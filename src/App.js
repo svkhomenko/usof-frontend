@@ -1,0 +1,98 @@
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, removeUser } from './store/slices/userSlice';
+import { SERVER_URL } from "./const";
+
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import EmailConfirmation from "./auth/EmailConfirmation";
+import SendPasswordConfirmation from "./auth/SendPasswordConfirmation";
+import PasswordConfirmation from "./auth/PasswordConfirmation";
+
+import Header from "./Header";
+
+import MainPage from "./posts/MainPage";
+import PostPage from "./posts/PostPage";
+import CreatePost from "./posts/CreatePost";
+import UpdatePost from "./posts/UpdatePost";
+
+import AllCategoriesPage from "./categories/AllCategoriesPage";
+import CategoryPage from "./categories/CategoryPage";
+import CreateCategory from "./categories/CreateCategory";
+import UpdateCategory from "./categories/UpdateCategory";
+
+import NotFound from "./tools/NotFound";
+import ErrorPage from "./tools/ErrorPage";
+
+function App() {
+    const curUser = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (curUser.id) {
+            fetch(SERVER_URL + `/api/users/${curUser.id}`, 
+            {
+                method: 'GET',
+                headers: {
+                    'authorization': curUser.token
+                }
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    dispatch(removeUser());
+                    throw response;
+                }
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                if (err.status == 500) {
+                    window.location.href = '/error';
+                }
+            });
+        }
+    }, []);
+
+    return (
+        <Router>
+            <Header />
+            
+            <Routes>
+                <Route path="/login" element={curUser.id ? <Navigate to="/" /> : <Login />} />
+                <Route path="/register" element={curUser.id ? <Navigate to="/" /> : <Register />} />
+                <Route path="/email-confirmation/:token" element={<EmailConfirmation />} />
+                <Route path="/password-reset" element={<SendPasswordConfirmation />} />
+                <Route path="/password-reset/:token" element={<PasswordConfirmation />} />
+
+                <Route path="/" element={<MainPage />} />
+                <Route path="/posts/:id" element={<PostPage />} />
+                <Route path="/create-post" element={curUser.id ? <CreatePost /> : <Navigate to="/login" />} />
+                {/* <Route path="/posts/:id/update" element={(curUser.id == id || curUser.role === 'admin') ? <UpdatePost /> : <Navigate to="/" />} /> */}
+                <Route path="/posts/:id/update" element={<CheckRightsForUpdatePost />} />
+
+                <Route path="/categories" element={<AllCategoriesPage />} />
+                <Route path="/categories/:id" element={<CategoryPage />} />
+                <Route path="/create-category" element={curUser.role === "admin" ? <CreateCategory /> : <Navigate to="/categories" />} />
+                <Route path="/categories/:id/update" element={curUser.role === "admin" ? <UpdateCategory /> : <Navigate to="/categories" />} />
+
+
+                <Route path="/error" element={<ErrorPage />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </Router>
+    );
+}
+
+function CheckRightsForUpdatePost() {
+    const curUser = useSelector((state) => state.user);
+    const { id: postId } = useParams();
+
+    if (curUser.id == postId || curUser.role === 'admin') {
+        return <UpdatePost />;
+    }
+    return <Navigate to="/" />;
+}
+
+export default App;
+
