@@ -11,14 +11,14 @@ function CategoryCard({ category }) {
     
     return (
         <div>
-            {
+            {/* {
                 curUser.role === 'admin' && 
                 <div>
                     <Link to={`/categories/${category.id}/update`}>
                         Update
                     </Link>
                 </div>
-            }
+            } */}
             {
                 curUser.role === 'admin' && 
                 <button onClick={deleteCategory}>Delete</button>
@@ -69,6 +69,7 @@ function deleteCategoryById(categoryId, curUser, deleteUser, successFunc) {
             case 403:
                 deleteUser();
                 window.location.href = '/login';
+                break;
             default:
                 window.location.href = '/error';
         }

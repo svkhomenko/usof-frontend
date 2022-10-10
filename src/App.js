@@ -69,12 +69,12 @@ function App() {
                 <Route path="/posts/:id" element={<PostPage />} />
                 <Route path="/create-post" element={curUser.id ? <CreatePost /> : <Navigate to="/login" />} />
                 {/* <Route path="/posts/:id/update" element={(curUser.id == id || curUser.role === 'admin') ? <UpdatePost /> : <Navigate to="/" />} /> */}
-                <Route path="/posts/:id/update" element={<CheckRightsForUpdatePost />} />
+                {/* <Route path="/posts/:id/update" element={<CheckRightsForUpdatePost />} /> */}
 
                 <Route path="/categories" element={<AllCategoriesPage />} />
                 <Route path="/categories/:id" element={<CategoryPage />} />
                 <Route path="/create-category" element={curUser.role === "admin" ? <CreateCategory /> : <Navigate to="/categories" />} />
-                <Route path="/categories/:id/update" element={curUser.role === "admin" ? <UpdateCategory /> : <Navigate to="/categories" />} />
+                {/* <Route path="/categories/:id/update" element={curUser.role === "admin" ? <UpdateCategory /> : <Navigate to="/categories" />} /> */}
 
 
                 <Route path="/error" element={<ErrorPage />} />
@@ -84,15 +84,15 @@ function App() {
     );
 }
 
-function CheckRightsForUpdatePost() {
-    const curUser = useSelector((state) => state.user);
-    const { id: postId } = useParams();
+// function CheckRightsForUpdatePost() {
+//     const curUser = useSelector((state) => state.user);
+//     const { id: postId } = useParams();
 
-    if (curUser.id == postId || curUser.role === 'admin') {
-        return <UpdatePost />;
-    }
-    return <Navigate to="/" />;
-}
+//     if (curUser.id == postId || curUser.role === 'admin') {
+//         return <UpdatePost />;
+//     }
+//     return <Navigate to="/" />;
+// }
 
 export default App;
 

@@ -10,7 +10,7 @@ import SearchContainer from "../filters/SearchContainer";
 import FilterDateContainer, { getFilterDate } from "../filters/FilterDateContainer";
 import PostCard from '../posts/PostCard';
 
-function CategoryPosts() {
+function CategoryPosts({ isUpdating }) {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
@@ -66,7 +66,8 @@ function CategoryPosts() {
         searchParameters.inactiveChecked, 
         searchParameters.search, 
         searchParameters.dateFrom,
-        searchParameters.dateTo
+        searchParameters.dateTo,
+        isUpdating
     ]);
 
     return (

@@ -79,6 +79,7 @@ function CreateCategory() {
                 case 403:
                     dispatch(removeUser());
                     window.location.href = '/login';
+                    break;
                 default:
                     window.location.href = '/error';
             }

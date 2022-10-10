@@ -16,14 +16,14 @@ function PostCard({ post }) {
                 (curUser.id == post.author.id || curUser.role === 'admin') && 
                 <button onClick={deletePost}>Delete</button>
             }
-            {
+            {/* {
                 (curUser.id == post.author.id || curUser.role === 'admin') && 
                 <div>
                     <Link to={`/posts/${post.id}/update`}>
                         Update
                     </Link>
                 </div>
-            }
+            } */}
             <Link to={`/posts/${post.id}`}>
                 <div>{post.title}</div>
                 <div>{post.content}</div>
@@ -97,6 +97,7 @@ function deletePostById(postId, curUser, deleteUser, successFunc) {
             case 403:
                 deleteUser();
                 window.location.href = '/login';
+                break;
             default:
                 window.location.href = '/error';
         }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { removeSearchParameters } from '../store/slices/searchParametersSlice';
+import { setReset, removeSearchParameters } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import PageIndexContainer from "../filters/PageIndexContainer";
 import CommentCard from '../comments/CommentCard';
@@ -10,7 +10,6 @@ function PostComments() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
-
     const { id: postId } = useParams();
 
     const [comments, setComments] = useState([]);
@@ -22,6 +21,12 @@ function PostComments() {
     }, []);
 
     useEffect(() => {
+        if (searchParameters.reset) {
+            dispatch(setReset({
+                reset: false
+            }));
+        }
+
         fetch(SERVER_URL + `/api/posts/${postId}/comments?` + new URLSearchParams(
             {
                 page: searchParameters.page
@@ -55,7 +60,7 @@ function PostComments() {
                     window.location.href = '/error';
             }
         });
-    }, [ postId, searchParameters.page]);
+    }, [postId, searchParameters.page, searchParameters.reset]);
 
     return (
         <>

@@ -1,56 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
-import { removeSearchParameters } from '../store/slices/searchParametersSlice';
+import { resetPage, setReset } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
-import FilterCategoryContainer from "../filters/FilterCategoryContainer";
 
-function CreatePost() {
+function CreateComment() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
-    const searchParameters = useSelector((state) => state.searchParameters);
-    const createPostFrom = useRef(null);
+    const { id: postId } = useParams();
+    const createCommentFrom = useRef(null);
 
-    const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [postImages, setPostImages] = useState([]);
+    const [commentImages, setCommentImages] = useState([]);
 
     const [mainMessage, setMainMessage] = useState('');
-    const [titleMessage, setTitleMessage] = useState('');
     const [contentMessage, setContentMessage] = useState('');
-    const [categoriesMessage, setCategoriesMessage] = useState('');
-    const [postImagesMessage, setPostImagesMessage] = useState('');
-
-    useEffect(() => {
-        dispatch(removeSearchParameters());
-    }, []);
+    const [commentImagesMessage, setCommentImagesMessage] = useState('');
 
     return (
         <> 
-            <h1>Create new post</h1>
+            <h1>Leave your answer</h1>
             <p>{mainMessage}</p>
-            <form onSubmit={handleSubmit} ref={createPostFrom}>
-                <label>
-                    Title:
-                    <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} required />
-                </label>
+            <form onSubmit={handleSubmit} ref={createCommentFrom}>
                 <label>
                     Content:
                     <p>{contentMessage}</p>
                     <textarea value={content} onChange={handleChangeContent} required />
                 </label>
                 <label>
-                    Categories:
-                    <p>{categoriesMessage}</p>
-                    <FilterCategoryContainer />
-                </label>
-                <label>
                     Images:
-                    <p>{postImagesMessage}</p>
-                    <input type="file" onChange={handleChangePostImages} multiple />
+                    <p>{commentImagesMessage}</p>
+                    <input type="file" onChange={handleChangeCommentImages} multiple />
                     <div>
-                        {Object.values(postImages).map((image) => {
+                        {Object.values(commentImages).map((image) => {
                             return (
                                 <div key={image.name}>
                                     {image.name}{' '}{image.size}
@@ -59,45 +42,35 @@ function CreatePost() {
                         })}
                     </div>
                 </label>
-                <input type="submit" value="Create post" />
+                <input type="submit" value="Create comment" />
             </form>
         </>
     );
-
-    function handleChangeTitle(event) {
-        setTitle(event.target.value);
-    }
     
     function handleChangeContent(event) {
         setContent(event.target.value);
     } 
 
-    function handleChangePostImages(event) {
-        setPostImages(event.target.files);
+    function handleChangeCommentImages(event) {
+        setCommentImages(event.target.files);
     }
 
     function handleSubmit(event) {
         event.preventDefault();
 
         setMainMessage('');
-        setTitleMessage('');
         setContentMessage('');
-        setCategoriesMessage('');
-        setPostImagesMessage('');
+        setCommentImagesMessage('');
 
         if (isDataValid()) {
             let formData = new FormData();
 
-            formData.append("title", title);
             formData.append("content", content);
-            searchParameters.categories.forEach(((category, index) => {
-                formData.append(`categories[${index}]`, category.id);
-            }));
-            Object.values(postImages).forEach((image) => {
-                formData.append("postImages", image);
+            Object.values(commentImages).forEach((image) => {
+                formData.append("commentImages", image);
             });
 
-            fetch(SERVER_URL + '/api/posts', {
+            fetch(SERVER_URL + `/api/posts/${postId}/comments`, {
                 method: 'POST',
                 headers: {
                     'authorization': curUser.token
@@ -109,11 +82,11 @@ function CreatePost() {
                     throw response;
                 }
                 else {
-                    setMainMessage('Post was successfully created');
-                    setTitle('');
+                    setMainMessage('Comment was successfully created');
                     setContent('');
-                    dispatch(removeSearchParameters());
-                    createPostFrom.current.reset();
+                    createCommentFrom.current.reset();
+                    dispatch(resetPage());
+                    dispatch(setReset({ reset: true }));
                 }
             })
             .catch((err) => {
@@ -122,8 +95,12 @@ function CreatePost() {
                     case 400:
                         return err.json();
                     case 401:
+                    case 403:
                         dispatch(removeUser());
                         window.location.href = '/login';
+                        break;
+                    case 404:
+                        window.location.href = '/';
                         break;
                     default:
                         window.location.href = '/error';
@@ -134,30 +111,24 @@ function CreatePost() {
                     if (err.message.includes('Content')) {
                         setContentMessage(err.message);
                     }
-                    else if (err.message.includes('Title')) {
-                        setTitleMessage(err.message);
-                    }
-                    else if (/categor/i.test(err.message)) {
-                        setCategoriesMessage(err.message);
-                    }
                     else if (/file/i.test(err.message)) {
-                        setPostImages(err.message);
+                        setCommentImages(err.message);
                     }
                 }
             }); 
         }
     }
-
+    
     function isDataValid() {
-        if (postImages.length > 10) {
-            setPostImagesMessage("Maximum number of files is 10");
+        if (commentImages.length > 10) {
+            setCommentImagesMessage("Maximum number of files is 10");
             return false;
         }
         
         let valid = true;
-        Object.values(postImages).forEach((image) => {
+        Object.values(commentImages).forEach((image) => {
             if (!image.type.startsWith("image")) {
-                setPostImagesMessage("Upload files in an image format");
+                setCommentImagesMessage("Upload files in an image format");
                 valid = false;
             }
         });
@@ -166,5 +137,5 @@ function CreatePost() {
     }
 }
 
-export default CreatePost;
+export default CreateComment;
 
