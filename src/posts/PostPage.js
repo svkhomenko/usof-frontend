@@ -5,9 +5,10 @@ import { removeUser } from '../store/slices/userSlice';
 import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
 import PostComments from "./PostComments";
-import { deletePostById } from './PostCard';
+import { deletePostById, LikeClick } from './post_tools';
 import CreateComment from '../comments/CreateComment';
 import UpdatePost from './UpdatePost';
+import LikeButton from "../tools/LikeButton";
 
 // function PostPage() {
 //     const curUser = useSelector((state) => state.user);
@@ -170,6 +171,7 @@ function PostPage() {
                         ? <UpdatePost setIsUpdating={setIsUpdating} curPost={curPost} setCurPost={setCurPost} />
                         : <>
                             <h1>{curPost.title}</h1>
+                            <LikeButton isLiked={curPost.isLiked} handleLikeClick={handleLikeClick} />
                             {
                                 (curUser.id == curPost.author.id || curUser.role === 'admin') && 
                                 <button onClick={deletePost}>Delete</button>
@@ -237,6 +239,10 @@ function PostPage() {
                 setMessage('Post was successfully deleted');
             }
         );
+    }
+
+    function handleLikeClick(type, action) {
+        LikeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
     }
 }
 

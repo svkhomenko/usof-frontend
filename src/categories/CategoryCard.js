@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
-import { SERVER_URL } from "../const";
+import { deleteCategoryById } from './category_tools';
 
 function CategoryCard({ category }) {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
     
     return (
         <div>
@@ -40,43 +41,13 @@ function CategoryCard({ category }) {
                 dispatch(setReset({
                     reset: false
                 }));
+                // navigate(0);
+                // navigate("/categories");
                 window.location.href = '/categories';
             }
         );
     }
 }
-
-function deleteCategoryById(categoryId, curUser, deleteUser, successFunc) {
-    fetch(SERVER_URL + `/api/categories/${categoryId}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'authorization': curUser.token
-        }
-    })
-    .then((response) => {
-        if (!response.ok) {
-            throw response;
-        }
-        else {
-            successFunc();
-        }
-    })
-    .catch((err) => {
-        console.log('err', err, err.body);
-        switch(err.status) {
-            case 401:
-            case 403:
-                deleteUser();
-                window.location.href = '/login';
-                break;
-            default:
-                window.location.href = '/error';
-        }
-    });
-}
-
-export { deleteCategoryById };
 
 export default CategoryCard;
 

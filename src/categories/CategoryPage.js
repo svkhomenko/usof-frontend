@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
 import CategoryPosts from "./CategoryPosts";
-import { deleteCategoryById } from './CategoryCard';
+import { deleteCategoryById } from './category_tools';
 import UpdateCategory from './UpdateCategory';
 
 // function CategoryPage() {
