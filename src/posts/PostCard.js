@@ -4,7 +4,7 @@ import { Buffer } from "buffer";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
-import { deletePostById, LikeClick } from './post_tools';
+import { deletePostById, likeClick } from './post_tools';
 import LikeButton from "../tools/LikeButton";
 
 function PostCard({ post }) {
@@ -28,7 +28,9 @@ function PostCard({ post }) {
                 </div>
             } */}
             <Link to={`/posts/${curPost.id}`}>
-                <LikeButton isLiked={curPost.isLiked} handleLikeClick={handleLikeClick} />
+                <LikeButton isLiked={curPost.isLiked} 
+                            handleLikeClick={handleLikeClick}
+                            isActive={curPost.status == 'active'} />
                 <div>{curPost.title}</div>
                 <div>{curPost.content}</div>
                 <div>
@@ -150,7 +152,7 @@ function PostCard({ post }) {
     // }
 
     function handleLikeClick(type, action) {
-        LikeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
+        likeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
     }
 }
 

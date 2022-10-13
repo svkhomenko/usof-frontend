@@ -18,7 +18,7 @@ import { LIKE, DISLIKE, UPDATE, DELETE } from "../const";
 //     }
 // }
 
-function LikeButton({ isLiked, handleLikeClick }) {
+// function LikeButton({ isLiked, handleLikeClick, isActive }) {
     // if (isLiked) {
     //     if (isLiked.type === 'like') {
     //         return (
@@ -57,17 +57,30 @@ function LikeButton({ isLiked, handleLikeClick }) {
     //         </div>
     //     );
     // }
+// }
 
+function LikeButton({ isLiked, handleLikeClick, isActive }) {
+    let clss = 'like_outer';
+    if (!isActive) {
+        clss += ' inactive';
+    }
+
+    let clickHandler = (e) => {e.preventDefault();};
+    if (isActive) {
+        clickHandler = (e, type, action) => {
+            e.preventDefault();
+            handleLikeClick(type, action);
+        };
+    }
+    
     if (isLiked) {
         if (isLiked.type === 'like') {
             return (
                 <div>
-                    <span className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(LIKE, DELETE);}}>
+                    <span className={clss} onClick={(e) => {clickHandler(e, LIKE, DELETE);}}>
                         <iconify-icon icon="ant-design:like-filled" />
                     </span> 
-                    <div className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(DISLIKE, UPDATE);}}>
+                    <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
                         <iconify-icon icon="ant-design:dislike-outlined" />
                     </div> 
                 </div>
@@ -76,12 +89,10 @@ function LikeButton({ isLiked, handleLikeClick }) {
         else {
             return (
                 <div>
-                    <div className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(LIKE, UPDATE);}}>
+                    <div className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
                         <iconify-icon icon="ant-design:like-outlined" />
                     </div> 
-                    <div className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(DISLIKE, DELETE);}}>
+                    <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, DELETE);}}>
                         <iconify-icon icon="ant-design:dislike-filled" />
                     </div> 
                 </div>
@@ -91,12 +102,10 @@ function LikeButton({ isLiked, handleLikeClick }) {
     else {
         return (
             <div>
-                <div className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(LIKE, UPDATE);}}>
+                <div className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
                     <iconify-icon icon="ant-design:like-outlined" />
                 </div> 
-                <div className="like_outer" onClick={(e) => {e.preventDefault();
-                                                                    handleLikeClick(DISLIKE, UPDATE);}}>
+                <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
                     <iconify-icon icon="ant-design:dislike-outlined" />
                 </div> 
             </div>

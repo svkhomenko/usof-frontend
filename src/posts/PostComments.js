@@ -6,7 +6,7 @@ import { SERVER_URL } from "../const";
 import PageIndexContainer from "../filters/PageIndexContainer";
 import CommentCard from '../comments/CommentCard';
 
-function PostComments() {
+function PostComments({ isPostActive }) {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
@@ -70,7 +70,7 @@ function PostComments() {
                     comments.length !== 0 
                     ? <>
                         {comments.map((comment) => (
-                            <CommentCard key={comment.id} comment={comment} />
+                            <CommentCard key={comment.id} comment={comment} isPostActive={isPostActive} />
                         ))}
                     </>
                     : <p>No comments found</p>

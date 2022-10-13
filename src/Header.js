@@ -26,18 +26,20 @@ function Header() {
                 curUser.id 
                 ? <>
                     <button onClick={logout}>Log out</button>
-                    <div style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "50px",
-                        height: "50px",
-                        overflow: "hidden"
-                    }}>
-                        <img src={src} alt="avatar" style={{width: "auto",
-                                                            height: "100%"}} />
-                    </div>
-                    <div>{curUser.login}</div>
+                    <Link to={'/profile'}>
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "50px",
+                            height: "50px",
+                            overflow: "hidden"
+                        }}>
+                            <img src={src} alt="avatar" style={{width: "auto",
+                                                                height: "100%"}} />
+                        </div>
+                        <div>{curUser.login}</div>
+                    </Link>
                 </>
                 : <>
                     <p>

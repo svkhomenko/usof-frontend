@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSearchParameters } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
-import { SERVER_URL, GET_POSTS } from "../const";
+// import { Buffer } from "buffer";
+import { SERVER_URL } from "../const";
 import PageIndexContainer from "../filters/PageIndexContainer";
 import OrderByContainer from "../filters/OrderByContainer";
 import FilterStatusContainer, { getFilterStatus } from "../filters/FilterStatusContainer";
@@ -16,8 +16,6 @@ function MainPage() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
-
-    console.log("curUser", curUser.id);
 
     const [posts, setPosts] = useState([]);
     const [countPosts, setCountPosts] = useState(0);

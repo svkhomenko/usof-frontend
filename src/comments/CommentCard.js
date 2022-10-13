@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Buffer } from "buffer";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
-import { SERVER_URL } from "../const";
+import { SERVER_URL, LIKE, UPDATE, DELETE } from "../const";
 import UpdateComment from "./UpdateComment";
+import LikeButton from "../tools/LikeButton";
 
-function CommentCard({ comment }) {
+function CommentCard({ comment, isPostActive }) {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
@@ -18,6 +19,9 @@ function CommentCard({ comment }) {
                 isUpdating
                 ? <UpdateComment setIsUpdating={setIsUpdating} curComment={curComment} setCurComment={setCurComment} />
                 : <>
+                    <LikeButton isLiked={curComment.isLiked} 
+                            handleLikeClick={handleLikeClick}
+                            isActive={isPostActive && curComment.status == 'active'} />
                     {
                         (curUser.id == curComment.author.id || curUser.role === 'admin') && 
                         <button onClick={deleteComment}>Delete</button>
@@ -83,6 +87,78 @@ function CommentCard({ comment }) {
                     window.location.href = '/error';
             }
         });
+    }
+
+    function handleLikeClick(type, action) {
+        if (action == UPDATE) {
+            fetch(SERVER_URL + `/api/comments/${curComment.id}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': curUser.token
+                },
+                body: JSON.stringify({ 
+                    type: type == LIKE ? 'like' : 'dislike'
+                })
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                else {
+                    setCurComment({
+                        ...curComment,
+                        isLiked: {
+                            type: type == LIKE ? 'like' : 'dislike'
+                        }
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                switch(err.status) {
+                    case 401:
+                    case 403:
+                        dispatch(removeUser());
+                        window.location.href = '/login';
+                        break;
+                    default:
+                        window.location.href = '/error';
+                }
+            });
+        }
+        else if (action == DELETE) {
+            fetch(SERVER_URL + `/api/comments/${curComment.id}/like`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': curUser.token
+                }
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                else {
+                    setCurComment({
+                        ...curComment,
+                        isLiked: false
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                switch(err.status) {
+                    case 401:
+                    case 403:
+                        dispatch(removeUser());
+                        window.location.href = '/login';
+                        break;
+                    default:
+                        window.location.href = '/error';
+                }
+            });
+        }
     }
 }
 

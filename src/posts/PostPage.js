@@ -5,7 +5,7 @@ import { removeUser } from '../store/slices/userSlice';
 import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
 import PostComments from "./PostComments";
-import { deletePostById, LikeClick } from './post_tools';
+import { deletePostById, likeClick } from './post_tools';
 import CreateComment from '../comments/CreateComment';
 import UpdatePost from './UpdatePost';
 import LikeButton from "../tools/LikeButton";
@@ -171,7 +171,9 @@ function PostPage() {
                         ? <UpdatePost setIsUpdating={setIsUpdating} curPost={curPost} setCurPost={setCurPost} />
                         : <>
                             <h1>{curPost.title}</h1>
-                            <LikeButton isLiked={curPost.isLiked} handleLikeClick={handleLikeClick} />
+                            <LikeButton isLiked={curPost.isLiked} 
+                                        handleLikeClick={handleLikeClick}
+                                        isActive={curPost.status == 'active'} />
                             {
                                 (curUser.id == curPost.author.id || curUser.role === 'admin') && 
                                 <button onClick={deletePost}>Delete</button>
@@ -221,7 +223,7 @@ function PostPage() {
                         </>
                     }
                     <hr />
-                    <PostComments />
+                    <PostComments isPostActive={curPost.status == 'active'} />
                     <CreateComment />
                 </>
                 : <p>{message}</p>
@@ -242,7 +244,7 @@ function PostPage() {
     }
 
     function handleLikeClick(type, action) {
-        LikeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
+        likeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
     }
 }
 

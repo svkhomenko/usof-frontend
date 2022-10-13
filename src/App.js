@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from './store/slices/userSlice';
 import { SERVER_URL } from "./const";
+import "./style.css";
 
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -13,15 +14,17 @@ import PasswordConfirmation from "./auth/PasswordConfirmation";
 
 import Header from "./Header";
 
+import ProfilePage from "./users/ProfilePage";
+
 import MainPage from "./posts/MainPage";
 import PostPage from "./posts/PostPage";
 import CreatePost from "./posts/CreatePost";
-import UpdatePost from "./posts/UpdatePost";
+// import UpdatePost from "./posts/UpdatePost";
 
 import AllCategoriesPage from "./categories/AllCategoriesPage";
 import CategoryPage from "./categories/CategoryPage";
 import CreateCategory from "./categories/CreateCategory";
-import UpdateCategory from "./categories/UpdateCategory";
+// import UpdateCategory from "./categories/UpdateCategory";
 
 import NotFound from "./tools/NotFound";
 import ErrorPage from "./tools/ErrorPage";
@@ -64,6 +67,8 @@ function App() {
                 <Route path="/email-confirmation/:token" element={<EmailConfirmation />} />
                 <Route path="/password-reset" element={<SendPasswordConfirmation />} />
                 <Route path="/password-reset/:token" element={<PasswordConfirmation />} />
+
+                <Route path="/profile" element={curUser.id ? <ProfilePage /> : <Navigate to="/" />} />
 
                 <Route path="/" element={<MainPage />} />
                 <Route path="/posts/:id" element={<PostPage />} />

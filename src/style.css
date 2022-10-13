@@ -50,3 +50,10 @@
     background-color: wheat;
 }
 
+
+/* likes */
+
+.like_outer.inactive {
+    color: grey;
+}
+

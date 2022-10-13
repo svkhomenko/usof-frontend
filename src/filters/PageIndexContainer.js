@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setPage } from '../store/slices/searchParametersSlice';
-import "../style.css";
 
 function PageIndexContainer(props) {
     const dispatch = useDispatch();

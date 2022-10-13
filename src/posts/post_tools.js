@@ -30,7 +30,7 @@ function deletePostById(postId, curUser, deleteUser, successFunc) {
     });
 }
 
-function LikeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
+function likeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
     if (action == UPDATE) {
         fetch(SERVER_URL + `/api/posts/${curPost.id}/like`, {
             method: 'POST',
@@ -102,5 +102,5 @@ function LikeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
     }
 }
 
-export { deletePostById, LikeClick };
+export { deletePostById, likeClick };
 
