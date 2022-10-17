@@ -4,8 +4,9 @@ import { Buffer } from "buffer";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
-import { deletePostById, likeClick } from './post_tools';
+import { deletePostById, likeClick, favClick } from './post_tools';
 import LikeButton from "../tools/LikeButton";
+import FavButton from "../tools/FavButton";
 
 function PostCard({ post }) {
     const curUser = useSelector((state) => state.user);
@@ -30,6 +31,9 @@ function PostCard({ post }) {
             <Link to={`/posts/${curPost.id}`}>
                 <LikeButton isLiked={curPost.isLiked} 
                             handleLikeClick={handleLikeClick}
+                            isActive={curPost.status == 'active'} />
+                <FavButton isFav={curPost.addToFavoritesUser} 
+                            handleFavClick={handleFavClick}
                             isActive={curPost.status == 'active'} />
                 <div>{curPost.title}</div>
                 <div>{curPost.content}</div>
@@ -153,6 +157,10 @@ function PostCard({ post }) {
 
     function handleLikeClick(type, action) {
         likeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
+    }
+
+    function handleFavClick() {
+        favClick(curPost, curUser, setCurPost, () => {dispatch(removeUser());});
     }
 }
 

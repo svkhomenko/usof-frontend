@@ -21,6 +21,7 @@ function Header() {
             <div>
                 <Link to={'/'}>Posts</Link>
                 <Link to={'/categories'}>Categories</Link>
+                <Link to={'/users'}>Users</Link>
             </div>
             {
                 curUser.id 

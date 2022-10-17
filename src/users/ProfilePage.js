@@ -9,12 +9,14 @@ import avatar from "../images/avatar.png";
 import { deleteUserById } from "./user_tools";
 import UpdateProfile from "./UpdateProfile";
 import UserPosts from "./UserPosts";
+import FavoritesPosts from "./FavoritesPosts";
 
 function ProfilePage() {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     const [isUpdating, setIsUpdating] = useState(false);
+    const [isFavoritesPosts, setIsFavoritesPosts] = useState(false);
 
     let src = avatar;
     if (curUser.profilePicture) {
@@ -93,7 +95,13 @@ function ProfilePage() {
                 </>
             }
             <hr />
-            <UserPosts isUpdating={isUpdating} />
+            <div onClick={() => {setIsFavoritesPosts(false)}}>Your posts</div>
+            <div onClick={() => {setIsFavoritesPosts(true)}}>Favorites posts</div>
+            {
+                isFavoritesPosts 
+                ? <FavoritesPosts isUpdating={isUpdating} />
+                : <UserPosts isUpdating={isUpdating} />
+            }
         </>
     );
 

@@ -5,10 +5,11 @@ import { removeUser } from '../store/slices/userSlice';
 import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
 import PostComments from "./PostComments";
-import { deletePostById, likeClick } from './post_tools';
+import { deletePostById, likeClick, favClick } from './post_tools';
 import CreateComment from '../comments/CreateComment';
 import UpdatePost from './UpdatePost';
 import LikeButton from "../tools/LikeButton";
+import FavButton from "../tools/FavButton";
 
 // function PostPage() {
 //     const curUser = useSelector((state) => state.user);
@@ -174,6 +175,9 @@ function PostPage() {
                             <LikeButton isLiked={curPost.isLiked} 
                                         handleLikeClick={handleLikeClick}
                                         isActive={curPost.status == 'active'} />
+                            <FavButton isFav={curPost.addToFavoritesUser} 
+                                        handleFavClick={handleFavClick}
+                                        isActive={curPost.status == 'active'} />
                             {
                                 (curUser.id == curPost.author.id || curUser.role === 'admin') && 
                                 <button onClick={deletePost}>Delete</button>
@@ -245,6 +249,10 @@ function PostPage() {
 
     function handleLikeClick(type, action) {
         likeClick(type, action, curPost, curUser, setCurPost, () => {dispatch(removeUser());});
+    }
+
+    function handleFavClick() {
+        favClick(curPost, curUser, setCurPost, () => {dispatch(removeUser());});
     }
 }
 

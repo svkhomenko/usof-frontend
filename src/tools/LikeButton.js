@@ -77,9 +77,9 @@ function LikeButton({ isLiked, handleLikeClick, isActive }) {
         if (isLiked.type === 'like') {
             return (
                 <div>
-                    <span className={clss} onClick={(e) => {clickHandler(e, LIKE, DELETE);}}>
+                    <div className={clss} onClick={(e) => {clickHandler(e, LIKE, DELETE);}}>
                         <iconify-icon icon="ant-design:like-filled" />
-                    </span> 
+                    </div> 
                     <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
                         <iconify-icon icon="ant-design:dislike-outlined" />
                     </div> 

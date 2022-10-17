@@ -14,6 +14,7 @@ import PasswordConfirmation from "./auth/PasswordConfirmation";
 
 import Header from "./Header";
 
+import AllUsersPage from "./users/AllUsersPage";
 import ProfilePage from "./users/ProfilePage";
 
 import MainPage from "./posts/MainPage";
@@ -50,9 +51,7 @@ function App() {
             })
             .catch((err) => {
                 console.log('err', err, err.body);
-                if (err.status == 500) {
-                    window.location.href = '/error';
-                }
+                window.location.href = '/error';
             });
         }
     }, []);
@@ -69,6 +68,7 @@ function App() {
                 <Route path="/password-reset/:token" element={<PasswordConfirmation />} />
 
                 <Route path="/profile" element={curUser.id ? <ProfilePage /> : <Navigate to="/" />} />
+                <Route path="/users" element={<AllUsersPage />} />
 
                 <Route path="/" element={<MainPage />} />
                 <Route path="/posts/:id" element={<PostPage />} />

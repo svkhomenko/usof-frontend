@@ -75,7 +75,7 @@ function CategoryPosts({ isUpdating }) {
             <h2>{countPosts} posts</h2>
             <OrderByContainer />
             <FilterStatusContainer />
-            <SearchContainer />
+            <SearchContainer placeholder="Find posts" />
             <FilterDateContainer />
             <button onClick={resetSettings}>Reset settings</button>
             <div>

@@ -102,5 +102,38 @@ function likeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
     }
 }
 
-export { deletePostById, likeClick };
+function favClick(curPost, curUser, setCurPost, deleteUser) {
+    fetch(SERVER_URL + `/api/posts/${curPost.id}/favorites`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': curUser.token
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw response;
+        }
+        else {
+            setCurPost({
+                ...curPost,
+                addToFavoritesUser: !curPost.addToFavoritesUser
+            });
+        }
+    })
+    .catch((err) => {
+        console.log('err', err, err.body);
+        switch(err.status) {
+            case 401:
+            case 403:
+                deleteUser();
+                window.location.href = '/login';
+                break;
+            default:
+                window.location.href = '/error';
+        }
+    });
+}
+
+export { deletePostById, likeClick, favClick };
 

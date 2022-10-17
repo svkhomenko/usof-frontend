@@ -120,9 +120,6 @@ function UpdateProfile({ setIsUpdating }) {
         setFullNameMessage('');
         setProfilePictureMessage('');
 
-        // | **PATCH** | `/api/users/:user_id` | Update user data | email, login, fullName, role, 
-        // avatar, deleteAvatar (boolean), link (for client confirmation page, replace 'dot' with '.') |
-
         if (isDataValid()) {
             let isEmailChanged = email !== curUser.email;
 
@@ -155,7 +152,7 @@ function UpdateProfile({ setIsUpdating }) {
                     if (isEmailChanged) {
                         console.log('change email');
                         dispatch(removeUser());
-                        // window.location.href = '/login';
+                        window.location.href = '/login';
                     }
                     else {
                         return response.json();
@@ -185,10 +182,10 @@ function UpdateProfile({ setIsUpdating }) {
                     case 403:
                     case 404:
                         dispatch(removeUser());
-                        // window.location.href = '/login';
+                        window.location.href = '/login';
                         break;
                     default:
-                        // window.location.href = '/error';
+                        window.location.href = '/error';
                 }
             })
             .then((err) => {
@@ -204,7 +201,7 @@ function UpdateProfile({ setIsUpdating }) {
                         setLoginMessage(err.message);
                     }
                     else {
-                        // window.location.href = '/error';
+                        window.location.href = '/error';
                     }
                 }
             });

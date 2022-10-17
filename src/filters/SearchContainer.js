@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetPage, setSearch } from '../store/slices/searchParametersSlice';
 
-function SearchContainer(props) {
+function SearchContainer({ placeholder }) {
     const dispatch = useDispatch();
     const searchParameters = useSelector((state) => state.searchParameters);
 
     return (
         <div className="search_container">
-            <input className="search_input" value={searchParameters.search} onChange={handleChange} type="search" placeholder="Find posts" />
+            <input className="search_input" value={searchParameters.search} onChange={handleChange} type="search" placeholder={placeholder} />
             <button className="search_btn button" type="submit">Search</button>
         </div>
     );

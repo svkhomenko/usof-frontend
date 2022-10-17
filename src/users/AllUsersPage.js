@@ -5,30 +5,31 @@ import { setReset, removeSearchParameters } from '../store/slices/searchParamete
 import { SERVER_URL } from "../const";
 import PageIndexContainer from "../filters/PageIndexContainer";
 import SearchContainer from "../filters/SearchContainer";
-import CategoryCard from "./CategoryCard";
+import UserCard from "./UserCard";
 
-function AllCategoriesPage() {
+function AllUsersPage() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
 
-    const [categories, setCategories] = useState([]);
-    const [countCategories, setCountCategories] = useState(0);
+    const [users, setUsers] = useState([]);
+    const [countUsers, setCountUsers] = useState(0);
     const [limit, setLimit] = useState(10);
 
     useEffect(() => {
-        if (searchParameters.reset) {
-            dispatch(removeSearchParameters());
-        }
-        else {
-            dispatch(setReset({
-                reset: false
-            }));
-        }
+        dispatch(removeSearchParameters());
+        // if (searchParameters.reset) {
+        //     dispatch(removeSearchParameters());
+        // }
+        // else {
+        //     dispatch(setReset({
+        //         reset: false
+        //     }));
+        // }
     }, []);
     
     useEffect(() => {
-        fetch(SERVER_URL + '/api/categories?' + new URLSearchParams(
+        fetch(SERVER_URL + '/api/users?' + new URLSearchParams(
             {
                 page: searchParameters.page,
                 search : searchParameters.search
@@ -47,9 +48,10 @@ function AllCategoriesPage() {
             return response.json();
         })
         .then((response) => {
-            setCategories(response.allCategories);
-            setCountCategories(response.countCategories);
+            setUsers(response.allUsers);
+            setCountUsers(response.countUsers);
             setLimit(response.limit);
+            console.log('count', response.countUsers);
         })
         .catch((err) => {
             console.log('err', err, err.body);
@@ -62,29 +64,29 @@ function AllCategoriesPage() {
 
     return (
         <> 
-            <h1>Categories</h1>
-            {
+            <h1>Users</h1>
+            {/* {
                 curUser.role === 'admin' && 
                 <p>
                     <Link to={'/create-category'}>
                         Create category
                     </Link>
                 </p>
-            }
-            <SearchContainer placeholder="Find categories" />
+            } */}
+            <SearchContainer placeholder="Find users" />
             <button onClick={resetSettings}>Reset settings</button>
             <div>
                 {
-                    categories.length !== 0 
+                    users.length !== 0 
                     ? <>
-                        {categories.map((category) => (
-                            <CategoryCard key={category.id} category={category} />
+                        {users.map((user) => (
+                            <UserCard key={user.id} user={user} />
                         ))}
                     </>
-                    : <p>No categories found</p>
+                    : <p>No users found</p>
                 }
             </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countCategories / limit)}/>
+            <PageIndexContainer numberOfPages={Math.ceil(countUsers / limit)}/>
         </>
     );
 
@@ -93,5 +95,5 @@ function AllCategoriesPage() {
     }
 }
 
-export default AllCategoriesPage;
+export default AllUsersPage;
 

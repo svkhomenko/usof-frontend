@@ -83,7 +83,7 @@ function MainPage() {
             }
             <OrderByContainer />
             <FilterStatusContainer />
-            <SearchContainer />
+            <SearchContainer placeholder="Find posts" />
             <FilterCategoryContainer />
             <FilterDateContainer />
             <button onClick={resetSettings}>Reset settings</button>

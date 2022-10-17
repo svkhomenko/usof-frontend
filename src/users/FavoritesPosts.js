@@ -10,7 +10,7 @@ import SearchContainer from "../filters/SearchContainer";
 import FilterDateContainer, { getFilterDate } from "../filters/FilterDateContainer";
 import PostCard from '../posts/PostCard';
 
-function UserPosts({ isUpdating }) {
+function FavoritesPosts({ isUpdating }) {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
@@ -24,7 +24,7 @@ function UserPosts({ isUpdating }) {
     }, []);
 
     useEffect(() => {
-        fetch(SERVER_URL + `/api/posts/own-posts?` + new URLSearchParams(
+        fetch(SERVER_URL + `/api/posts/favorites?` + new URLSearchParams(
             {
                 page: searchParameters.page,
                 orderBy: searchParameters.orderBy,
@@ -74,7 +74,7 @@ function UserPosts({ isUpdating }) {
 
     return (
         <>
-            <h2>{countPosts} your posts</h2>
+            <h2>{countPosts} favorites posts</h2>
             <OrderByContainer />
             <FilterStatusContainer />
             <SearchContainer placeholder="Find posts" />
@@ -100,5 +100,5 @@ function UserPosts({ isUpdating }) {
     }
 }
 
-export default UserPosts;
+export default FavoritesPosts;
 
