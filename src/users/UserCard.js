@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
 import { Buffer } from "buffer";
-// import { deleteCategoryById } from './category_tools';
+import { deleteUserById } from "./user_tools";
 import avatar from "../images/avatar.png";
 
 function UserCard({ user }) {
@@ -18,42 +18,48 @@ function UserCard({ user }) {
     
     return (
         <div>
-            {/* <button onClick={deleteAccount}>Delete</button>
-            <button onClick={() => {setIsUpdating(true)}}>
-                Update
-            </button> */}
-            <div>{user.login}</div>
-            <div>{user.email}</div>
-            <div>{user.fullName}</div>
-            <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "50px",
-                    height: "50px",
-                    overflow: "hidden"
-            }}>
-                <img src={src} alt="avatar" style={{width: "auto",
-                                                    height: "100%"}} />
-            </div>
-            <div>{user.role}</div>
-            <div>{user.status}</div>
-            <div>{user.rating}</div>
+            {
+                (curUser.role === 'admin' || curUser.id == user.id) && 
+                <button onClick={deleteAccount}>Delete</button>
+            }
+            <Link to={`/users/${user.id}`}>
+                <div>{user.login}</div>
+                <div>{user.email}</div>
+                <div>{user.fullName}</div>
+                <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "50px",
+                        height: "50px",
+                        overflow: "hidden"
+                }}>
+                    <img src={src} alt="avatar" style={{width: "auto",
+                                                        height: "100%"}} />
+                </div>
+                <div>{user.role}</div>
+                <div>{user.status}</div>
+                <div>{user.rating}</div>
+            </Link>
         </div>
     );
 
-    function deleteCategory() {
-        deleteCategoryById(category.id, curUser,
+    function deleteAccount() {
+        deleteUserById(user.id, curUser,
             () => {
                 dispatch(removeUser());
-            },
+            }, 
             () => {
-                dispatch(setReset({
-                    reset: false
-                }));
-                // navigate(0);
-                // navigate("/categories");
-                window.location.href = '/categories';
+                if (user.id == curUser.id) {
+                    dispatch(removeUser());
+                    window.location.href = '/login';
+                }
+                else {
+                    dispatch(setReset({
+                        reset: false
+                    }));
+                    window.location.href = '/users';
+                }
             }
         );
     }

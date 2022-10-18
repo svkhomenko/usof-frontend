@@ -18,14 +18,14 @@ function AllUsersPage() {
 
     useEffect(() => {
         dispatch(removeSearchParameters());
-        // if (searchParameters.reset) {
-        //     dispatch(removeSearchParameters());
-        // }
-        // else {
-        //     dispatch(setReset({
-        //         reset: false
-        //     }));
-        // }
+        if (searchParameters.reset) {
+            dispatch(removeSearchParameters());
+        }
+        else {
+            dispatch(setReset({
+                reset: false
+            }));
+        }
     }, []);
     
     useEffect(() => {
@@ -65,14 +65,14 @@ function AllUsersPage() {
     return (
         <> 
             <h1>Users</h1>
-            {/* {
+            {
                 curUser.role === 'admin' && 
                 <p>
-                    <Link to={'/create-category'}>
-                        Create category
+                    <Link to={'/create-user'}>
+                        Create user
                     </Link>
                 </p>
-            } */}
+            }
             <SearchContainer placeholder="Find users" />
             <button onClick={resetSettings}>Reset settings</button>
             <div>

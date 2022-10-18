@@ -69,7 +69,7 @@ function ProfilePage() {
         <>
             {
                 isUpdating
-                ? <UpdateProfile setIsUpdating={setIsUpdating} />
+                ? <UpdateProfile user={curUser} successFunc={successUpdateFunc} />
                 : <>
                     <button onClick={deleteAccount}>Delete</button>
                     <button onClick={() => {setIsUpdating(true)}}>
@@ -109,10 +109,27 @@ function ProfilePage() {
         deleteUserById(curUser.id, curUser,
             () => {
                 dispatch(removeUser());
-            }, () => {
+            },
+            () => {
                 dispatch(removeUser());
                 window.location.href = '/login';
-            });
+            }
+        );
+    }
+
+    function successUpdateFunc(data) {
+        dispatch(setUser({
+            id: data.id,
+            login: data.login,
+            email: data.email,
+            fullName: data.fullName,
+            profilePicture: data.profilePicture,
+            role: data.role,
+            status: data.status,
+            rating: data.rating,
+            token: curUser.token
+        }));
+        setIsUpdating(false);
     }
 }
 

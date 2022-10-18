@@ -9,7 +9,7 @@ function CreatePost() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
-    const createPostFrom = useRef(null);
+    const createPostForm = useRef(null);
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -29,7 +29,7 @@ function CreatePost() {
         <> 
             <h1>Create new post</h1>
             <p>{mainMessage}</p>
-            <form onSubmit={handleSubmit} ref={createPostFrom}>
+            <form onSubmit={handleSubmit} ref={createPostForm}>
                 <label>
                     Title:
                     <p>{titleMessage}</p>
@@ -113,7 +113,7 @@ function CreatePost() {
                     setTitle('');
                     setContent('');
                     dispatch(removeSearchParameters());
-                    createPostFrom.current.reset();
+                    createPostForm.current.reset();
                 }
             })
             .catch((err) => {

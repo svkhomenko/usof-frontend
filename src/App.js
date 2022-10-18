@@ -16,6 +16,8 @@ import Header from "./Header";
 
 import AllUsersPage from "./users/AllUsersPage";
 import ProfilePage from "./users/ProfilePage";
+import UserPage from "./users/UserPage";
+import CreateUser from "./users/CreateUser";
 
 import MainPage from "./posts/MainPage";
 import PostPage from "./posts/PostPage";
@@ -69,6 +71,8 @@ function App() {
 
                 <Route path="/profile" element={curUser.id ? <ProfilePage /> : <Navigate to="/" />} />
                 <Route path="/users" element={<AllUsersPage />} />
+                <Route path="/users/:id" element={<UserPage />} />
+                <Route path="/create-user" element={curUser.role === "admin" ? <CreateUser /> : <Navigate to="/users" />} />
 
                 <Route path="/" element={<MainPage />} />
                 <Route path="/posts/:id" element={<PostPage />} />
