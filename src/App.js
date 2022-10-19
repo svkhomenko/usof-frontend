@@ -37,8 +37,28 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // if (curUser.id) {
+        //     fetch(SERVER_URL + `/api/users/${curUser.id}`, 
+        //     {
+        //         method: 'GET',
+        //         headers: {
+        //             'authorization': curUser.token
+        //         }
+        //     })
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             dispatch(removeUser());
+        //             throw response;
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log('err', err, err.body);
+        //         window.location.href = '/error';
+        //     });
+        // }
+
         if (curUser.id) {
-            fetch(SERVER_URL + `/api/users/${curUser.id}`, 
+            fetch(SERVER_URL + `/api/posts/favorites`, 
             {
                 method: 'GET',
                 headers: {

@@ -17,14 +17,14 @@ function FavButton({ isFav, handleFavClick, isActive }) {
     if (isFav) {
         return (
             <span className={clss} onClick={clickHandler}>
-                <iconify-icon icon="bi:bookmark" />
+                <iconify-icon icon="bi:bookmark-fill" />
             </span> 
         );
     }
     else {
         return (
             <span className={clss} onClick={clickHandler}>
-                <iconify-icon icon="bi:bookmark-fill" />
+                <iconify-icon icon="bi:bookmark" />
             </span> 
         );
     }

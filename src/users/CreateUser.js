@@ -117,15 +117,8 @@ function CreateUser() {
                     throw response;
                 }
                 else {
-                    console.log(response.headers.location);
-                    // setLogin('');
-                    // setPassword('');
-                    // setPasswordConfirmation('');
-                    // setEmail('');
-                    // setFullName('');
-
-                    // res.setHeader("Location", `/api/users/${user.id}`)
-//             .status(201).send();
+                    let resId = response.headers.get('location').split('/')[3];
+                    window.location.href = `/users/${resId}`;
                 }
             })
             .catch((err) => {

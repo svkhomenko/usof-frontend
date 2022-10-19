@@ -10,14 +10,12 @@ function CreateCategory() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    const [mainMessage, setMainMessage] = useState('');
     const [titleMessage, setTitleMessage] = useState('');
     const [descriptionMessage, setDescriptionMessage] = useState('');
 
     return (
         <> 
             <h1>Create new category</h1>
-            <p>{mainMessage}</p>
             <form onSubmit={handleSubmit}>
                 <label>
                     Title:
@@ -45,7 +43,6 @@ function CreateCategory() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        setMainMessage('');
         setTitleMessage('');
         setDescriptionMessage('');
 
@@ -65,9 +62,8 @@ function CreateCategory() {
                 throw response;
             }
             else {
-                setMainMessage('Category was successfully created');
-                setTitle('');
-                setDescription('');
+                let resId = response.headers.get('location').split('/')[3];
+                window.location.href = `/categories/${resId}`;
             }
         })
         .catch((err) => {

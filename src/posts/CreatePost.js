@@ -15,7 +15,6 @@ function CreatePost() {
     const [content, setContent] = useState('');
     const [postImages, setPostImages] = useState([]);
 
-    const [mainMessage, setMainMessage] = useState('');
     const [titleMessage, setTitleMessage] = useState('');
     const [contentMessage, setContentMessage] = useState('');
     const [categoriesMessage, setCategoriesMessage] = useState('');
@@ -28,7 +27,6 @@ function CreatePost() {
     return (
         <> 
             <h1>Create new post</h1>
-            <p>{mainMessage}</p>
             <form onSubmit={handleSubmit} ref={createPostForm}>
                 <label>
                     Title:
@@ -79,7 +77,6 @@ function CreatePost() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        setMainMessage('');
         setTitleMessage('');
         setContentMessage('');
         setCategoriesMessage('');
@@ -109,11 +106,8 @@ function CreatePost() {
                     throw response;
                 }
                 else {
-                    setMainMessage('Post was successfully created');
-                    setTitle('');
-                    setContent('');
-                    dispatch(removeSearchParameters());
-                    createPostForm.current.reset();
+                    let resId = response.headers.get('location').split('/')[3];
+                    window.location.href = `/posts/${resId}`;
                 }
             })
             .catch((err) => {

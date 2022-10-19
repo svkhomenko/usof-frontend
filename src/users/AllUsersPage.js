@@ -51,7 +51,6 @@ function AllUsersPage() {
             setUsers(response.allUsers);
             setCountUsers(response.countUsers);
             setLimit(response.limit);
-            console.log('count', response.countUsers);
         })
         .catch((err) => {
             console.log('err', err, err.body);
