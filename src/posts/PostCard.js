@@ -15,37 +15,19 @@ function PostCard({ post }) {
     const [curPost, setCurPost] = useState(post);
 
     return (
-        <div>
-            {
-                (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-                <button onClick={deletePost}>Delete</button>
-            }
-            {/* {
-                (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-                <div>
-                    <Link to={`/posts/${curPost.id}/update`}>
-                        Update
-                    </Link>
-                </div>
-            } */}
-            <Link to={`/posts/${curPost.id}`}>
-                <LikeButton isLiked={curPost.isLiked} 
-                            handleLikeClick={handleLikeClick}
-                            isActive={curPost.status == 'active'} />
-                <FavButton isFav={curPost.addToFavoritesUser} 
-                            handleFavClick={handleFavClick}
-                            isActive={curPost.status == 'active'} />
-                <div>{curPost.title}</div>
-                <div>{curPost.content}</div>
-                <div>
+        <div className="post_card">
+            <Link to={`/posts/${curPost.id}`} className="post_outer">
+                <div className='title'>{curPost.title}</div>
+                <div className="categories_container">
                     {curPost.categories.map((category) => {
                         return (
-                            <span key={category.id}>
+                            <span key={category.id} className="category">
                                 {category.title}
                             </span>
                         );
                     })}
                 </div>
+                <div className='content'>{curPost.content}</div>
                 <div>
                     {curPost.images.map((image) => {
                         let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
@@ -65,7 +47,20 @@ function PostCard({ post }) {
                     })}
                 </div>
             </Link>
-            <hr/>
+            <div className='button_container'>
+                <LikeButton isLiked={curPost.isLiked} 
+                            handleLikeClick={handleLikeClick}
+                            isActive={curPost.status == 'active'} />
+                <FavButton isFav={curPost.addToFavoritesUser} 
+                            handleFavClick={handleFavClick}
+                            isActive={curPost.status == 'active'} />
+                {
+                    (curUser.id == curPost.author.id || curUser.role === 'admin') && 
+                    <span onClick={deletePost} className="like_outer delete">
+                        <iconify-icon icon="fluent:delete-16-filled" />
+                    </span>
+                }
+            </div>
         </div>
     );
 

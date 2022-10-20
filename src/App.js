@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from './store/slices/userSlice';
 import { SERVER_URL } from "./const";
 import "./style.css";
+import "./styles/main.css";
 
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -68,7 +69,7 @@ function App() {
             .then((response) => {
                 if (!response.ok) {
                     dispatch(removeUser());
-                    throw response;
+                    // throw response;
                 }
             })
             .catch((err) => {

@@ -76,39 +76,39 @@ function LikeButton({ isLiked, handleLikeClick, isActive }) {
     if (isLiked) {
         if (isLiked.type === 'like') {
             return (
-                <div>
-                    <div className={clss} onClick={(e) => {clickHandler(e, LIKE, DELETE);}}>
+                <span className="like_container">
+                    <span className={clss} onClick={(e) => {clickHandler(e, LIKE, DELETE);}}>
                         <iconify-icon icon="ant-design:like-filled" />
-                    </div> 
-                    <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
+                    </span> 
+                    <span className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
                         <iconify-icon icon="ant-design:dislike-outlined" />
-                    </div> 
-                </div>
+                    </span> 
+                </span>
             );
         }
         else {
             return (
-                <div>
-                    <div className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
+                <span className="like_container">
+                    <span className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
                         <iconify-icon icon="ant-design:like-outlined" />
-                    </div> 
-                    <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, DELETE);}}>
+                    </span> 
+                    <span className={clss} onClick={(e) => {clickHandler(e, DISLIKE, DELETE);}}>
                         <iconify-icon icon="ant-design:dislike-filled" />
-                    </div> 
-                </div>
+                    </span> 
+                </span>
             );
         }
     }
     else {
         return (
-            <div>
-                <div className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
+            <span className="like_container">
+                <span className={clss} onClick={(e) => {clickHandler(e, LIKE, UPDATE);}}>
                     <iconify-icon icon="ant-design:like-outlined" />
-                </div> 
-                <div className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
+                </span> 
+                <span className={clss} onClick={(e) => {clickHandler(e, DISLIKE, UPDATE);}}>
                     <iconify-icon icon="ant-design:dislike-outlined" />
-                </div> 
-            </div>
+                </span> 
+            </span>
         );
     }
 }

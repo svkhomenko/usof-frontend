@@ -1,7 +1,7 @@
 import React from "react";
 
 function FavButton({ isFav, handleFavClick, isActive }) {
-    let clss = 'like_outer';
+    let clss = 'like_outer fav_outer';
     if (!isActive) {
         clss += ' inactive';
     }

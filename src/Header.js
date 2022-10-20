@@ -16,46 +16,37 @@ function Header() {
     }
     
     return (
-        <> 
+        <header> 
             <h1><Link to={'/'}>Usof</Link></h1>
-            <div>
+            {/* <div>
                 <Link to={'/'}>Posts</Link>
                 <Link to={'/categories'}>Categories</Link>
                 <Link to={'/users'}>Users</Link>
-            </div>
+            </div> */}
+            <input className="search_input" type="search" placeholder="Search" />
             {
                 curUser.id 
-                ? <>
-                    <button onClick={logout}>Log out</button>
-                    <Link to={'/profile'}>
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "50px",
-                            height: "50px",
-                            overflow: "hidden"
-                        }}>
-                            <img src={src} alt="avatar" style={{width: "auto",
-                                                                height: "100%"}} />
+                ? <div className='header_buttons_container'>
+                    <button className="button first" onClick={logout}>Log out</button>
+                    <Link to={'/profile'} className="cur_user_container">
+                        <span className="cur_user_role">{curUser.role}</span>
+                        <div className="cur_user_outer">
+                            <img src={src} alt="avatar" />
                         </div>
-                        <div>{curUser.login}</div>
+                        <span>{curUser.login}</span>
                     </Link>
-                </>
-                : <>
-                    <p>
-                        <Link to={'/register'}>
-                            Create account
-                        </Link>
-                    </p>
-                    <p>
-                        <Link to={'/login'}>
-                            Log in
-                        </Link>
-                    </p>
-                </>
+                </div>
+                : <div className='header_buttons_container'>
+                    <Link to={'/register'} className="button negative first">
+                        Create account
+                    </Link>
+                    <Link to={'/login'} className="button">
+                        Log in
+                    </Link>
+                </div>
             }
-        </>
+            {/* <span className='delimiter'>·</span> */}
+        </header>
     );
 
     function logout() {
