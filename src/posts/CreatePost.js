@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
 import { removeSearchParameters } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import FilterCategoryContainer from "../filters/FilterCategoryContainer";
+import { validateTitle, validateContent } from "../tools/dataValidation";
 
 function CreatePost() {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
-    const createPostForm = useRef(null);
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -27,16 +27,16 @@ function CreatePost() {
     return (
         <> 
             <h1>Create new post</h1>
-            <form onSubmit={handleSubmit} ref={createPostForm}>
+            <form onSubmit={handleSubmit}>
                 <label>
                     Title:
                     <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} required />
+                    <input type="text" value={title} onChange={handleChangeTitle} />
                 </label>
                 <label>
                     Content:
                     <p>{contentMessage}</p>
-                    <textarea value={content} onChange={handleChangeContent} required />
+                    <textarea value={content} onChange={handleChangeContent} />
                 </label>
                 <label>
                     Categories:
@@ -46,7 +46,7 @@ function CreatePost() {
                 <label>
                     Images:
                     <p>{postImagesMessage}</p>
-                    <input type="file" onChange={handleChangePostImages} multiple />
+                    <input type="file" onChange={handleChangePostImages} multiple accept="image/*" />
                     <div>
                         {Object.values(postImages).map((image) => {
                             return (
@@ -143,12 +143,16 @@ function CreatePost() {
     }
 
     function isDataValid() {
+        let valid = true;
+
+        valid = validateTitle(title, setTitleMessage) && valid;
+        valid = validateContent(content, setContentMessage) && valid;
+
         if (postImages.length > 10) {
             setPostImagesMessage("Maximum number of files is 10");
             return false;
         }
         
-        let valid = true;
         Object.values(postImages).forEach((image) => {
             if (!image.type.startsWith("image")) {
                 setPostImagesMessage("Upload files in an image format");

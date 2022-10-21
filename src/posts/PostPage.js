@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
-import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
 import PostComments from "./PostComments";
 import { deletePostById, likeClick, favClick } from './post_tools';
@@ -10,6 +9,7 @@ import CreateComment from '../comments/CreateComment';
 import UpdatePost from './UpdatePost';
 import LikeButton from "../tools/LikeButton";
 import FavButton from "../tools/FavButton";
+import { getSrc } from "../tools/tools_func";
 
 // function PostPage() {
 //     const curUser = useSelector((state) => state.user);
@@ -208,7 +208,6 @@ function PostPage() {
                             </div>
                             <div>
                                 {curPost.images.map((image) => {
-                                    let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                                     return (
                                         <div key={image.id} style={{
                                             display: "flex",
@@ -218,7 +217,7 @@ function PostPage() {
                                             height: "50px",
                                             overflow: "hidden"
                                         }}>
-                                            <img src={src} alt="post" style={{width: "auto",
+                                            <img src={getSrc(image.image)} alt="post" style={{width: "auto",
                                                                                     height: "100%"}} />
                                         </div>
                                     );

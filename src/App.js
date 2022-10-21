@@ -13,7 +13,7 @@ import EmailConfirmation from "./auth/EmailConfirmation";
 import SendPasswordConfirmation from "./auth/SendPasswordConfirmation";
 import PasswordConfirmation from "./auth/PasswordConfirmation";
 
-import Header from "./Header";
+import Header from "./tools/Header";
 
 import AllUsersPage from "./users/AllUsersPage";
 import ProfilePage from "./users/ProfilePage";

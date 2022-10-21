@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Buffer } from "buffer";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
 import { deletePostById, likeClick, favClick } from './post_tools';
 import LikeButton from "../tools/LikeButton";
 import FavButton from "../tools/FavButton";
+import { getSrc, getDateString } from "../tools/tools_func";
 
 function PostCard({ post }) {
     const curUser = useSelector((state) => state.user);
@@ -14,23 +14,123 @@ function PostCard({ post }) {
 
     const [curPost, setCurPost] = useState(post);
 
+    console.log(post);
+
+    // return (
+    //     <div className="post_card">
+    //         <Link to={`/posts/${curPost.id}`} className="post_outer">
+    //             <div className="extra_data">
+    //                 <div className="user_icon_container">
+    //                     <div className="user_icon_role_outer">
+    //                         <span className="user_icon_role">{curPost.author.role}</span>
+    //                         <div className="user_icon_outer">
+    //                             <img src={getSrc(curPost.author.profilePicture)} alt="avatar" />
+    //                         </div>
+    //                     </div>
+    //                     <span>{curPost.author.login}</span>
+    //                 </div>
+    //                 <span className='delimiter'>·</span>
+    //                 <span>{getDateString(curPost.publishDate)}</span>
+    //                 <span className='delimiter'>·</span>
+    //                 <span>{curPost.status}</span>
+    //             </div>
+    //             <div className='title'>{curPost.title}</div>
+    //             <div className="categories_container">
+    //                 {curPost.categories.map((category) => {
+    //                     return (
+    //                         <span key={category.id} className="category">
+    //                             {category.title}
+    //                         </span>
+    //                     );
+    //                 })}
+    //             </div>
+    //             <div className='content'>{curPost.content}</div>
+    //             <div>
+    //                 {curPost.images.map((image) => {
+    //                     return (
+    //                         <div key={image.id} style={{
+    //                             display: "flex",
+    //                             justifyContent: "center",
+    //                             alignItems: "center",
+    //                             width: "50px",
+    //                             height: "50px",
+    //                             overflow: "hidden"
+    //                         }}>
+    //                             <img src={getSrc(image.image)} alt="post" style={{width: "auto",
+    //                                                                     height: "100%"}} />
+    //                         </div>
+    //                     );
+    //                 })}
+    //             </div>
+    //         </Link>
+    //         <div className='button_container'>
+    //             <LikeButton isLiked={curPost.isLiked} 
+    //                         handleLikeClick={handleLikeClick}
+    //                         isActive={curPost.status == 'active'}
+    //                         likesCount={curPost.dislikesCount}
+    //                         dislikesCount={curPost.likesCount} />
+    //             <FavButton isFav={curPost.addToFavoritesUser} 
+    //                         handleFavClick={handleFavClick}
+    //                         isActive={curPost.status == 'active'} />
+    //             {
+    //                 (curUser.id == curPost.author.id || curUser.role === 'admin') && 
+    //                 <span onClick={deletePost} className="like_outer delete">
+    //                     <iconify-icon icon="fluent:delete-16-filled" />
+    //                 </span>
+    //             }
+    //         </div>
+    //     </div>
+    // );
+
     return (
         <div className="post_card">
             <Link to={`/posts/${curPost.id}`} className="post_outer">
+                <div className="header">
+                    <div className="extra_data">
+                        <div className="user_icon_container">
+                            <div className="user_icon_role_outer">
+                                <span className="user_icon_role">{curPost.author.role}</span>
+                                <div className="user_icon_outer">
+                                    <img src={getSrc(curPost.author.profilePicture)} alt="avatar" />
+                                </div>
+                            </div>
+                            <span>{curPost.author.login}</span>
+                        </div>
+                        <span className='delimiter'>·</span>
+                        <span>{getDateString(curPost.publishDate)}</span>
+                        <span className='delimiter'>·</span>
+                        <span>{curPost.status}</span>
+                    </div>
+                    <div className='button_container'>
+                        <LikeButton isLiked={curPost.isLiked} 
+                                    handleLikeClick={handleLikeClick}
+                                    isActive={curPost.status == 'active'}
+                                    likesCount={curPost.likesCount}
+                                    dislikesCount={curPost.dislikesCount} />
+                        <FavButton isFav={curPost.addToFavoritesUser} 
+                                    handleFavClick={handleFavClick}
+                                    isActive={curPost.status == 'active'} />
+                        {
+                            (curUser.id == curPost.author.id || curUser.role === 'admin') && 
+                            <span onClick={deletePost} className="like_outer delete">
+                                <iconify-icon icon="fluent:delete-16-filled" />
+                            </span>
+                        }
+                    </div>
+                </div>
                 <div className='title'>{curPost.title}</div>
                 <div className="categories_container">
                     {curPost.categories.map((category) => {
                         return (
-                            <span key={category.id} className="category">
-                                {category.title}
-                            </span>
+                            <Link to={`/categories/${category.id}`} key={category.id} className="category tooltip" data-title={category.description}>
+                                <div>{category.title}</div>
+                            </Link>
                         );
                     })}
                 </div>
                 <div className='content'>{curPost.content}</div>
                 <div>
                     {curPost.images.map((image) => {
-                        let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                         return (
                             <div key={image.id} style={{
                                 display: "flex",
@@ -40,31 +140,19 @@ function PostCard({ post }) {
                                 height: "50px",
                                 overflow: "hidden"
                             }}>
-                                <img src={src} alt="post" style={{width: "auto",
+                                <img src={getSrc(image.image)} alt="post" style={{width: "auto",
                                                                         height: "100%"}} />
                             </div>
                         );
                     })}
                 </div>
             </Link>
-            <div className='button_container'>
-                <LikeButton isLiked={curPost.isLiked} 
-                            handleLikeClick={handleLikeClick}
-                            isActive={curPost.status == 'active'} />
-                <FavButton isFav={curPost.addToFavoritesUser} 
-                            handleFavClick={handleFavClick}
-                            isActive={curPost.status == 'active'} />
-                {
-                    (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-                    <span onClick={deletePost} className="like_outer delete">
-                        <iconify-icon icon="fluent:delete-16-filled" />
-                    </span>
-                }
-            </div>
         </div>
     );
 
-    function deletePost() {
+    function deletePost(event) {
+        event.preventDefault();
+        
         deletePostById(curPost.id, curUser,
             () => {
                 dispatch(removeUser());

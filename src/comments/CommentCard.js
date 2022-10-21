@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Buffer } from "buffer";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL, LIKE, UPDATE, DELETE } from "../const";
 import UpdateComment from "./UpdateComment";
 import LikeButton from "../tools/LikeButton";
+import { getSrc } from "../tools/tools_func";
 
 function CommentCard({ comment, isPostActive }) {
     const curUser = useSelector((state) => state.user);
@@ -37,7 +37,6 @@ function CommentCard({ comment, isPostActive }) {
                     <div>{curComment.author.login}</div>
                     <div>
                         {curComment.images.map((image) => {
-                            let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                             return (
                                 <div key={image.id} style={{
                                     display: "flex",
@@ -47,7 +46,7 @@ function CommentCard({ comment, isPostActive }) {
                                     height: "50px",
                                     overflow: "hidden"
                                 }}>
-                                    <img src={src} alt="comment" style={{width: "auto",
+                                    <img src={getSrc(image.image)} alt="comment" style={{width: "auto",
                                                                             height: "100%"}} />
                                 </div>
                             );

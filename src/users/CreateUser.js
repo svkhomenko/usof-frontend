@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
 import { SERVER_URL, CLIENT_URL } from "../const";
-import { checkPasswordConfirmation, validatePassword, validateLogin, validateFullName } from "../tools/dataValidation";
+import { checkPasswordConfirmation, validatePassword, validateLogin, validateFullName, validateEmail } from "../tools/dataValidation";
 
 function CreateUser() {
     const dispatch = useDispatch();
@@ -28,27 +28,27 @@ function CreateUser() {
                 <label>
                     Login:
                     <p>{loginMessage}</p>
-                    <input type="text" value={login} onChange={handleChangeLogin} required />
+                    <input type="text" value={login} onChange={handleChangeLogin} />
                 </label>
                 <label>
                     Password:
                     <p>{passwordMessage}</p>
-                    <input type="password" value={password} onChange={handleChangePassword} required />
+                    <input type="password" value={password} onChange={handleChangePassword} />
                 </label>
                 <label>
                     Password confirmation:
                     <p>{passwordConfirmationMessage}</p>
-                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} required />
+                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
                 </label>
                 <label>
                     Email:
                     <p>{emailMessage}</p>
-                    <input type="email" value={email} onChange={handleChangeEmail} required />
+                    <input type="text" value={email} onChange={handleChangeEmail} />
                 </label>
                 <label>
                     Full name:
                     <p>{fullNameMessage}</p>
-                    <input type="text" value={fullName} onChange={handleChangeFullName} required />
+                    <input type="text" value={fullName} onChange={handleChangeFullName} />
                 </label>
                 <label>
                     Role:
@@ -137,7 +137,7 @@ function CreateUser() {
             })
             .then((err) => {
                 if (err && err.message) {
-                    if (err.message.includes('email')) {
+                    if (/email/i.test(err.message)) {
                         setEmailMessage(err.message);
                     }
                     else if (err.message.includes('Full name')) {
@@ -167,6 +167,7 @@ function CreateUser() {
         validData = validatePassword(password, setPasswordMessage) && validData;
         validData = validateLogin(login, setLoginMessage) && validData;
         validData = validateFullName(fullName, setFullNameMessage) && validData;
+        validData = validateEmail(email, setEmailMessage) && validData;
 
         return validData;
     }

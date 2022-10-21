@@ -3,18 +3,12 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { setReset } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
 import { deleteUserById } from "./user_tools";
-import avatar from "../images/avatar.png";
+import { getSrc } from "../tools/tools_func";
 
 function UserCard({ user }) {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
-
-    let src = avatar;
-    if (user.profilePicture) {
-        src = 'data:image/png;base64,' + Buffer.from(user.profilePicture, "binary").toString("base64");
-    }
     
     return (
         <div>
@@ -34,7 +28,7 @@ function UserCard({ user }) {
                         height: "50px",
                         overflow: "hidden"
                 }}>
-                    <img src={src} alt="avatar" style={{width: "auto",
+                    <img src={getSrc(user.profilePicture)} alt="avatar" style={{width: "auto",
                                                         height: "100%"}} />
                 </div>
                 <div>{user.role}</div>

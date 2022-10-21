@@ -8,7 +8,7 @@ function SearchContainer({ placeholder }) {
 
     return (
         <div className="search_container">
-            <input className="search_input" value={searchParameters.search} onChange={handleChange} type="search" placeholder={placeholder} />
+            <input type="search" className="search_input" value={searchParameters.search} onChange={handleChange} maxLength="200" placeholder={placeholder} />
             {/* <button className="search_btn button" type="submit">Search</button> */}
         </div>
     );

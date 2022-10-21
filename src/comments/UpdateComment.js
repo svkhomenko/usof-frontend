@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
+import { validateContent } from "../tools/dataValidation";
 
 function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
     const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                         <label>
                             Content:
                             <p>{contentMessage}</p>
-                            <textarea value={content} onChange={handleChangeContent} required />
+                            <textarea value={content} onChange={handleChangeContent} />
                         </label>
                         <div>
                             {curCommentImages.map((image) => {
@@ -68,7 +69,7 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                         <label>
                             Images:
                             <p>{commentImagesMessage}</p>
-                            <input type="file" onChange={handleChangeCommentImages} multiple />
+                            <input type="file" onChange={handleChangeCommentImages} multiple accept="image/*" />
                             <div>
                                 {Object.values(commentImages).map((image) => {
                                     return (
@@ -196,12 +197,13 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
     }
     
     function isDataValid() {
+        let valid = validateContent(content, setContentMessage);
+
         if (commentImages.length + curCommentImages.length > 10) {
             setCommentImagesMessage("Maximum number of files is 10");
             return false;
         }
-        
-        let valid = true;
+    
         Object.values(commentImages).forEach((image) => {
             if (!image.type.startsWith("image")) {
                 setCommentImagesMessage("Upload files in an image format");

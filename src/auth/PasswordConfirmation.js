@@ -23,11 +23,11 @@ function PasswordConfirmation() {
                     <form onSubmit={handleSubmit}>
                         <label>
                             Password:
-                            <input type="password" value={password} onChange={handleChangePassword} required />
+                            <input type="password" value={password} onChange={handleChangePassword} />
                         </label>
                         <label>
                             Password confirmation:
-                            <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} required />
+                            <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
                         </label>
                         <input type="submit" value="Reset password" />
                     </form>

@@ -1,5 +1,7 @@
 @import './_vars.css';
 
+@import './user_icon.css';
+
 header {
     position: relative;
     display: flex;
@@ -54,23 +56,15 @@ header .search_input::placeholder {
     margin-right: 15px;
 }
 
-.cur_user_container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cur_user_container:hover {
+header .user_icon_container:hover {
     color: var(--grey-color);
 }
-
 
 /* .cur_user_container .delimiter {
     margin: 0 5px;
 } */
 
-.cur_user_outer {
+/* .cur_user_outer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,10 +88,5 @@ header .search_input::placeholder {
     background-color: var(--light-green-color);
     font-size: 10px;
     color: var(--dark-green-color);
-}
-/* 
-.cur_user_container:hover .cur_user_role {
-    color: var(--dark-green-color);
 } */
-
 

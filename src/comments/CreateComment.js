@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
 import { resetPage, setReset } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
+import { validateContent } from "../tools/dataValidation";
 
 function CreateComment() {
     const dispatch = useDispatch();
@@ -26,12 +27,12 @@ function CreateComment() {
                 <label>
                     Content:
                     <p>{contentMessage}</p>
-                    <textarea value={content} onChange={handleChangeContent} required />
+                    <textarea value={content} onChange={handleChangeContent} />
                 </label>
                 <label>
                     Images:
                     <p>{commentImagesMessage}</p>
-                    <input type="file" onChange={handleChangeCommentImages} multiple />
+                    <input type="file" onChange={handleChangeCommentImages} multiple accept="image/*" />
                     <div>
                         {Object.values(commentImages).map((image) => {
                             return (
@@ -120,12 +121,13 @@ function CreateComment() {
     }
     
     function isDataValid() {
+        let valid = validateContent(content, setContentMessage);
+
         if (commentImages.length > 10) {
             setCommentImagesMessage("Maximum number of files is 10");
             return false;
         }
         
-        let valid = true;
         Object.values(commentImages).forEach((image) => {
             if (!image.type.startsWith("image")) {
                 setCommentImagesMessage("Upload files in an image format");

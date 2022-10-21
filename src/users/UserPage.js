@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
-import { removeSearchParameters } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
+import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
-import avatar from "../images/avatar.png";
 import { deleteUserById } from "./user_tools";
 import UpdateProfile from "./UpdateProfile";
+import { getSrc } from "../tools/tools_func";
 
 function UserPage() {
     const curUser = useSelector((state) => state.user);
@@ -17,11 +15,6 @@ function UserPage() {
     const [user, setUser] = useState();
     const [message, setMessage] = useState('User is not found');
     const [isUpdating, setIsUpdating] = useState(false);
-
-    let src = avatar;
-    if (user && user.profilePicture) {
-        src = 'data:image/png;base64,' + Buffer.from(user.profilePicture, "binary").toString("base64");
-    }
     
     useEffect(() => {
         fetch(SERVER_URL + `/api/users/${userId}`, 
@@ -83,7 +76,7 @@ function UserPage() {
                                     height: "50px",
                                     overflow: "hidden"
                             }}>
-                                <img src={src} alt="avatar" style={{width: "auto",
+                                <img src={getSrc(user.profilePicture)} alt="avatar" style={{width: "auto",
                                                                     height: "100%"}} />
                             </div>
                             <div>{user.role}</div>

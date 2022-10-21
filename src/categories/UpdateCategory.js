@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
+import { validateTitle, validateDescription } from "../tools/dataValidation";
 
 // function UpdateCategory() {
 //     const dispatch = useDispatch();
@@ -158,12 +159,12 @@ function UpdateCategory({ setIsUpdating, curCategory, setCurCategory }) {
                 <label>
                     Title:
                     <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} required />
+                    <input type="text" value={title} onChange={handleChangeTitle} />
                 </label>
                 <label>
                     Description:
                     <p>{descriptionMessage}</p>
-                    <textarea value={description} onChange={handleChangeDescription} required />
+                    <textarea value={description} onChange={handleChangeDescription} />
                 </label>
                 <input type="submit" value="Update category" />
             </form>
@@ -184,58 +185,69 @@ function UpdateCategory({ setIsUpdating, curCategory, setCurCategory }) {
         setTitleMessage('');
         setDescriptionMessage('');
 
-        fetch(SERVER_URL + `/api/categories/${categoryId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': curUser.token
-            },
-            body: JSON.stringify({ 
-                title,
-                description
+        if (isDataValid()) {
+            fetch(SERVER_URL + `/api/categories/${categoryId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': curUser.token
+                },
+                body: JSON.stringify({ 
+                    title,
+                    description
+                })
             })
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw response;
-            }
-            else {
-                return response.json();
-            }
-        })
-        .then((response) => {
-            setCurCategory(response.curCategory);
-            setIsUpdating(false);
-        })
-        .catch((err) => {
-            console.log('err', err, err.body);
-            switch(err.status) {
-                case 400:
-                    return err.json();
-                case 401:
-                    dispatch(removeUser());
-                    window.location.href = '/login';
-                    break;
-                case 403:
-                    window.location.href = '/categories';
-                    break;
-                default:
-                    window.location.href = '/error';
-            }
-        })
-        .then((err) => {
-            if (err && err.message) {
-                if (err.message.includes('Title')) {
-                    setTitleMessage(err.message);
-                }
-                else if (err.message.includes('Description')) {
-                    setDescriptionMessage(err.message);
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
                 }
                 else {
-                    setCurCategory(null);
+                    return response.json();
                 }
-            }
-        }); 
+            })
+            .then((response) => {
+                setCurCategory(response.curCategory);
+                setIsUpdating(false);
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                switch(err.status) {
+                    case 400:
+                        return err.json();
+                    case 401:
+                        dispatch(removeUser());
+                        window.location.href = '/login';
+                        break;
+                    case 403:
+                        window.location.href = '/categories';
+                        break;
+                    default:
+                        window.location.href = '/error';
+                }
+            })
+            .then((err) => {
+                if (err && err.message) {
+                    if (err.message.includes('Title')) {
+                        setTitleMessage(err.message);
+                    }
+                    else if (err.message.includes('Description')) {
+                        setDescriptionMessage(err.message);
+                    }
+                    else {
+                        setCurCategory(null);
+                    }
+                }
+            }); 
+        }
+    }
+
+    function isDataValid() {
+        let validData = true;
+
+        validData = validateTitle(title, setTitleMessage) && validData;
+        validData = validateDescription(description, setDescriptionMessage) && validData;
+
+        return validData;
     }
 }
 

@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from "react-router-dom";
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
-import { resetPage, setCategories } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
+import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL, CLIENT_URL } from "../const";
-import { validateLogin, validateFullName } from "../tools/dataValidation";
+import { validateLogin, validateFullName, validateEmail } from "../tools/dataValidation";
+import { getSrc } from "../tools/tools_func";
 
 // function UpdateProfile({ setIsUpdating }) {
 //     const dispatch = useDispatch();
@@ -191,7 +189,7 @@ import { validateLogin, validateFullName } from "../tools/dataValidation";
 //             .then((err) => {
 //                 if (err && err.message) {
 //                     console.log(err.message);
-//                     if (err.message.includes('email')) {
+//                     if (/email/i.test(err.message)) {
 //                         setEmailMessage(err.message);
 //                     }
 //                     else if (err.message.includes('Full name')) {
@@ -246,17 +244,17 @@ function UpdateProfile({ user, successFunc }) {
                 <label>
                     Login:
                     <p>{loginMessage}</p>
-                    <input type="text" value={login} onChange={handleChangeLogin} required />
+                    <input type="text" value={login} onChange={handleChangeLogin} />
                 </label>
                 <label>
                     Email:
                     <p>{emailMessage}</p>
-                    <input type="email" value={email} onChange={handleChangeEmail} required />
+                    <input type="text" value={email} onChange={handleChangeEmail} />
                 </label>
                 <label>
                     Full name:
                     <p>{fullNameMessage}</p>
-                    <input type="text" value={fullName} onChange={handleChangeFullName} required />
+                    <input type="text" value={fullName} onChange={handleChangeFullName} />
                 </label>
                 {
                     curUser.role == 'admin'
@@ -283,13 +281,13 @@ function UpdateProfile({ user, successFunc }) {
                                 overflow: "hidden"
                         }}>
                             <span onClick={handleChangeDeleteAvatar}>Delete</span>
-                            <img src={'data:image/png;base64,' + Buffer.from(curAvatar, "binary").toString("base64")} 
+                            <img src={getSrc(curAvatar)} 
                                     alt="avatar" style={{width: "auto",
                                                         height: "100%"}} />
                         </div>
                     }
                     <p>{profilePictureMessage}</p>
-                    <input type="file" onChange={handleChangeProfilePicture} />
+                    <input type="file" onChange={handleChangeProfilePicture} accept="image/*" />
                     {
                         profilePicture
                         && <div>
@@ -396,7 +394,7 @@ function UpdateProfile({ user, successFunc }) {
             .then((err) => {
                 if (err && err.message) {
                     console.log(err.message);
-                    if (err.message.includes('email')) {
+                    if (/email/i.test(err.message)) {
                         setEmailMessage(err.message);
                     }
                     else if (err.message.includes('Full name')) {
@@ -418,6 +416,7 @@ function UpdateProfile({ user, successFunc }) {
 
         validData = validateLogin(login, setLoginMessage) && validData;
         validData = validateFullName(fullName, setFullNameMessage) && validData;
+        validData = validateEmail(email, setEmailMessage) && validData;
 
         if (profilePicture && profilePicture[0] && !profilePicture[0].type.startsWith("image")) {
             setProfilePictureMessage("Upload files in an image format");

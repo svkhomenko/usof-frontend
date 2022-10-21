@@ -51,7 +51,8 @@ function likeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
                     ...curPost,
                     isLiked: {
                         type: type == LIKE ? 'like' : 'dislike'
-                    }
+                    },
+                    ...getCount()
                 });
             }
         })
@@ -83,7 +84,8 @@ function likeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
             else {
                 setCurPost({
                     ...curPost,
-                    isLiked: false
+                    isLiked: false,
+                    ...getCount()
                 });
             }
         })
@@ -98,6 +100,39 @@ function likeClick(type, action, curPost, curUser, setCurPost, deleteUser) {
                 default:
                     window.location.href = '/error';
             }
+        });
+    }
+
+    function getCount() {
+        let likesCount = curPost.likesCount;
+        let dislikesCount = curPost.dislikesCount;
+
+        if (action == UPDATE) {
+            if (type == LIKE) {
+                likesCount++;
+                if (curPost.isLiked) {
+                    dislikesCount--;
+                }
+            }
+            else {
+                dislikesCount++;
+                if (curPost.isLiked) {
+                    likesCount--;
+                }
+            }
+        }
+        else if (action == DELETE) {
+            if (type == LIKE) {
+                likesCount--;
+            }
+            else {
+                dislikesCount--;
+            }
+        }
+
+        return ({
+            likesCount,
+            dislikesCount
         });
     }
 }

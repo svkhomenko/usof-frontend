@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
+import { validateTitle, validateDescription } from "../tools/dataValidation";
 
 function CreateCategory() {
     const dispatch = useDispatch();
@@ -20,12 +21,12 @@ function CreateCategory() {
                 <label>
                     Title:
                     <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} required />
+                    <input type="text" value={title} onChange={handleChangeTitle} />
                 </label>
                 <label>
                     Description:
                     <p>{descriptionMessage}</p>
-                    <textarea value={description} onChange={handleChangeDescription} required />
+                    <textarea value={description} onChange={handleChangeDescription} />
                 </label>
                 <input type="submit" value="Create category" />
             </form>
@@ -46,50 +47,61 @@ function CreateCategory() {
         setTitleMessage('');
         setDescriptionMessage('');
 
-        fetch(SERVER_URL + '/api/categories', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': curUser.token
-            },
-            body: JSON.stringify({ 
-                title,
-                description
+        if (isDataValid()) {
+            fetch(SERVER_URL + '/api/categories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': curUser.token
+                },
+                body: JSON.stringify({ 
+                    title,
+                    description
+                })
             })
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw response;
-            }
-            else {
-                let resId = response.headers.get('location').split('/')[3];
-                window.location.href = `/categories/${resId}`;
-            }
-        })
-        .catch((err) => {
-            console.log('err', err, err.body);
-            switch(err.status) {
-                case 400:
-                    return err.json();
-                case 401:
-                case 403:
-                    dispatch(removeUser());
-                    window.location.href = '/login';
-                    break;
-                default:
-                    window.location.href = '/error';
-            }
-        })
-        .then((err) => {
-            if (err && err.message) {
-                if (err.message.includes('Title')) {
-                    setTitleMessage(err.message);
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
                 }
-                else if (err.message.includes('Description')) {
-                    setDescriptionMessage(err.message);
+                else {
+                    let resId = response.headers.get('location').split('/')[3];
+                    window.location.href = `/categories/${resId}`;
                 }
-            }
-        }); 
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                switch(err.status) {
+                    case 400:
+                        return err.json();
+                    case 401:
+                    case 403:
+                        dispatch(removeUser());
+                        window.location.href = '/login';
+                        break;
+                    default:
+                        window.location.href = '/error';
+                }
+            })
+            .then((err) => {
+                if (err && err.message) {
+                    if (err.message.includes('Title')) {
+                        setTitleMessage(err.message);
+                    }
+                    else if (err.message.includes('Description')) {
+                        setDescriptionMessage(err.message);
+                    }
+                }
+            }); 
+        }
+    }
+
+    function isDataValid() {
+        let validData = true;
+
+        validData = validateTitle(title, setTitleMessage) && validData;
+        validData = validateDescription(description, setDescriptionMessage) && validData;
+
+        return validData;
     }
 }
 

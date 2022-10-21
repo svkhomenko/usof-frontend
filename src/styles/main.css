@@ -1,3 +1,7 @@
 @import './_vars.css';
+
+@import './user_icon.css';
+@import './tooltip.css';
+
 @import './header.css';
 @import './post_card.css';

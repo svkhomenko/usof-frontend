@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
-import { resetPage, setCategories } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
+import { setCategories } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import FilterCategoryContainer from '../filters/FilterCategoryContainer';
+import { validateTitle, validateContent } from "../tools/dataValidation";
+import { getSrc } from "../tools/tools_func";
 
 // function UpdatePost() {
 //     const dispatch = useDispatch();
@@ -317,6 +318,12 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
     const [categoriesMessage, setCategoriesMessage] = useState('');
     const [postImagesMessage, setPostImagesMessage] = useState('');
 
+    useEffect(() => {
+        dispatch(setCategories({
+            categories: curPost.categories
+        }));
+    }, []);
+
     return (
         <> 
             <h1>Update post</h1>
@@ -343,12 +350,12 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                         <label>
                             Title:
                             <p>{titleMessage}</p>
-                            <input type="text" value={title} onChange={handleChangeTitle} required />
+                            <input type="text" value={title} onChange={handleChangeTitle} />
                         </label>
                         <label>
                             Content:
                             <p>{contentMessage}</p>
-                            <textarea value={content} onChange={handleChangeContent} required />
+                            <textarea value={content} onChange={handleChangeContent} />
                         </label>
                     </>
                     : <>
@@ -366,7 +373,6 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                     ? <>
                         <div>
                             {curPostImages.map((image) => {
-                                let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                                 return (
                                     <div key={image.id} style={{
                                         display: "flex",
@@ -377,7 +383,7 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                                         overflow: "hidden"
                                     }}>
                                         <span onClick={() => {handleChangeDeleteFiles(image.id)}}>Delete</span>
-                                        <img src={src} alt="post" style={{width: "auto",
+                                        <img src={getSrc(image.image)} alt="post" style={{width: "auto",
                                                                                 height: "100%"}} />
                                     </div>
                                 );
@@ -386,7 +392,7 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                         <label>
                             Images:
                             <p>{postImagesMessage}</p>
-                            <input type="file" onChange={handleChangePostImages} multiple />
+                            <input type="file" onChange={handleChangePostImages} multiple accept="image/*" />
                             <div>
                                 {Object.values(postImages).map((image) => {
                                     return (
@@ -400,7 +406,6 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                     </>
                     : <div>
                         {curPost.images.map((image) => {
-                            let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                             return (
                                 <div key={image.id} style={{
                                     display: "flex",
@@ -410,7 +415,7 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
                                     height: "50px",
                                     overflow: "hidden"
                                 }}>
-                                    <img src={src} alt="post" style={{width: "auto",
+                                    <img src={getSrc(image.image)} alt="post" style={{width: "auto",
                                                                             height: "100%"}} />
                                 </div>
                             );
@@ -529,12 +534,16 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
     }
     
     function isDataValid() {
+        let valid = true;
+
+        valid = validateTitle(title, setTitleMessage) && valid;
+        valid = validateContent(content, setContentMessage) && valid;
+
         if (postImages.length + curPostImages.length > 10) {
             setPostImagesMessage("Maximum number of files is 10");
             return false;
         }
         
-        let valid = true;
         Object.values(postImages).forEach((image) => {
             if (!image.type.startsWith("image")) {
                 setPostImagesMessage("Upload files in an image format");

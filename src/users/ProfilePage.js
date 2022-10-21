@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
-import { removeSearchParameters } from '../store/slices/searchParametersSlice';
-import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
-import avatar from "../images/avatar.png";
 import { deleteUserById } from "./user_tools";
 import UpdateProfile from "./UpdateProfile";
 import UserPosts from "./UserPosts";
 import FavoritesPosts from "./FavoritesPosts";
+import { getSrc } from "../tools/tools_func";
 
 function ProfilePage() {
     const curUser = useSelector((state) => state.user);
@@ -17,11 +14,6 @@ function ProfilePage() {
 
     const [isUpdating, setIsUpdating] = useState(false);
     const [isFavoritesPosts, setIsFavoritesPosts] = useState(false);
-
-    let src = avatar;
-    if (curUser.profilePicture) {
-        src = 'data:image/png;base64,' + Buffer.from(curUser.profilePicture, "binary").toString("base64");
-    }
 
     useEffect(() => {
         fetch(SERVER_URL + `/api/users/${curUser.id}`, 
@@ -86,7 +78,7 @@ function ProfilePage() {
                             height: "50px",
                             overflow: "hidden"
                     }}>
-                        <img src={src} alt="avatar" style={{width: "auto",
+                        <img src={getSrc(curUser.profilePicture)} alt="avatar" style={{width: "auto",
                                                             height: "100%"}} />
                     </div>
                     <div>{curUser.role}</div>

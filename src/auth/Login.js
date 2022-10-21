@@ -10,7 +10,10 @@ function Login() {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+
     const [errMessage, setErrMessage] = useState('');
+    const [loginMessage, setLoginMessage] = useState('');
+    const [passwordMessage, setPasswordMessage] = useState('');
 
     return (
         <> 
@@ -19,11 +22,13 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Login:
-                    <input type="text" value={login} onChange={handleChangeLogin} required />
+                    {loginMessage}
+                    <input type="text" value={login} onChange={handleChangeLogin} />
                 </label>
                 <label>
                     Password:
-                    <input type="password" value={password} onChange={handleChangePassword} required />
+                    {passwordMessage}
+                    <input type="password" value={password} onChange={handleChangePassword} />
                 </label>
                 <input type="submit" value="Log in" />
             </form>
@@ -53,50 +58,70 @@ function Login() {
     function handleSubmit(event) {
         event.preventDefault();
 
-        fetch(SERVER_URL + '/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ 
-                login,
-                password,
-                link: CLIENT_URL + '/email-confirmation' })
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw response;
-            }
-            return response.json();
-        })
-        .then((data) => {
-            dispatch(setUser({
-                id: data.id,
-                login: data.login,
-                email: data.email,
-                fullName: data.fullName,
-                profilePicture: data.profilePicture,
-                role: data.role,
-                status: data.status,
-                rating: data.rating,
-                token: data.token
-            }));
-        })
-        .catch((err) => {
-            console.log('err', err, err.body);
-            switch(err.status) {
-                case 400:
-                case 403:
-                    return err.json();
-                default:
-                    window.location.href = '/error';
-            }
-        })
-        .then((err) => {
-            if (err && err.message) {
-                setErrMessage(err.message);
-            }
-        }); 
+        setLoginMessage('');
+        setPasswordMessage('');
+
+        if (isDataValid()) {
+            fetch(SERVER_URL + '/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    login,
+                    password,
+                    link: CLIENT_URL + '/email-confirmation' })
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((data) => {
+                dispatch(setUser({
+                    id: data.id,
+                    login: data.login,
+                    email: data.email,
+                    fullName: data.fullName,
+                    profilePicture: data.profilePicture,
+                    role: data.role,
+                    status: data.status,
+                    rating: data.rating,
+                    token: data.token
+                }));
+            })
+            .catch((err) => {
+                console.log('err', err, err.body);
+                switch(err.status) {
+                    case 400:
+                    case 403:
+                        return err.json();
+                    default:
+                        window.location.href = '/error';
+                }
+            })
+            .then((err) => {
+                if (err && err.message) {
+                    setErrMessage(err.message);
+                }
+            }); 
+        }
+    }
+
+    function isDataValid() {
+        let validData = true;
+
+        if (!login) {
+            setLoginMessage("Login is required");
+            validData = false;
+        }
+        if (!password) {
+            setPasswordMessage("Password is required");
+            validData = false;
+        }
+
+        return validData;
     }
 }
 
