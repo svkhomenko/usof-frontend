@@ -1,4 +1,4 @@
-/* page_index */
+@import '../_vars.css';
 
 .page_index_container {
     display: flex;
@@ -15,11 +15,8 @@
     height: 26px;
     margin-left: 7px;
     border-radius: 50%;
-    /* background-color: var(--off-white-color);
-    color: var(--grey-color); */
-    background-color: wheat;
-    color: grey;
-
+    background-color: var(--off-white-color);
+    color: var(--grey-color);
     cursor: default;
 }
 
@@ -29,9 +26,7 @@
 
 .page_index.active,
 .page_index:hover {
-    /* background-color: var(--black-color); */
-    background-color: black;
-
+    background-color: var(--dark-green-color);
     color: white;
 }
 
@@ -46,9 +41,6 @@
     height: 3px;
     margin-left: 7px;
     border-radius: 50%;
-    /* background-color: var(--off-white-color); */
-    background-color: wheat;
+    background-color: var(--off-white-color);
 }
-
-
 

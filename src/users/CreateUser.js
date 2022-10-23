@@ -23,7 +23,7 @@ function CreateUser() {
 
     return (
         <> 
-            <h1>Create new user</h1>
+            <h2>Create new user</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Login:

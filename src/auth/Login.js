@@ -17,7 +17,7 @@ function Login() {
 
     return (
         <> 
-            <h1>Login</h1>
+            <h2>Login</h2>
             <p>{errMessage}</p>
             <form onSubmit={handleSubmit}>
                 <label>

@@ -12,9 +12,9 @@ function SendPasswordConfirmation() {
         <>
             {
                 message 
-                ? <h1>{message}</h1>
+                ? <h2>{message}</h2>
                 : <>
-                    <h1>Send password confirmation</h1>
+                    <h2>Send password confirmation</h2>
                     <p>{errMessage}</p>
                     <p>Please enter the email you use for registration</p>
                     <form onSubmit={handleSubmit}>

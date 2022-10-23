@@ -21,7 +21,7 @@ function CreateComment() {
 
     return (
         <> 
-            <h1>Leave your answer</h1>
+            <h2>Leave your answer</h2>
             <p>{mainMessage}</p>
             <form onSubmit={handleSubmit} ref={createCommentFrom}>
                 <label>

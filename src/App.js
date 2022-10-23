@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from './store/slices/userSlice';
+import { removeUser } from './store/slices/userSlice';
 import { SERVER_URL } from "./const";
-import "./style.css";
 import "./styles/main.css";
 
 import Login from "./auth/Login";
@@ -23,12 +21,10 @@ import CreateUser from "./users/CreateUser";
 import MainPage from "./posts/MainPage";
 import PostPage from "./posts/PostPage";
 import CreatePost from "./posts/CreatePost";
-// import UpdatePost from "./posts/UpdatePost";
 
 import AllCategoriesPage from "./categories/AllCategoriesPage";
 import CategoryPage from "./categories/CategoryPage";
 import CreateCategory from "./categories/CreateCategory";
-// import UpdateCategory from "./categories/UpdateCategory";
 
 import NotFound from "./tools/NotFound";
 import ErrorPage from "./tools/ErrorPage";
@@ -72,10 +68,10 @@ function App() {
                     // throw response;
                 }
             })
-            .catch((err) => {
-                console.log('err', err, err.body);
-                window.location.href = '/error';
-            });
+            // .catch((err) => {
+            //     console.log('err', err, err.body);
+            //     window.location.href = '/error';
+            // });
         }
     }, []);
 
@@ -98,31 +94,17 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/posts/:id" element={<PostPage />} />
                 <Route path="/create-post" element={curUser.id ? <CreatePost /> : <Navigate to="/login" />} />
-                {/* <Route path="/posts/:id/update" element={(curUser.id == id || curUser.role === 'admin') ? <UpdatePost /> : <Navigate to="/" />} /> */}
-                {/* <Route path="/posts/:id/update" element={<CheckRightsForUpdatePost />} /> */}
 
                 <Route path="/categories" element={<AllCategoriesPage />} />
                 <Route path="/categories/:id" element={<CategoryPage />} />
                 <Route path="/create-category" element={curUser.role === "admin" ? <CreateCategory /> : <Navigate to="/categories" />} />
-                {/* <Route path="/categories/:id/update" element={curUser.role === "admin" ? <UpdateCategory /> : <Navigate to="/categories" />} /> */}
-
-
+               
                 <Route path="/error" element={<ErrorPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     );
 }
-
-// function CheckRightsForUpdatePost() {
-//     const curUser = useSelector((state) => state.user);
-//     const { id: postId } = useParams();
-
-//     if (curUser.id == postId || curUser.role === 'admin') {
-//         return <UpdatePost />;
-//     }
-//     return <Navigate to="/" />;
-// }
 
 export default App;
 

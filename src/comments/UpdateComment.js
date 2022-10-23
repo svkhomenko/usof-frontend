@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
-import { Buffer } from "buffer";
 import { SERVER_URL } from "../const";
 import { validateContent } from "../tools/dataValidation";
+import { getSrc } from "../tools/tools_func";
 
 function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
 
     return (
         <> 
-            <h1>Update comment</h1>
+            <h2>Update comment</h2>
             <form onSubmit={handleSubmit}>
                 {
                     curUser.role == 'admin'
@@ -49,7 +49,6 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                         </label>
                         <div>
                             {curCommentImages.map((image) => {
-                                let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                                 return (
                                     <div key={image.id} style={{
                                         display: "flex",
@@ -60,7 +59,7 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                                         overflow: "hidden"
                                     }}>
                                         <span onClick={() => {handleChangeDeleteFiles(image.id)}}>Delete</span>
-                                        <img src={src} alt="Comment" style={{width: "auto",
+                                        <img src={getSrc(image.image)} alt="Comment" style={{width: "auto",
                                                                                 height: "100%"}} />
                                     </div>
                                 );
@@ -85,7 +84,6 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                         <div>{curComment.content}</div>
                         <div>
                         {curComment.images.map((image) => {
-                            let src = 'data:image/png;base64,' + Buffer.from(image.image, "binary").toString("base64");
                             return (
                                 <div key={image.id} style={{
                                     display: "flex",
@@ -95,7 +93,7 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                                     height: "50px",
                                     overflow: "hidden"
                                 }}>
-                                    <img src={src} alt="comment" style={{width: "auto",
+                                    <img src={getSrc(image.image)} alt="comment" style={{width: "auto",
                                                                             height: "100%"}} />
                                 </div>
                             );

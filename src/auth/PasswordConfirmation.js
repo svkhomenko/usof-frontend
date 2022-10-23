@@ -16,9 +16,9 @@ function PasswordConfirmation() {
         <> 
             {
                 message 
-                ? <h1>{message}</h1>
+                ? <h2>{message}</h2>
                 : <>
-                    <h1>Update password</h1>
+                    <h2>Update password</h2>
                     <p>{errMessage}</p>
                     <form onSubmit={handleSubmit}>
                         <label>

@@ -2,11 +2,20 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetPage, setOrderBy } from '../store/slices/searchParametersSlice';
 
-function OrderByContainer(props) {
+function OrderByContainer() {
     const dispatch = useDispatch();
     const searchParameters = useSelector((state) => state.searchParameters);
     
     return (
+        <>
+        <label>
+            Order by
+            <select value={searchParameters.orderBy} onChange={handleChange}
+                    className='order_by'>
+                <option value="like">Like</option>
+                <option value="date">Date</option>
+            </select>
+        </label>
         <label>
             Order by
             <select value={searchParameters.orderBy} onChange={handleChange}>
@@ -14,6 +23,7 @@ function OrderByContainer(props) {
                 <option value="date">Date</option>
             </select>
         </label>
+        </>
     );
 
     function handleChange(event) {

@@ -26,7 +26,7 @@ function CreatePost() {
 
     return (
         <> 
-            <h1>Create new post</h1>
+            <h2>Create new post</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Title:

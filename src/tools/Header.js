@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { getSrc } from "./tools_func";
@@ -12,12 +12,20 @@ function Header() {
     return (
         <header> 
             <h1><Link to={'/'}>Usof</Link></h1>
-            {/* <div>
-                <Link to={'/'}>Posts</Link>
-                <Link to={'/categories'}>Categories</Link>
-                <Link to={'/users'}>Users</Link>
-            </div> */}
-            <input className="search_input" type="search" placeholder="Search" />
+            <div className='menu_bar'>
+                <NavLink to={'/'}
+                        className={() => (window.location.pathname == "/" || window.location.pathname.startsWith('/posts')) ? "active" : ""}>
+                    Posts
+                </NavLink>
+                <NavLink to={'/categories'}
+                        className={({ isActive }) => isActive ? "active" : ""}>
+                    Categories
+                </NavLink>
+                <NavLink to={'/users'} 
+                        className={({ isActive }) => isActive ? "active" : ""}>
+                    Users
+                </NavLink>
+            </div>
             {
                 curUser.id 
                 ? <div className='header_buttons_container'>

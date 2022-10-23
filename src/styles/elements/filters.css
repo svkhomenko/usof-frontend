@@ -1,0 +1,47 @@
+@import '../_vars.css';
+
+/* search_input */
+
+.search_input {
+    box-sizing: border-box;
+    width: 45vw;
+    height: 35px;
+    margin-bottom: 10px;
+    padding: 0 20px;
+    background-color: white;
+    border: 1px solid var(--black-color);
+    border-radius: 40px;
+    font-size: 14px;
+    color: inherit;
+}
+
+.search_input::placeholder {
+    font-size: 14px;
+    color: inherit;
+}
+
+/* order_by */
+
+/* .order_by {
+    margin-bottom: 20px;
+    border: none;
+    background-color: rgb(53, 64, 82);
+    color: rgb(178, 191, 214);
+} */
+
+.order_by:active, 
+.order_by:hover, 
+.order_by:focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.order_by option {
+    background-color: rgb(111, 125, 149);
+}
+
+.order_by option:checked {
+    color: blueviolet;
+    box-shadow: 0 0 10px 100px red inset;
+}
+

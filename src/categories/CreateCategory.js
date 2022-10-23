@@ -16,7 +16,7 @@ function CreateCategory() {
 
     return (
         <> 
-            <h1>Create new category</h1>
+            <h2>Create new category</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Title:

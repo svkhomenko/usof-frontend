@@ -14,8 +14,6 @@ function PostCard({ post }) {
 
     const [curPost, setCurPost] = useState(post);
 
-    console.log(post);
-
     // return (
     //     <div className="post_card">
     //         <Link to={`/posts/${curPost.id}`} className="post_outer">
@@ -122,30 +120,18 @@ function PostCard({ post }) {
                 <div className="categories_container">
                     {curPost.categories.map((category) => {
                         return (
-                            <Link to={`/categories/${category.id}`} key={category.id} className="category tooltip" data-title={category.description}>
-                                <div>{category.title}</div>
-                            </Link>
-                        );
-                    })}
-                </div>
-                <div className='content'>{curPost.content}</div>
-                <div>
-                    {curPost.images.map((image) => {
-                        return (
-                            <div key={image.id} style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                width: "50px",
-                                height: "50px",
-                                overflow: "hidden"
-                            }}>
-                                <img src={getSrc(image.image)} alt="post" style={{width: "auto",
-                                                                        height: "100%"}} />
+                            <div key={category.id} 
+                                className="category tooltip" data-title={category.description}
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    window.location.href = `/categories/${category.id}`;
+                                }}>
+                                {category.title}
                             </div>
                         );
                     })}
                 </div>
+                <div className='content'>{curPost.content}</div>
             </Link>
         </div>
     );

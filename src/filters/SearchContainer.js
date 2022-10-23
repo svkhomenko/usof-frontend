@@ -7,10 +7,7 @@ function SearchContainer({ placeholder }) {
     const searchParameters = useSelector((state) => state.searchParameters);
 
     return (
-        <div className="search_container">
-            <input type="search" className="search_input" value={searchParameters.search} onChange={handleChange} maxLength="200" placeholder={placeholder} />
-            {/* <button className="search_btn button" type="submit">Search</button> */}
-        </div>
+        <input type="search" className="search_input" value={searchParameters.search} onChange={handleChange} maxLength="200" placeholder={placeholder} />
     );
 
     function handleChange(event) {
@@ -20,22 +17,6 @@ function SearchContainer({ placeholder }) {
         dispatch(resetPage());
     }
 }
-
-// function SearchContainer(props) {
-//     const [search, setSearch] = useState('');
-
-//     return (
-//         <div className="search_container">
-//             <input className="search_input" value={search} onChange={handleChange} type="search" placeholder="Find posts" />
-//             <button className="search_btn button" type="submit">Search</button>
-//         </div>
-//     );
-
-//     function handleChange(event) {
-//         setSearch(event.target.value);
-//         props.funcChangeSearch(event.target.value);
-//     }
-// }
 
 export default SearchContainer;
 

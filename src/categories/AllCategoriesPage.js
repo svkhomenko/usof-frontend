@@ -62,7 +62,7 @@ function AllCategoriesPage() {
 
     return (
         <> 
-            <h1>Categories</h1>
+            <h2>Categories</h2>
             {
                 curUser.role === 'admin' && 
                 <p>

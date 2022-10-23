@@ -1,0 +1,12 @@
+@import './_vars.css';
+
+.main_page {
+    position: relative;
+}
+
+.main_page .main_button {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
