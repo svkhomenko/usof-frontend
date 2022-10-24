@@ -76,7 +76,10 @@ function FavoritesPosts({ isUpdating }) {
         <>
             <h2>{countPosts} favorites posts</h2>
             <OrderByContainer />
-            <FilterStatusContainer />
+            {
+                curUser.role == 'admin' &&
+                <FilterStatusContainer />
+            }
             <SearchContainer placeholder="Find posts" />
             <FilterDateContainer />
             <button onClick={resetSettings}>Reset settings</button>

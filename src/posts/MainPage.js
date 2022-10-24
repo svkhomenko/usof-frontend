@@ -80,12 +80,36 @@ function MainPage() {
                     </Link>
                 </p>
             }
-            <SearchContainer placeholder="Find posts" />
-            <OrderByContainer />
-            <FilterStatusContainer />
-            <FilterCategoryContainer />
-            <FilterDateContainer />
-            <button onClick={resetSettings}>Reset settings</button>
+            <div className='filter_container'>
+                <SearchContainer placeholder="Find posts" />
+                <FilterDateContainer />
+                <OrderByContainer />
+                {
+                    curUser.role == 'admin' &&
+                    <FilterStatusContainer />
+                }
+                <FilterCategoryContainer />
+                <button onClick={resetSettings} className="button negative">
+                    Reset settings
+                </button>
+            </div>
+            {/* <div className='filter_container'>
+                <SearchContainer placeholder="Find posts" />
+                <FilterDateContainer />
+            </div>
+            <div className='filter_container'>
+                <OrderByContainer />
+                {
+                    curUser.role == 'admin' &&
+                    <FilterStatusContainer />
+                }
+            </div>
+            <div className='filter_container'>
+                <FilterCategoryContainer />
+                <button onClick={resetSettings} className="button negative">
+                    Reset settings
+                </button>
+            </div> */}
             <div>
                 {
                     posts.length !== 0 

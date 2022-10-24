@@ -5,6 +5,7 @@
 @import './elements/page_index.css';
 @import './elements/post_card.css';
 @import './elements/filters.css';
+@import './elements/category_item.css';
 
 @import './header.css';
 @import './main_page.css';

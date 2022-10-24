@@ -1,0 +1,17 @@
+@import '../_vars.css';
+
+.categories_container {
+    margin: 3px -3px;
+}
+
+.category {
+    display: inline-block;
+    margin: 3px;
+    padding: 3px 5px;
+    border: 1px solid var(--dark-green-color);
+    border-radius: 40px;
+    background-color: var(--light-green-color);
+    font-size: 10px;
+    color: var(--dark-green-color);
+}
+

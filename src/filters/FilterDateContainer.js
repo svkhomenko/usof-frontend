@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetPage, setDateFrom, setDateTo } from '../store/slices/searchParametersSlice';
 
-function FilterDateContainer(props) {
+function FilterDateContainer() {
     const dispatch = useDispatch();
     const searchParameters = useSelector((state) => state.searchParameters);
     
     return (
-        <label>
+        <label className='date_filter'>
             Date
             from <input type="date" value={searchParameters.dateFrom} onChange={handleChangeFrom} />
             to <input type="date" value={searchParameters.dateTo} onChange={handleChangeTo} />
@@ -40,34 +40,6 @@ export function getFilterDate(searchParameters) {
     }
     return str;
 }
-
-// function FilterDateContainer(props) {
-//     const [from, setFrom] = useState('');
-//     const [to, setTo] = useState('');
-
-//     useEffect(() => {
-//         setFrom('');
-//         setTo('');
-//     }, [props.reset]);
-    
-//     return (
-//         <label>
-//             Date
-//             from <input type="date" value={from} onChange={handleChangeFrom} />
-//             to <input type="date" value={to} onChange={handleChangeTo} />
-//         </label>
-//     );
-
-//     function handleChangeFrom(event) {
-//         setFrom(event.target.value);
-//         props.funcChangeFilterDateFrom(event.target.value);
-//     }
-
-//     function handleChangeTo(event) {
-//         setTo(event.target.value);
-//         props.funcChangeFilterDateTo(event.target.value);
-//     }
-// }
 
 export default FilterDateContainer;
 

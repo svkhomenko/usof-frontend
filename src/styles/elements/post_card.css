@@ -71,26 +71,6 @@
 
 /* category */
 
-.post_card .categories_container {
-    margin: 3px -3px;
-}
-
-.post_card .category {
-    display: inline-block;
-    margin: 3px;
-    padding: 3px 5px;
-    border: 1px solid var(--dark-green-color);
-    border-radius: 40px;
-    background-color: var(--light-green-color);
-    font-size: 10px;
-    color: var(--dark-green-color);
-}
-
-.tooltip {
-	display: inline;
-	position: relative;
-}
-
 .post_card .content {
     white-space: pre-wrap;
     -webkit-line-clamp: 8; 
