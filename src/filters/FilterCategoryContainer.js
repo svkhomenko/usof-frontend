@@ -151,7 +151,9 @@ function FilterCategoryContainer(props) {
                     ))}
                 </div>
             }
-            <input className="search_input" value={filterCategorySearch} onChange={handleChange} type="search" placeholder="Check categories" />
+            <input className="search_input" 
+                    value={filterCategorySearch} onChange={handleChange} 
+                    type="search" placeholder="Check categories" />
             {filterCategorySearch !== '' && allCategories.length !== 0 && 
                 <div className='options_container'>
                     {allCategories.map((category) => (

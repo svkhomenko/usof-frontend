@@ -13,7 +13,7 @@ function OrderByContainer() {
     ];
  
     return (
-        <label>
+        <label className='order_by_label'>
             Order by
             <Select value={getValue()} options={options} 
                     onChange={handleChange} className='order_by' classNamePrefix='order_by' />

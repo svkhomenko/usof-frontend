@@ -79,14 +79,23 @@ async function uploadPostData(req, res) {
                     throw new ValidationError("deleteFiles must be array", 400);
                 }
 
-                deleteFiles.forEach(async (fileId) => {
+                // deleteFiles.forEach(async (fileId) => {
+                //     await ImageFromPost.destroy({
+                //         where: {
+                //             id: fileId,
+                //             postId: post.id
+                //         }
+                //     });
+                // });
+
+                await Promise.all(deleteFiles.map(async (fileId) => {
                     await ImageFromPost.destroy({
                         where: {
                             id: fileId,
                             postId: post.id
                         }
                     });
-                });
+                }));
             }
     
             let { count } = await ImageFromPost.findAndCountAll({

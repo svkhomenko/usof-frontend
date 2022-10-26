@@ -56,33 +56,3 @@ header .user_icon_container:hover {
     color: var(--grey-color);
 }
 
-/* .cur_user_container .delimiter {
-    margin: 0 5px;
-} */
-
-/* .cur_user_outer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-}
-
-.cur_user_outer img{
-    width: auto;
-    height: 100%;
-}
-
-.cur_user_role {
-    position: absolute;
-    right: -15px;
-    top: 0;
-    padding: 3px 5px;
-    border: 1px solid var(--dark-green-color);
-    border-radius: 40px;
-    background-color: var(--light-green-color);
-    font-size: 10px;
-    color: var(--dark-green-color);
-} */
-

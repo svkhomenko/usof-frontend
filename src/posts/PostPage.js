@@ -9,7 +9,8 @@ import CreateComment from '../comments/CreateComment';
 import UpdatePost from './UpdatePost';
 import LikeButton from "../tools/LikeButton";
 import FavButton from "../tools/FavButton";
-import { getSrc } from "../tools/tools_func";
+import PostImages from "../tools/PostImages";
+import { getSrc, getDateString } from "../tools/tools_func";
 
 function PostPage() {
     const curUser = useSelector((state) => state.user);
@@ -43,6 +44,7 @@ function PostPage() {
                 case 403:
                 case 404:
                     setCurPost(null);
+                    break;
                 default:
                     window.location.href = '/error';
             }
@@ -50,75 +52,84 @@ function PostPage() {
     }, []);
 
     return (
-        <> 
+        <div className='post_page'> 
             {
                 curPost
                 ? <>
                     {
                         isUpdating
                         ? <UpdatePost setIsUpdating={setIsUpdating} curPost={curPost} setCurPost={setCurPost} />
-                        : <>
-                            <h2>{curPost.title}</h2>
-                            <LikeButton isLiked={curPost.isLiked} 
-                                        handleLikeClick={handleLikeClick}
-                                        isActive={curPost.status == 'active'} />
-                            <FavButton isFav={curPost.addToFavoritesUser} 
-                                        handleFavClick={handleFavClick}
-                                        isActive={curPost.status == 'active'} />
-                            {
-                                (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-                                <button onClick={deletePost}>Delete</button>
-                            }
-                            {
-                                curUser.id && 
-                                <p>
-                                    <Link to={'/create-post'}>
-                                        Create Post
-                                    </Link>
-                                </p>
-                            }
-                            {
-                                (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-                                <button onClick={() => {setIsUpdating(true)}}>
-                                    Update
-                                </button>
-                            }
-                            <div>{curPost.content}</div>
-                            <div>
-                                {curPost.categories.map((category) => {
-                                    return (
-                                        <span key={category.id}>
-                                            {category.title}
-                                        </span>
-                                    );
-                                })}
-                            </div>
-                            <div>
-                                {curPost.images.map((image) => {
-                                    return (
-                                        <div key={image.id} style={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                            width: "50px",
-                                            height: "50px",
-                                            overflow: "hidden"
-                                        }}>
-                                            <img src={getSrc(image.image)} alt="post" style={{width: "auto",
-                                                                                    height: "100%"}} />
+                        : <div className="post_card">
+                            <div className="header">
+                                <div className="extra_data">
+                                    <div className="user_icon_container">
+                                        <div className="user_icon_role_outer">
+                                            <span className="user_icon_role">{curPost.author.role}</span>
+                                            <div className="user_icon_outer">
+                                                <img src={getSrc(curPost.author.profilePicture)} alt="avatar" />
+                                            </div>
                                         </div>
-                                    );
-                                })}
+                                        <span>{curPost.author.login}</span>
+                                    </div>
+                                    <span className='delimiter'>·</span>
+                                    <span>{getDateString(curPost.publishDate)}</span>
+                                    <span className='delimiter'>·</span>
+                                    <span>{curPost.status}</span>
+                                </div>
+                                <div className='button_outer'>
+                                    {
+                                        (curUser.id == curPost.author.id || curUser.role === 'admin') && 
+                                        <button onClick={() => {setIsUpdating(true)}} className="button negative update">
+                                            Update
+                                        </button>
+                                    }
+                                    {
+                                        curUser.id && 
+                                        <Link to={'/create-post'} className="button create">
+                                            Create post
+                                        </Link>
+                                    }
+                                    <div className='button_container'>
+                                        <LikeButton isLiked={curPost.isLiked} 
+                                                    handleLikeClick={handleLikeClick}
+                                                    isActive={curPost.status == 'active'}
+                                                    likesCount={curPost.likesCount}
+                                                    dislikesCount={curPost.dislikesCount} />
+                                        <FavButton isFav={curPost.addToFavoritesUser} 
+                                                    handleFavClick={handleFavClick}
+                                                    isActive={curPost.status == 'active'} />
+                                        {
+                                            (curUser.id == curPost.author.id || curUser.role === 'admin') && 
+                                            <span onClick={deletePost} className="like_outer delete">
+                                                <iconify-icon icon="fluent:delete-16-filled" />
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
                             </div>
-                        </>
+                            <h2>{curPost.title}</h2>
+                            <div className='content'>{curPost.content}</div>
+                            <div className="categories_container">
+                                {curPost.categories.map((category) => (
+                                    <div key={category.id} 
+                                        className="category tooltip" data-title={category.description}
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            window.location.href = `/categories/${category.id}`;
+                                        }}>
+                                        {category.title}
+                                    </div>
+                                ))}
+                            </div>
+                            <PostImages images={curPost.images} />
+                        </div>
                     }
-                    <hr />
                     <PostComments isPostActive={curPost.status == 'active'} />
                     <CreateComment />
                 </>
-                : <p>{message}</p>
+                : <div className='main_message'>{message}</div>
             }
-        </>
+        </div>
     );
 
     function deletePost() {

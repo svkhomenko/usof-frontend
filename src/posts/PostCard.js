@@ -14,72 +14,6 @@ function PostCard({ post }) {
 
     const [curPost, setCurPost] = useState(post);
 
-    // return (
-    //     <div className="post_card">
-    //         <Link to={`/posts/${curPost.id}`} className="post_outer">
-    //             <div className="extra_data">
-    //                 <div className="user_icon_container">
-    //                     <div className="user_icon_role_outer">
-    //                         <span className="user_icon_role">{curPost.author.role}</span>
-    //                         <div className="user_icon_outer">
-    //                             <img src={getSrc(curPost.author.profilePicture)} alt="avatar" />
-    //                         </div>
-    //                     </div>
-    //                     <span>{curPost.author.login}</span>
-    //                 </div>
-    //                 <span className='delimiter'>·</span>
-    //                 <span>{getDateString(curPost.publishDate)}</span>
-    //                 <span className='delimiter'>·</span>
-    //                 <span>{curPost.status}</span>
-    //             </div>
-    //             <div className='title'>{curPost.title}</div>
-    //             <div className="categories_container">
-    //                 {curPost.categories.map((category) => {
-    //                     return (
-    //                         <span key={category.id} className="category">
-    //                             {category.title}
-    //                         </span>
-    //                     );
-    //                 })}
-    //             </div>
-    //             <div className='content'>{curPost.content}</div>
-    //             <div>
-    //                 {curPost.images.map((image) => {
-    //                     return (
-    //                         <div key={image.id} style={{
-    //                             display: "flex",
-    //                             justifyContent: "center",
-    //                             alignItems: "center",
-    //                             width: "50px",
-    //                             height: "50px",
-    //                             overflow: "hidden"
-    //                         }}>
-    //                             <img src={getSrc(image.image)} alt="post" style={{width: "auto",
-    //                                                                     height: "100%"}} />
-    //                         </div>
-    //                     );
-    //                 })}
-    //             </div>
-    //         </Link>
-    //         <div className='button_container'>
-    //             <LikeButton isLiked={curPost.isLiked} 
-    //                         handleLikeClick={handleLikeClick}
-    //                         isActive={curPost.status == 'active'}
-    //                         likesCount={curPost.dislikesCount}
-    //                         dislikesCount={curPost.likesCount} />
-    //             <FavButton isFav={curPost.addToFavoritesUser} 
-    //                         handleFavClick={handleFavClick}
-    //                         isActive={curPost.status == 'active'} />
-    //             {
-    //                 (curUser.id == curPost.author.id || curUser.role === 'admin') && 
-    //                 <span onClick={deletePost} className="like_outer delete">
-    //                     <iconify-icon icon="fluent:delete-16-filled" />
-    //                 </span>
-    //             }
-    //         </div>
-    //     </div>
-    // );
-
     return (
         <div className="post_card">
             <Link to={`/posts/${curPost.id}`} className="post_outer">
@@ -118,18 +52,16 @@ function PostCard({ post }) {
                 </div>
                 <div className='title'>{curPost.title}</div>
                 <div className="categories_container">
-                    {curPost.categories.map((category) => {
-                        return (
-                            <div key={category.id} 
-                                className="category tooltip" data-title={category.description}
-                                onClick={(event) => {
-                                    event.preventDefault();
-                                    window.location.href = `/categories/${category.id}`;
-                                }}>
-                                {category.title}
-                            </div>
-                        );
-                    })}
+                    {curPost.categories.map((category) => (
+                        <div key={category.id} 
+                            className="category tooltip" data-title={category.description}
+                            onClick={(event) => {
+                                event.preventDefault();
+                                window.location.href = `/categories/${category.id}`;
+                            }}>
+                            {category.title}
+                        </div>
+                    ))}
                 </div>
                 <div className='content'>{curPost.content}</div>
             </Link>

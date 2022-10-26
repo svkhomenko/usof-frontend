@@ -10,16 +10,15 @@
     top: 0;
 }
 
-/* .main_page .filter_container {
-    display: flex;
-    justify-content: space-between;
-} */
-
 .main_page .filter_container {
     display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); */
     grid-template-columns: repeat(2, 1fr);
-    /* grid-column-gap: 20px;
-    grid-row-gap: 50px;
-    margin: 50px 0; */
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    align-items: center;
+}
+
+.main_page .reset_settings {
+    width: 150px;
+    height: 30px;
 }

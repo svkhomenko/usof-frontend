@@ -74,42 +74,24 @@ function MainPage() {
             <h2>Main page</h2>
             {
                 curUser.id && 
-                <p>
-                    <Link to={'/create-post'} className="button main_button">
-                        Create post
-                    </Link>
-                </p>
+                <Link to={'/create-post'} className="button main_button">
+                    Create post
+                </Link>
             }
             <div className='filter_container'>
                 <SearchContainer placeholder="Find posts" />
                 <FilterDateContainer />
-                <OrderByContainer />
+                <FilterCategoryContainer />
                 {
                     curUser.role == 'admin' &&
                     <FilterStatusContainer />
                 }
-                <FilterCategoryContainer />
-                <button onClick={resetSettings} className="button negative">
-                    Reset settings
-                </button>
-            </div>
-            {/* <div className='filter_container'>
-                <SearchContainer placeholder="Find posts" />
-                <FilterDateContainer />
-            </div>
-            <div className='filter_container'>
                 <OrderByContainer />
-                {
-                    curUser.role == 'admin' &&
-                    <FilterStatusContainer />
-                }
-            </div>
-            <div className='filter_container'>
-                <FilterCategoryContainer />
-                <button onClick={resetSettings} className="button negative">
+                <button onClick={resetSettings} 
+                        className="button negative reset_settings">
                     Reset settings
                 </button>
-            </div> */}
+            </div>
             <div>
                 {
                     posts.length !== 0 
@@ -117,11 +99,11 @@ function MainPage() {
                         {posts.map((post) => (
                             <PostCard key={post.id} post={post} />
                         ))}
+                        <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
                     </>
                     : <p>No posts found</p>
                 }
             </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
         </div>
     );
 

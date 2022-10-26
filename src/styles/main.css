@@ -1,14 +1,17 @@
 @import './_vars.css';
 
+@import './header.css';
+@import './main_page.css';
+@import './post_page.css';
+
 @import './elements/user_icon.css';
 @import './elements/tooltip.css';
 @import './elements/page_index.css';
 @import './elements/post_card.css';
 @import './elements/filters.css';
 @import './elements/category_item.css';
-
-@import './header.css';
-@import './main_page.css';
+@import './elements/slider.css';
+@import './elements/update.css';
 
 body {
     margin: 0;
@@ -71,5 +74,32 @@ body a {
 
 h2 {
     font-size: 34px;
+}
+
+/* messages */
+
+.main_message {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.small_title {
+    margin: 10px 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--dark-green-color);
+}
+
+.message {
+    margin: 3px 0;
+}
+
+.message.error {
+    color: var(--maroon-color);
+}
+
+.message.success {
+    color: var(--green-color);
 }
 

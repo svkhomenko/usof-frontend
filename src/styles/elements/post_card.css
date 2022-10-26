@@ -1,10 +1,9 @@
 @import '../_vars.css';
 
 .post_card {
-    display: flex;
     padding-bottom: 10px;
     margin: 10px 0 20px;
-    border-bottom: 0.05px solid var(--green-color);
+    border-bottom: 1px solid var(--green-color);
 }
 
 .post_card .post_outer {
@@ -15,6 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 /* extra_data */
@@ -34,6 +34,14 @@
     display: flex;
     justify-content: space-between;
     min-width: 130px;
+}
+
+.post_card .button_container.for_comment {
+    min-width: 105px;
+}
+
+.post_card .button_container.for_comment.without_delete {
+    min-width: 0px;
 }
 
 .post_card .button_container .count {
@@ -77,5 +85,9 @@
     display: -webkit-box; 
     -webkit-box-orient: vertical; 
     overflow: hidden;
+}
+
+.comment_card .post_images_container {
+    margin-top: 5px;
 }
 

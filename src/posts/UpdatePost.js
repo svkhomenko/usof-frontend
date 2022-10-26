@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
@@ -33,111 +34,208 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
         }));
     }, []);
 
+    // return (
+    //     <> 
+    //         <h2>Update post</h2>
+    //         <form onSubmit={handleSubmit}>
+    //             {
+    //                 curUser.role == 'admin'
+    //                 ? <>
+    //                     <label>
+    //                         Status:
+    //                         <p>{statusMessage}</p>
+    //                         <select value={status} onChange={handleChangeStatus}>
+    //                             <option value="active">Active</option>
+    //                             <option value="inactive">Inactive</option>
+    //                         </select>
+    //                     </label>
+    //                 </>
+    //                 : <>
+    //                     <div>{curPost.status}</div>
+    //                 </>
+    //             }
+    //             {
+    //                 curUser.id == curPost.author.id
+    //                 ? <>
+    //                     <label>
+    //                         Title:
+    //                         <p>{titleMessage}</p>
+    //                         <input type="text" value={title} onChange={handleChangeTitle} />
+    //                     </label>
+    //                     <label>
+    //                         Content:
+    //                         <p>{contentMessage}</p>
+    //                         <textarea value={content} onChange={handleChangeContent} />
+    //                     </label>
+    //                 </>
+    //                 : <>
+    //                     <div>{curPost.title}</div>
+    //                     <div>{curPost.content}</div>
+    //                 </>
+    //             }
+    //             <label>
+    //                 Categories:
+    //                 <p>{categoriesMessage}</p>
+    //                 <FilterCategoryContainer />
+    //             </label>
+    //             {
+    //                 curUser.id == curPost.author.id
+    //                 ? <>
+    //                     <div>
+    //                         {curPostImages.map((image) => {
+    //                             return (
+    //                                 <div key={image.id} style={{
+    //                                     display: "flex",
+    //                                     justifyContent: "center",
+    //                                     alignItems: "center",
+    //                                     width: "50px",
+    //                                     height: "50px",
+    //                                     overflow: "hidden"
+    //                                 }}>
+    //                                     <span onClick={() => {handleChangeDeleteFiles(image.id)}}>Delete</span>
+    //                                     <img src={getSrc(image.image)} alt="post" style={{width: "auto",
+    //                                                                             height: "100%"}} />
+    //                                 </div>
+    //                             );
+    //                         })}
+    //                     </div>
+    //                     <label>
+    //                         Images:
+    //                         <p>{postImagesMessage}</p>
+    //                         <input type="file" onChange={handleChangePostImages} multiple accept="image/*" />
+    //                         <div>
+    //                             {Object.values(postImages).map((image) => {
+    //                                 return (
+    //                                     <div key={image.name}>
+    //                                         {image.name}{' '}{image.size}
+    //                                     </div>
+    //                                 );
+    //                             })}
+    //                         </div>
+    //                     </label>
+    //                 </>
+    //                 : <div>
+    //                     {curPost.images.map((image) => {
+    //                         return (
+    //                             <div key={image.id} style={{
+    //                                 display: "flex",
+    //                                 justifyContent: "center",
+    //                                 alignItems: "center",
+    //                                 width: "50px",
+    //                                 height: "50px",
+    //                                 overflow: "hidden"
+    //                             }}>
+    //                                 <img src={getSrc(image.image)} alt="post" style={{width: "auto",
+    //                                                                         height: "100%"}} />
+    //                             </div>
+    //                         );
+    //                     })}
+    //                 </div>
+    //             }
+    //             <input type="submit" value="Update post" />
+    //         </form>
+    //     </>
+    // );
+
+    const statusOptions = [
+        { value: 'active', label: 'Active' },
+        { value: 'inactive', label: 'Inactive' }
+    ];
+
     return (
-        <> 
+        <div className='post_card update_post'> 
             <h2>Update post</h2>
             <form onSubmit={handleSubmit}>
                 {
                     curUser.role == 'admin'
-                    ? <>
-                        <label>
-                            Status:
-                            <p>{statusMessage}</p>
-                            <select value={status} onChange={handleChangeStatus}>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </label>
-                    </>
-                    : <>
-                        <div>{curPost.status}</div>
+                    && <>
+                        <div className='status_select_contatiner'>
+                            <div className='label'>Status:</div>
+                            <div className='message error'>{statusMessage}</div>
+                            <Select value={getStatusValue()} options={statusOptions} 
+                                    onChange={handleChangeStatus} className='status_select' classNamePrefix='status_select' />
+                        </div>
                     </>
                 }
-                {
-                    curUser.id == curPost.author.id
-                    ? <>
-                        <label>
-                            Title:
-                            <p>{titleMessage}</p>
-                            <input type="text" value={title} onChange={handleChangeTitle} />
-                        </label>
-                        <label>
-                            Content:
-                            <p>{contentMessage}</p>
-                            <textarea value={content} onChange={handleChangeContent} />
-                        </label>
-                    </>
-                    : <>
-                        <div>{curPost.title}</div>
-                        <div>{curPost.content}</div>
-                    </>
-                }
-                <label>
-                    Categories:
-                    <p>{categoriesMessage}</p>
-                    <FilterCategoryContainer />
-                </label>
                 {
                     curUser.id == curPost.author.id
                     ? <>
                         <div>
-                            {curPostImages.map((image) => {
-                                return (
-                                    <div key={image.id} style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        width: "50px",
-                                        height: "50px",
-                                        overflow: "hidden"
-                                    }}>
-                                        <span onClick={() => {handleChangeDeleteFiles(image.id)}}>Delete</span>
-                                        <img src={getSrc(image.image)} alt="post" style={{width: "auto",
-                                                                                height: "100%"}} />
-                                    </div>
-                                );
-                            })}
+                            <div className='label'>Title:</div>
+                            <div className='message error'>{titleMessage}</div>
+                            <textarea value={title} onChange={handleChangeTitle}
+                                        className="small" />
                         </div>
-                        <label>
-                            Images:
-                            <p>{postImagesMessage}</p>
-                            <input type="file" onChange={handleChangePostImages} multiple accept="image/*" />
-                            <div>
-                                {Object.values(postImages).map((image) => {
-                                    return (
-                                        <div key={image.name}>
-                                            {image.name}{' '}{image.size}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </label>
+                        <div>
+                            <div className='label'>Content:</div>
+                            <div className='message error'>{contentMessage}</div>
+                            <textarea value={content} onChange={handleChangeContent}
+                                        className="large" />
+                        </div>
                     </>
-                    : <div>
-                        {curPost.images.map((image) => {
-                            return (
-                                <div key={image.id} style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    width: "50px",
-                                    height: "50px",
-                                    overflow: "hidden"
-                                }}>
-                                    <img src={getSrc(image.image)} alt="post" style={{width: "auto",
-                                                                            height: "100%"}} />
-                                </div>
-                            );
-                        })}
-                    </div>
+                    : <>
+                        <h2>{curPost.title}</h2>
+                        <div className='content'>{curPost.content}</div>
+                    </>
                 }
-                <input type="submit" value="Update post" />
+                <div>
+                    <div className='label'>Categories:</div>
+                    <div className='message error'>{categoriesMessage}</div>
+                    <FilterCategoryContainer />
+                </div>
+                {
+                    curUser.id == curPost.author.id
+                    ? <>
+                        <div className='post_images_container'>
+                            {curPostImages.map((image) => (
+                                <div key={image.id} className="user_icon_outer post_images_outer update" >
+                                    <img src={getSrc(image.image)} alt="post" />
+                                    <div onClick={() => {handleChangeDeleteFiles(image.id)}}
+                                            className="delete_image">
+                                        <iconify-icon icon="iwwa:delete" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div> 
+                        <div>
+                            <div className='label'>Images:</div>
+                            <div className='message error'>{postImagesMessage}</div>
+                            <label htmlFor="file-upload_update_post" className='button negative file_upload_label'>
+                                Upload Files
+                            </label>
+                            <input type="file" id="file-upload_update_post" multiple accept="image/*"
+                                    onChange={handleChangePostImages} className="input_file" />
+                            {
+                                Object.values(postImages).length > 0 &&
+                                <div className='upload_files_container'>
+                                    {Object.values(postImages).map((image) => (
+                                        <div key={image.name}>
+                                            {image.name}{' - '}{(image.size / 1024).toFixed(2)}{' KB'}
+                                        </div>
+                                    ))}
+                                </div>
+                            }
+                        </div>
+                    </>
+                    : <div className='post_images_container'>
+                        {curPost.images.map((image) => (
+                            <div key={image.id} className="user_icon_outer post_images_outer" >
+                                <img src={getSrc(image.image)} alt="post" />
+                            </div>
+                        ))}
+                    </div> 
+                }
+                <input type="submit" value="Update post" className='button submit' />
             </form>
-        </>
+        </div>
     );
 
+    function getStatusValue() {
+        return statusOptions.find(option => option.value == status);
+    }
+    
     function handleChangeStatus(event) {
-        setStatus(event.target.value);
+        setStatus(event.value);
     }
 
     function handleChangeTitle(event) {

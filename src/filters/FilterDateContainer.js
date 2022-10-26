@@ -10,7 +10,7 @@ function FilterDateContainer() {
         <label className='date_filter'>
             Date
             from <input type="date" value={searchParameters.dateFrom} onChange={handleChangeFrom} />
-            to <input type="date" value={searchParameters.dateTo} onChange={handleChangeTo} />
+            {" "}to <input type="date" value={searchParameters.dateTo} onChange={handleChangeTo} />
         </label>
     );
 
