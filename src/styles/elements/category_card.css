@@ -1,0 +1,35 @@
+@import '../_vars.css';
+
+.category_card {
+    display: block;
+    padding-bottom: 10px;
+    margin: 10px 0 15px;
+    border-bottom: 1px solid var(--green-color);
+}
+
+.category_card .header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.category_card .title {
+    margin-bottom: 5px;
+    max-width: 85vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 26px;
+    color: var(--dark-green-color);
+}
+
+.category_card:hover .title {
+    color: var(--green-color);
+}
+
+.category_card .description {
+    white-space: pre-wrap;
+    -webkit-line-clamp: 8; 
+    display: -webkit-box; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+}
+

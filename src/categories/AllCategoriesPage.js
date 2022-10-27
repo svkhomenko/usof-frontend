@@ -59,33 +59,34 @@ function AllCategoriesPage() {
         searchParameters.page, 
         searchParameters.search
     ]);
-
+    
     return (
-        <> 
+        <div className='main_page category_page'> 
             <h2>Categories</h2>
             {
                 curUser.role === 'admin' && 
-                <p>
-                    <Link to={'/create-category'}>
-                        Create category
-                    </Link>
-                </p>
+                <Link to={'/create-category'} className="button main_button">
+                    Create category
+                </Link>
             }
-            <SearchContainer placeholder="Find categories" />
-            <button onClick={resetSettings}>Reset settings</button>
-            <div>
-                {
-                    categories.length !== 0 
-                    ? <>
-                        {categories.map((category) => (
-                            <CategoryCard key={category.id} category={category} />
-                        ))}
-                    </>
-                    : <p>No categories found</p>
-                }
+            <div className='category_search_container'>
+                <SearchContainer placeholder="Find categories" />
+                <button onClick={resetSettings}
+                        className="button negative reset_settings">
+                        Reset settings
+                </button>
             </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countCategories / limit)}/>
-        </>
+            {
+                categories.length !== 0 
+                ? <>
+                    {categories.map((category) => (
+                        <CategoryCard key={category.id} category={category} />
+                    ))}
+                    <PageIndexContainer numberOfPages={Math.ceil(countCategories / limit)}/>
+                </>
+                : <p>No categories found</p>
+            }
+        </div>
     );
 
     function resetSettings() {

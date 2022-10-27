@@ -6,10 +6,6 @@
     border-bottom: 1px solid var(--green-color);
 }
 
-.post_card .post_outer {
-    width: 100%;
-}
-
 .post_card .header {
     display: flex;
     justify-content: space-between;
@@ -76,8 +72,6 @@
 .post_card:hover .title {
     color: var(--green-color);
 }
-
-/* category */
 
 .post_card .content {
     white-space: pre-wrap;

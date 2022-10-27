@@ -3,6 +3,7 @@
 @import './header.css';
 @import './main_page.css';
 @import './post_page.css';
+@import './category_page.css';
 
 @import './elements/user_icon.css';
 @import './elements/tooltip.css';
@@ -10,8 +11,10 @@
 @import './elements/post_card.css';
 @import './elements/filters.css';
 @import './elements/category_item.css';
+@import './elements/category_card.css';
 @import './elements/slider.css';
-@import './elements/update.css';
+@import './elements/forms.css';
+@import './elements/user_card.css';
 
 body {
     margin: 0;
@@ -101,5 +104,20 @@ h2 {
 
 .message.success {
     color: var(--green-color);
+}
+
+/* display_center */
+
+.display_center {
+    display: flex;
+    justify-content: space-around;
+}
+
+.display_center.hr {
+    border-bottom: 1px solid var(--green-color);
+}
+
+.no_hr {
+    border: none;
 }
 

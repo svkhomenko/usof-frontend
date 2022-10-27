@@ -16,7 +16,7 @@ function PostCard({ post }) {
 
     return (
         <div className="post_card">
-            <Link to={`/posts/${curPost.id}`} className="post_outer">
+            <Link to={`/posts/${curPost.id}`}>
                 <div className="header">
                     <div className="extra_data">
                         <div className="user_icon_container">

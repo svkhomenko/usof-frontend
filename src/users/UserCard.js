@@ -9,36 +9,39 @@ import { getSrc } from "../tools/tools_func";
 function UserCard({ user }) {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
-    
+
     return (
-        <div>
+        <div className='user_card_outer'>
             {
                 (curUser.role === 'admin' || curUser.id == user.id) && 
-                <button onClick={deleteAccount}>Delete</button>
-            }
-            <Link to={`/users/${user.id}`}>
-                <div>{user.login}</div>
-                <div>{user.email}</div>
-                <div>{user.fullName}</div>
-                <div style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "50px",
-                        height: "50px",
-                        overflow: "hidden"
-                }}>
-                    <img src={getSrc(user.profilePicture)} alt="avatar" style={{width: "auto",
-                                                        height: "100%"}} />
+                <div onClick={deleteAccount} className="like_outer delete">
+                    <iconify-icon icon="fluent:delete-16-filled" />
                 </div>
-                <div>{user.role}</div>
-                <div>{user.status}</div>
-                <div>{user.rating}</div>
+            }
+            <Link to={`/users/${user.id}`} className='user_card'>
+                <div className="user_icon_role_outer">
+                    <span className="user_icon_role">{user.role}</span>
+                    <div className="user_icon_outer">
+                        <img src={getSrc(user.profilePicture)} alt="avatar" />
+                    </div>
+                </div>
+                <div className='info'>
+                    <span className='login'>{user.login}</span>
+                    <span className='delimiter'>·</span>
+                    <span>{user.fullName}</span>
+                    <div>{user.email}</div>
+                    <span className='login'>{user.rating}</span>
+                    <span className='delimiter'>·</span>
+                    <span>{user.status}</span>
+                </div>
             </Link>
         </div>
     );
 
-    function deleteAccount() {
+    function deleteAccount(event) {
+        console.log('here');
+        event.preventDefault();
+
         deleteUserById(user.id, curUser,
             () => {
                 dispatch(removeUser());

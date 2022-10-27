@@ -65,51 +65,6 @@ function CommentCard({ comment, isPostActive }) {
         </div>
     );
 
-    // return (
-    //     <div>
-    //         {
-    //             isUpdating
-    //             ? <UpdateComment setIsUpdating={setIsUpdating} curComment={curComment} setCurComment={setCurComment} />
-    //             : <>
-    //                 <LikeButton isLiked={curComment.isLiked} 
-    //                         handleLikeClick={handleLikeClick}
-    //                         isActive={isPostActive && curComment.status == 'active'} />
-    //                 {
-    //                     (curUser.id == curComment.author.id || curUser.role === 'admin') && 
-    //                     <button onClick={deleteComment}>Delete</button>
-    //                 }
-    //                 {
-    //                     (curUser.id == curComment.author.id || curUser.role === 'admin') && 
-    //                     <button onClick={() => {setIsUpdating(true)}}>
-    //                         Update
-    //                     </button>
-    //                 }
-    //                 <div>{curComment.content}</div>
-    //                 <div>{curComment.status}</div>
-    //                 <div>{curComment.author.login}</div>
-    //                 <div>
-    //                     {curComment.images.map((image) => {
-    //                         return (
-    //                             <div key={image.id} style={{
-    //                                 display: "flex",
-    //                                 justifyContent: "center",
-    //                                 alignItems: "center",
-    //                                 width: "50px",
-    //                                 height: "50px",
-    //                                 overflow: "hidden"
-    //                             }}>
-    //                                 <img src={getSrc(image.image)} alt="comment" style={{width: "auto",
-    //                                                                         height: "100%"}} />
-    //                             </div>
-    //                         );
-    //                     })}
-    //                 </div>
-    //             </>
-    //         }
-    //         <hr/>
-    //     </div>
-    // );
-
     function deleteComment() {
         fetch(SERVER_URL + `/api/comments/${curComment.id}`, {
             method: 'DELETE',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
+import { removeUser } from '../store/slices/userSlice';
 import { removeSearchParameters } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import FilterCategoryContainer from "../filters/FilterCategoryContainer";
@@ -25,41 +25,50 @@ function CreatePost() {
     }, []);
 
     return (
-        <> 
-            <h2>Create new post</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Title:
-                    <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} />
-                </label>
-                <label>
-                    Content:
-                    <p>{contentMessage}</p>
-                    <textarea value={content} onChange={handleChangeContent} />
-                </label>
-                <label>
-                    Categories:
-                    <p>{categoriesMessage}</p>
-                    <FilterCategoryContainer />
-                </label>
-                <label>
-                    Images:
-                    <p>{postImagesMessage}</p>
-                    <input type="file" onChange={handleChangePostImages} multiple accept="image/*" />
+        <div className='display_center'>
+            <div className='post_card update_post no_hr'> 
+                <h2>Create new post</h2>
+                <form onSubmit={handleSubmit}>
                     <div>
-                        {Object.values(postImages).map((image) => {
-                            return (
-                                <div key={image.name}>
-                                    {image.name}{' '}{image.size}
-                                </div>
-                            );
-                        })}
+                        <div className='label'>Title:</div>
+                        <div className='message error'>{titleMessage}</div>
+                        <textarea value={title} onChange={handleChangeTitle}
+                                    className="small" />
                     </div>
-                </label>
-                <input type="submit" value="Create post" />
-            </form>
-        </>
+                    <div>
+                        <div className='label'>Content:</div>
+                        <div className='message error'>{contentMessage}</div>
+                        <textarea value={content} onChange={handleChangeContent}
+                                    className="large" />
+                    </div>
+                    <div>
+                        <div className='label'>Categories:</div>
+                        <div className='message error'>{categoriesMessage}</div>
+                        <FilterCategoryContainer />
+                    </div>
+                    <div>
+                        <div className='label'>Images:</div>
+                        <div className='message error'>{postImagesMessage}</div>
+                        <label htmlFor="file-upload_create_post" className='button negative file_upload_label'>
+                            Upload Files
+                        </label>
+                        <input type="file" id="file-upload_create_post" multiple accept="image/*"
+                                onChange={handleChangePostImages} className="input_file" />
+                        {
+                            Object.values(postImages).length > 0 &&
+                            <div className='upload_files_container'>
+                                {Object.values(postImages).map((image) => (
+                                    <div key={image.name}>
+                                        {image.name}{' - '}{(image.size / 1024).toFixed(2)}{' KB'}
+                                    </div>
+                                ))}
+                            </div>
+                        }
+                    </div>
+                    <input type="submit" value="Create post" className='button submit' />
+                </form>
+            </div>
+        </div>
     );
 
     function handleChangeTitle(event) {

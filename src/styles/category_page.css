@@ -1,0 +1,34 @@
+@import './_vars.css';
+
+.category_page .buttons_container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+.category_page .buttons_container .button {
+    margin-right: 20px;
+}
+
+.category_page .filter_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.category_page .reset_settings {
+    width: 150px;
+    height: 30px;
+}
+
+.category_page .category_search_container {
+    margin-bottom: 20px;
+}
+
+.category_page .category_search_container .reset_settings {
+    margin-left: 50px;
+}
+

@@ -71,31 +71,36 @@ function CategoryPosts({ isUpdating }) {
     ]);
 
     return (
-        <>
-            <h2>{countPosts} posts</h2>
-            <OrderByContainer />
-            {
-                curUser.role == 'admin' &&
-                <FilterStatusContainer />
-            }
-            <SearchContainer placeholder="Find posts" />
-            <FilterDateContainer />
-            <button onClick={resetSettings}>Reset settings</button>
-            <div>
-                {
-                    posts.length !== 0 
-                    ? <>
-                        {posts.map((post) => (
-                            <PostCard key={post.id} post={post} />
-                        ))}
-                    </>
-                    : <p>No posts found</p>
-                }
+        <div className='post_comments_outer'>
+            <div className='small_title'>
+                {countPosts} post{countPosts != 1 && 's'}
             </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
-        </>
+            <div className='filter_container'>
+                <SearchContainer placeholder="Find posts" />
+                <FilterDateContainer />
+                <OrderByContainer />
+                {
+                    curUser.role == 'admin' &&
+                    <FilterStatusContainer />
+                }
+                <button onClick={resetSettings} 
+                        className="button negative reset_settings">
+                    Reset settings
+                </button>
+            </div>
+            {
+                posts.length !== 0 
+                ? <>
+                    {posts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                    ))}
+                    <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
+                </>
+                : <div className='small_message'>No posts found</div>
+            }
+        </div>
     );
-
+    
     function resetSettings() {
         dispatch(removeSearchParameters());
     }

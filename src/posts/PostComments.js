@@ -67,18 +67,16 @@ function PostComments({ isPostActive }) {
             <div className='small_title'>
                 {countComments} comment{countComments != 1 && 's'}
             </div>
-            <div>
-                {
-                    comments.length !== 0 
-                    ? <>
-                        {comments.map((comment) => (
-                            <CommentCard key={comment.id} comment={comment} isPostActive={isPostActive} />
-                        ))}
-                        <PageIndexContainer numberOfPages={Math.ceil(countComments / limit)}/>
-                    </>
-                    : <div className='small_message'>No comments found</div>
-                }
-            </div>
+            {
+                comments.length !== 0 
+                ? <>
+                    {comments.map((comment) => (
+                        <CommentCard key={comment.id} comment={comment} isPostActive={isPostActive} />
+                    ))}
+                    <PageIndexContainer numberOfPages={Math.ceil(countComments / limit)}/>
+                </>
+                : <div className='small_message'>No comments found</div>
+            }
         </div>
     );
 }

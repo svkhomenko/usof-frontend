@@ -20,35 +20,37 @@ function CreateComment() {
     const [commentImagesMessage, setCommentImagesMessage] = useState('');
 
     return (
-        <div className='create_comment_outer'> 
-            <div className='small_title'>Leave your answer</div>
-            <div className='message success'>{mainMessage}</div>
-            <form onSubmit={handleSubmit} ref={createCommentFrom}>
-                <div>
-                    <div className='message error'>{contentMessage}</div>
-                    <textarea value={content} onChange={handleChangeContent} 
-                                className="large" placeholder="Answer..." />
-                </div>
-                <div>
-                    <div className='message error'>{commentImagesMessage}</div>
-                    <label htmlFor="file-upload_new_comment" className='button negative'>
-                        Upload Files
-                    </label>
-                    <input type="file" id='file-upload_new_comment' multiple accept="image/*"
-                            onChange={handleChangeCommentImages} className="input_file" />
-                    {
-                        Object.values(commentImages).length > 0 &&
-                        <div className='upload_files_container'>
-                            {Object.values(commentImages).map((image) => (
-                                <div key={image.name}>
-                                    {image.name}{' - '}{(image.size / 1024).toFixed(2)}{' KB'}
-                                </div>
-                            ))}
-                        </div>
-                    }
-                </div>
-                <input type="submit" value="Create comment" className='button create' />
-            </form>
+        <div className='display_center'>
+            <div className='create_comment_outer'> 
+                <div className='small_title'>Leave your answer</div>
+                <div className='message success'>{mainMessage}</div>
+                <form onSubmit={handleSubmit} ref={createCommentFrom}>
+                    <div>
+                        <div className='message error'>{contentMessage}</div>
+                        <textarea value={content} onChange={handleChangeContent} 
+                                    className="large" placeholder="Answer..." />
+                    </div>
+                    <div>
+                        <div className='message error'>{commentImagesMessage}</div>
+                        <label htmlFor="file-upload_new_comment" className='button negative'>
+                            Upload Files
+                        </label>
+                        <input type="file" id='file-upload_new_comment' multiple accept="image/*"
+                                onChange={handleChangeCommentImages} className="input_file" />
+                        {
+                            Object.values(commentImages).length > 0 &&
+                            <div className='upload_files_container'>
+                                {Object.values(commentImages).map((image) => (
+                                    <div key={image.name}>
+                                        {image.name}{' - '}{(image.size / 1024).toFixed(2)}{' KB'}
+                                    </div>
+                                ))}
+                            </div>
+                        }
+                    </div>
+                    <input type="submit" value="Create comment" className='button create' />
+                </form>
+            </div>
         </div>
     );
     

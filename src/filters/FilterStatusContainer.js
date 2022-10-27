@@ -9,12 +9,7 @@ function FilterStatusContainer(props) {
     return (
         <>
             <div>
-                Status
-                {/* <input type="checkbox" className="status_checkbox" name="status" id="status" />
-                <label className="sidebar_blocks_text categories_text" htmlFor="status">status</label>
-                <input type="checkbox" className="status_checkbox" name="status" id="status" />
-                <label className="sidebar_blocks_text categories_text" htmlFor="status">status</label> */}
-                
+                Status 
                 <input type="checkbox" className="status_checkbox"
                         id="active" name="active" 
                         checked={searchParameters.activeChecked} onChange={handleChangeActive} />
@@ -30,18 +25,6 @@ function FilterStatusContainer(props) {
             </div>
         </>
     );
-
-    // return (
-    //     <>
-    //         <label>
-    //             Status
-    //             <input type="checkbox" id="active" name="active" checked={searchParameters.activeChecked} onChange={handleChangeActive} />
-    //             <label htmlFor="active">Active</label>
-    //             <input type="checkbox" id="inactive" name="inactive" checked={searchParameters.inactiveChecked} onChange={handleChangeInactive} />
-    //             <label htmlFor="inactive">Inactive</label>
-    //         </label>
-    //     </>
-    // );
 
     function handleChangeActive() {
         dispatch(toggleActive());

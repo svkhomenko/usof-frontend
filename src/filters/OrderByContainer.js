@@ -32,46 +32,5 @@ function OrderByContainer() {
     }
 }
 
-// function OrderByContainer() {
-//     const dispatch = useDispatch();
-//     const searchParameters = useSelector((state) => state.searchParameters);
-
-//     return (
-//         <>
-//             <label>
-//                 Order by
-//                 <Select value={searchParameters.orderBy} classes={{ root: (dd()).select }}
-//                         onChange={handleChange}>
-//                     <MenuItem value="like">Like</MenuItem>
-//                     <MenuItem value="date">Date</MenuItem>
-//                 </Select>
-//             </label>
-            
-//         {/* <label>
-//             Order by
-//             <select value={searchParameters.orderBy} onChange={handleChange}
-//                     className='order_by'>
-//                 <option value="like">Like</option>
-//                 <option value="date">Date</option>
-//             </select>
-//         </label>
-//         <label>
-//             Order by
-//             <select value={searchParameters.orderBy} onChange={handleChange}>
-//                 <option value="like">Like</option>
-//                 <option value="date">Date</option>
-//             </select>
-//         </label> */}
-//         </>
-//     );
-
-//     function handleChange(event) {
-//         dispatch(setOrderBy({
-//             orderBy: event.target.value
-//         }));
-//         dispatch(resetPage());
-//     }
-// }
-
 export default OrderByContainer;
 

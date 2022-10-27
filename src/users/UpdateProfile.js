@@ -147,8 +147,7 @@ function UpdateProfile({ user, successFunc }) {
                     throw response;
                 }
                 else {
-                    if (isEmailChanged) {
-                        console.log('change email');
+                    if (isEmailChanged && user.id == curUser.id) {
                         dispatch(removeUser());
                         window.location.href = '/login';
                     }

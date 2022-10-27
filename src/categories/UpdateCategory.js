@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
@@ -16,23 +16,44 @@ function UpdateCategory({ setIsUpdating, curCategory, setCurCategory }) {
     const [titleMessage, setTitleMessage] = useState('');
     const [descriptionMessage, setDescriptionMessage] = useState('');
 
+    // return (
+    //     <> 
+    //         <h2>Update category</h2>
+    //         <form onSubmit={handleSubmit}>
+    //             <label>
+    //                 Title:
+    //                 <p>{titleMessage}</p>
+    //                 <input type="text" value={title} onChange={handleChangeTitle} />
+    //             </label>
+    //             <label>
+    //                 Description:
+    //                 <p>{descriptionMessage}</p>
+    //                 <textarea value={description} onChange={handleChangeDescription} />
+    //             </label>
+    //             <input type="submit" value="Update category" />
+    //         </form>
+    //     </>
+    // );
+
     return (
-        <> 
+        <div className='post_card update_post'> 
             <h2>Update category</h2>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Title:
-                    <p>{titleMessage}</p>
-                    <input type="text" value={title} onChange={handleChangeTitle} />
-                </label>
-                <label>
-                    Description:
-                    <p>{descriptionMessage}</p>
-                    <textarea value={description} onChange={handleChangeDescription} />
-                </label>
-                <input type="submit" value="Update category" />
+                <div>
+                    <div className='label'>Title:</div>
+                    <div className='message error'>{titleMessage}</div>
+                    <textarea value={title} onChange={handleChangeTitle}
+                                className="small" />
+                </div>
+                <div>
+                    <div className='label'>Description:</div>
+                    <div className='message error'>{descriptionMessage}</div>
+                    <textarea value={description} onChange={handleChangeDescription}
+                                className="large" />
+                </div>
+                <input type="submit" value="Update category" className='button submit' />
             </form>
-        </>
+        </div>
     );
 
     function handleChangeTitle(event) {

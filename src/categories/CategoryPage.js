@@ -45,42 +45,37 @@ function CategoryPage() {
     }, []);
 
     return (
-        <> 
+        <div className='post_page category_page'> 
             {
                 curCategory
                 ? <>
                     {
                         isUpdating
                         ? <UpdateCategory setIsUpdating={setIsUpdating} curCategory={curCategory} setCurCategory={setCurCategory} />
-                        : <>
-                            <h2>{curCategory.title}</h2>
+                        : <div className="category_card">
                             {
                                 curUser.role === 'admin' && 
-                                <button onClick={deleteCategory}>Delete</button>
-                            }
-                            {
-                                curUser.role === 'admin' && 
-                                <p>
-                                    <Link to={'/create-category'}>
+                                <div className='buttons_container'>
+                                    <button onClick={() => {setIsUpdating(true)}} className="button negative">
+                                        Update
+                                    </button>
+                                    <Link to={'/create-category'} className="button">
                                         Create category
                                     </Link>
-                                </p>
+                                    <span onClick={deleteCategory} className="like_outer delete">
+                                        <iconify-icon icon="fluent:delete-16-filled" />
+                                    </span>
+                                </div>
                             }
-                            {
-                                curUser.role === 'admin' && 
-                                <button onClick={() => {setIsUpdating(true)}}>
-                                    Update
-                                </button>
-                            }
-                            <div>{curCategory.description}</div>
-                        </>
+                            <h2>{curCategory.title}</h2>
+                            <div className='description'>{curCategory.description}</div>
+                        </div>
                     }
-                    <hr />
                     <CategoryPosts isUpdating={isUpdating} />
                 </>
-                : <p>{message}</p>
+                : <div className='main_message'>{message}</div>
             }
-        </>
+        </div>
     );
 
     function deleteCategory() {
