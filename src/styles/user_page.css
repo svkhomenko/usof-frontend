@@ -1,0 +1,82 @@
+@import './_vars.css';
+
+.user_page {
+    padding-top: 20px;
+}
+
+.user_page.hr {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--green-color);
+}
+
+.user_page .buttons_container {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+.user_page .buttons_container .button {
+    margin-right: 20px;
+}
+
+.user_container {
+    display: flex;
+}
+
+.user_container .user_icon_outer {
+    width: 250px;
+    height: 250px;
+}
+
+.user_container .info {
+    margin-left: 15px;
+    padding-top: 25px;
+    line-height: 26px;
+    font-size: 16px;
+}
+
+.user_container .login {
+    font-size: 20px;
+    color: var(--dark-green-color);
+}
+
+/* profile_page */
+
+.profile_page .navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+}
+
+.profile_page .navigation div {
+    padding: 10px;
+    border-top: 2px solid transparent;
+    color: var(--dark-green-color);
+    cursor: pointer;
+}
+
+.profile_page .navigation div.active  {
+    border-top: 2px solid var(--green-color);
+}
+
+.profile_page .navigation div:hover  {
+    color: var(--green-color);
+}
+
+/* listing */
+
+.users_listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+}
+
+.users_listing .user_icon_outer {
+    transition: transform 0.5s;
+}
+
+.users_listing .user_icon_outer:hover {
+    transform: scale(1.1);
+}
+

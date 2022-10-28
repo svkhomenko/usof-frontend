@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import Select from 'react-select';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
+import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL, CLIENT_URL } from "../const";
 import { checkPasswordConfirmation, validatePassword, validateLogin, validateFullName, validateEmail } from "../tools/dataValidation";
 
@@ -21,47 +22,56 @@ function CreateUser() {
     const [emailMessage, setEmailMessage] = useState('');
     const [fullNameMessage, setFullNameMessage] = useState('');
 
+    const roleOptions = [
+        { value: 'admin', label: 'Admin' },
+        { value: 'user', label: 'User' }
+    ];
+
     return (
-        <> 
-            <h2>Create new user</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Login:
-                    <p>{loginMessage}</p>
-                    <input type="text" value={login} onChange={handleChangeLogin} />
-                </label>
-                <label>
-                    Password:
-                    <p>{passwordMessage}</p>
-                    <input type="password" value={password} onChange={handleChangePassword} />
-                </label>
-                <label>
-                    Password confirmation:
-                    <p>{passwordConfirmationMessage}</p>
-                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
-                </label>
-                <label>
-                    Email:
-                    <p>{emailMessage}</p>
-                    <input type="text" value={email} onChange={handleChangeEmail} />
-                </label>
-                <label>
-                    Full name:
-                    <p>{fullNameMessage}</p>
-                    <input type="text" value={fullName} onChange={handleChangeFullName} />
-                </label>
-                <label>
-                    Role:
-                    <select value={role} onChange={handleChangeRole}>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                    </select>
-                </label>
-                <input type="submit" value="Create user" />
-            </form>
-        </>
+        <div className='display_center'>
+            <div className='post_card update_post no_hr user_form'> 
+                <h2>Create new user</h2>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <div className='label'>Login:</div>
+                        <div className='message error'>{loginMessage}</div>
+                        <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+                    </div>
+                    <div>
+                        <div className='label'>Password:</div>
+                        <div className='message error'>{passwordMessage}</div>
+                        <input type="password" value={password} onChange={handleChangePassword} className="input" />
+                    </div>
+                    <div>
+                        <div className='label'>Password confirmation:</div>
+                        <div className='message error'>{passwordConfirmationMessage}</div>
+                        <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} className="input" />
+                    </div>
+                    <div>
+                        <div className='label'>Email:</div>
+                        <div className='message error'>{emailMessage}</div>
+                        <input type="text" value={email} onChange={handleChangeEmail} className="input" />
+                    </div>
+                    <div>
+                        <div className='label'>Full name:</div>
+                        <div className='message error'>{fullNameMessage}</div>
+                        <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
+                    </div>
+                    <div className='status_select_contatiner'>
+                        <div className='label'>Role:</div>
+                        <Select value={getRoleValue()} options={roleOptions} 
+                                onChange={handleChangeRole} className='status_select' classNamePrefix='status_select' />
+                    </div>
+                    <input type="submit" value="Create user" className='button submit' />
+                </form>
+            </div>
+        </div>
     );
 
+    function getRoleValue() {
+        return roleOptions.find(option => option.value == role);
+    }
+    
     function handleChangeLogin(event) {
         setLogin(event.target.value);
     }
@@ -83,7 +93,7 @@ function CreateUser() {
     }
 
     function handleChangeRole(event) {
-        setRole(event.target.value);
+        setRole(event.value);
     }
 
     function handleSubmit(event) {

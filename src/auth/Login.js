@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/slices/userSlice';
 import { SERVER_URL, CLIENT_URL } from "../const";
 
 function Login() {
-    // const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     const [login, setLogin] = useState('');
@@ -16,35 +15,37 @@ function Login() {
     const [passwordMessage, setPasswordMessage] = useState('');
 
     return (
-        <> 
-            <h2>Login</h2>
-            <p>{errMessage}</p>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Login:
-                    {loginMessage}
-                    <input type="text" value={login} onChange={handleChangeLogin} />
-                </label>
-                <label>
-                    Password:
-                    {passwordMessage}
-                    <input type="password" value={password} onChange={handleChangePassword} />
-                </label>
-                <input type="submit" value="Log in" />
-            </form>
-            <p>
-                Don't have an account yet? 
-                <Link to={'/register'}>
-                    Create one
-                </Link>
-            </p>
-            <p>
-                Forgot your password? 
-                <Link to={'/password-reset'}>
-                    Reset it
-                </Link>
-            </p>
-        </>
+        <div className='display_center'>
+            <div className='post_card no_hr user_form'> 
+                <h2>Login</h2>
+                <div className='message error'>{errMessage}</div>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <div className='label'>Login:</div>
+                        <div className='message error'>{loginMessage}</div>
+                        <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+                    </div>
+                    <div>
+                        <div className='label'>Password:</div>
+                        <div className='message error'>{passwordMessage}</div>
+                        <input type="password" value={password} onChange={handleChangePassword} className="input" />
+                    </div>
+                    <input type="submit" value="Log in" className='button submit' />
+                </form>
+                <div className='auth_link'>
+                    Don't have an account yet?{' '} 
+                    <Link to={'/register'}>
+                        Create one
+                    </Link>
+                </div>
+                <div className='auth_link'>
+                    Forgot your password?{' '}
+                    <Link to={'/password-reset'}>
+                        Reset it
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
 
     function handleChangeLogin(event) {

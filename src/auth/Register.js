@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { checkPasswordConfirmation, validatePassword, validateLogin, validateFullName, validateEmail } from "../tools/dataValidation";
 import { SERVER_URL, CLIENT_URL } from "../const";

@@ -1,11 +1,37 @@
 @import '../_vars.css';
 
 .label {
-    margin: 8px 0 5px;
+    margin: 10px 0 5px;
 }
 
 .input_file {
     display: none;
+}
+
+/* auth */
+
+.auth_link {
+    margin: 10px 0;
+}
+
+.auth_link a {
+    text-decoration: underline;
+    color: var(--dark-green-color);
+}
+
+.auth_link a:hover {
+    color: var(--green-color);
+}
+
+/* user_form */
+
+.user_form .input {
+    width: 45vw;
+    padding: 7px 10px;
+}
+
+.user_form .status_select_contatiner {
+    margin: 15px 0;
 }
 
 /* status_select */
@@ -107,6 +133,6 @@ textarea:focus {
 /* button submit */
 
 .button.submit {
-    margin-top: 8px;
+    margin-top: 10px;
 }
 

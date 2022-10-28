@@ -2,10 +2,8 @@
 
 .user_card_outer {
     position: relative;
-    max-width: 300px;
-    width: 300px;
+    width: 270px;
     word-break: break-all;
-    /* border: 1px solid red; */
 }
 
 .user_card_outer .delete {
@@ -16,7 +14,6 @@
 
 .user_card {
     display: flex;
-    /* border: 1px solid red; */
 }
 
 .user_card .user_icon_outer {
@@ -25,6 +22,7 @@
 }
 
 .user_card .info {
+    margin-left: 5px;
     padding-top: 23px;
     line-height: 20px;
     font-size: 14px;
@@ -38,12 +36,4 @@
     font-size: 16px;
     color: var(--dark-green-color);
 }
-
-/* .listing {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    grid-column-gap: 20px;
-    grid-row-gap: 50px;
-    margin: 50px 0;
-} */
 

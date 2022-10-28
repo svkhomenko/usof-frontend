@@ -4,6 +4,7 @@
 @import './main_page.css';
 @import './post_page.css';
 @import './category_page.css';
+@import './user_page.css';
 
 @import './elements/user_icon.css';
 @import './elements/tooltip.css';

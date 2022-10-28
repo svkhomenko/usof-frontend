@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser, removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
@@ -57,46 +58,99 @@ function ProfilePage() {
         });
     }, []);
 
+    // return (
+    //     <>
+    //         {
+    //             isUpdating
+    //             ? <UpdateProfile user={curUser} successFunc={successUpdateFunc} />
+    //             : <>
+    //                 <button onClick={deleteAccount}>Delete</button>
+    //                 <button onClick={() => {setIsUpdating(true)}}>
+    //                     Update
+    //                 </button>
+    //                 <div>{curUser.login}</div>
+    //                 <div>{curUser.email}</div>
+    //                 <div>{curUser.fullName}</div>
+    //                 <div style={{
+    //                         display: "flex",
+    //                         justifyContent: "center",
+    //                         alignItems: "center",
+    //                         width: "50px",
+    //                         height: "50px",
+    //                         overflow: "hidden"
+    //                 }}>
+    //                     <img src={getSrc(curUser.profilePicture)} alt="avatar" style={{width: "auto",
+    //                                                         height: "100%"}} />
+    //                 </div>
+    //                 <div>{curUser.role}</div>
+    //                 <div>{curUser.status}</div>
+    //                 <div>{curUser.rating}</div>
+    //             </>
+    //         }
+    //         <hr />
+    //         <div onClick={() => {setIsFavoritesPosts(false)}}>Your posts</div>
+    //         <div onClick={() => {setIsFavoritesPosts(true)}}>Favorites posts</div>
+    //         {
+    //             isFavoritesPosts 
+    //             ? <FavoritesPosts isUpdating={isUpdating} />
+    //             : <UserPosts isUpdating={isUpdating} />
+    //         }
+    //     </>
+    // );
+
     return (
-        <>
+        <div className='profile_page'>
             {
                 isUpdating
                 ? <UpdateProfile user={curUser} successFunc={successUpdateFunc} />
-                : <>
-                    <button onClick={deleteAccount}>Delete</button>
-                    <button onClick={() => {setIsUpdating(true)}}>
-                        Update
-                    </button>
-                    <div>{curUser.login}</div>
-                    <div>{curUser.email}</div>
-                    <div>{curUser.fullName}</div>
-                    <div style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "50px",
-                            height: "50px",
-                            overflow: "hidden"
-                    }}>
-                        <img src={getSrc(curUser.profilePicture)} alt="avatar" style={{width: "auto",
-                                                            height: "100%"}} />
+                : <div className='user_page hr'>
+                    <div className='buttons_container'>
+                        <button onClick={() => {setIsUpdating(true)}} className="button negative">
+                            Update
+                        </button>
+                        {
+                            curUser.role === 'admin' && 
+                            <Link to={'/create-user'} className="button main_button">
+                                Create user
+                            </Link>
+                        }
+                        <span onClick={deleteAccount} className="like_outer delete">
+                            <iconify-icon icon="fluent:delete-16-filled" />
+                        </span>
                     </div>
-                    <div>{curUser.role}</div>
-                    <div>{curUser.status}</div>
-                    <div>{curUser.rating}</div>
-                </>
+                    <div className='user_container'>
+                        <div className="user_icon_role_outer">
+                            <span className="user_icon_role">{curUser.role}</span>
+                            <div className="user_icon_outer">
+                                <img src={getSrc(curUser.profilePicture)} alt="avatar" />
+                            </div>
+                        </div>
+                        <div className='info'>
+                            <div className='login'>{curUser.login}</div>
+                            <div>{curUser.fullName}</div>
+                            <div>{curUser.email}</div>
+                            <div className='login'>{curUser.rating}</div>
+                            <div>{curUser.status}</div>
+                        </div>
+                    </div>
+                </div>
             }
-            <hr />
-            <div onClick={() => {setIsFavoritesPosts(false)}}>Your posts</div>
-            <div onClick={() => {setIsFavoritesPosts(true)}}>Favorites posts</div>
+            <div className='navigation'>
+                <div onClick={() => {setIsFavoritesPosts(false)}} className={isFavoritesPosts ? '' : 'active'}>
+                    Your posts
+                </div>
+                <div onClick={() => {setIsFavoritesPosts(true)}} className={isFavoritesPosts ? 'active' : ''}>
+                    Favorites posts
+                </div>
+            </div>
             {
                 isFavoritesPosts 
                 ? <FavoritesPosts isUpdating={isUpdating} />
                 : <UserPosts isUpdating={isUpdating} />
             }
-        </>
+        </div>
     );
-
+    
     function deleteAccount() {
         deleteUserById(curUser.id, curUser,
             () => {

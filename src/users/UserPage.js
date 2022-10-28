@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
 import { SERVER_URL } from "../const";
@@ -48,48 +48,59 @@ function UserPage() {
     }, []);
 
     return (
-        <> 
+        <div>
             {
                 user
                 ? <>
                     {
                         isUpdating
                         ? <UpdateProfile user={user} successFunc={successUpdateFunc} />
-                        : <>
-                            {
-                                (curUser.role === 'admin' || curUser.id == user.id) && 
-                                <>
-                                    <button onClick={deleteAccount}>Delete</button>
-                                    <button onClick={() => {setIsUpdating(true)}}>
+                        : <div className='user_page'>
+                            <div className='buttons_container'>
+                                {
+                                    (curUser.role === 'admin' || curUser.id == user.id) && 
+                                    <button onClick={() => {setIsUpdating(true)}} className="button negative">
                                         Update
                                     </button>
-                                </>
-                            }
-                            <div>{user.login}</div>
-                            <div>{user.email}</div>
-                            <div>{user.fullName}</div>
-                            <div style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    width: "50px",
-                                    height: "50px",
-                                    overflow: "hidden"
-                            }}>
-                                <img src={getSrc(user.profilePicture)} alt="avatar" style={{width: "auto",
-                                                                    height: "100%"}} />
+                                    
+                                }
+                                {
+                                    curUser.role === 'admin' && 
+                                    <Link to={'/create-user'} className="button main_button">
+                                        Create user
+                                    </Link>
+                                }
+                                {
+                                    (curUser.role === 'admin' || curUser.id == user.id) && 
+                                    <span onClick={deleteAccount} className="like_outer delete">
+                                        <iconify-icon icon="fluent:delete-16-filled" />
+                                    </span>
+                                    
+                                }
                             </div>
-                            <div>{user.role}</div>
-                            <div>{user.status}</div>
-                            <div>{user.rating}</div>
-                        </>
+                            <div className='user_container'>
+                                <div className="user_icon_role_outer">
+                                    <span className="user_icon_role">{user.role}</span>
+                                    <div className="user_icon_outer">
+                                        <img src={getSrc(user.profilePicture)} alt="avatar" />
+                                    </div>
+                                </div>
+                                <div className='info'>
+                                    <div className='login'>{user.login}</div>
+                                    <div>{user.fullName}</div>
+                                    <div>{user.email}</div>
+                                    <div className='login'>{user.rating}</div>
+                                    <div>{user.status}</div>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </>
-                : <p>{message}</p>
+                : <div className='main_message'>{message}</div>
             }
-        </>
+        </div>
     );
-
+    
     function deleteAccount() {
         deleteUserById(user.id, curUser,
             () => {

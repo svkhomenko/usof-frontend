@@ -18,7 +18,7 @@ function UserCard({ user }) {
                     <iconify-icon icon="fluent:delete-16-filled" />
                 </div>
             }
-            <Link to={`/users/${user.id}`} className='user_card'>
+            <Link to={getLink()} className='user_card'>
                 <div className="user_icon_role_outer">
                     <span className="user_icon_role">{user.role}</span>
                     <div className="user_icon_outer">
@@ -37,6 +37,13 @@ function UserCard({ user }) {
             </Link>
         </div>
     );
+
+    function getLink() {
+        if (user.id == curUser.id) {
+            return '/profile';
+        }
+        return `/users/${user.id}`;
+    }
 
     function deleteAccount(event) {
         console.log('here');

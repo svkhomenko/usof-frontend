@@ -62,31 +62,34 @@ function AllUsersPage() {
     ]);
 
     return (
-        <> 
+        <div className='main_page category_page'> 
             <h2>Users</h2>
             {
                 curUser.role === 'admin' && 
-                <p>
-                    <Link to={'/create-user'}>
-                        Create user
-                    </Link>
-                </p>
+                <Link to={'/create-user'} className="button main_button">
+                    Create user
+                </Link>
             }
-            <SearchContainer placeholder="Find users" />
-            <button onClick={resetSettings}>Reset settings</button>
-            <div>
-                {
-                    users.length !== 0 
-                    ? <>
+            <div className='category_search_container'>
+                <SearchContainer placeholder="Find users" />
+                <button onClick={resetSettings}
+                        className="button negative reset_settings">
+                        Reset settings
+                </button>
+            </div>
+            {
+                users.length !== 0 
+                ? <>
+                    <div className='users_listing'>
                         {users.map((user) => (
                             <UserCard key={user.id} user={user} />
                         ))}
-                    </>
-                    : <p>No users found</p>
-                }
-            </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countUsers / limit)}/>
-        </>
+                    </div>
+                    <PageIndexContainer numberOfPages={Math.ceil(countUsers / limit)}/>
+                </>
+                : <p>No users found</p>
+            }
+        </div>
     );
 
     function resetSettings() {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSearchParameters } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
@@ -7,6 +6,7 @@ import PageIndexContainer from "../filters/PageIndexContainer";
 import OrderByContainer from "../filters/OrderByContainer";
 import FilterStatusContainer, { getFilterStatus } from "../filters/FilterStatusContainer";
 import SearchContainer from "../filters/SearchContainer";
+import FilterCategoryContainer from "../filters/FilterCategoryContainer";
 import FilterDateContainer, { getFilterDate } from "../filters/FilterDateContainer";
 import PostCard from '../posts/PostCard';
 
@@ -30,6 +30,7 @@ function UserPosts({ isUpdating }) {
                 orderBy: searchParameters.orderBy,
                 filterStatus: getFilterStatus(searchParameters),
                 search : searchParameters.search,
+                filterCategory: searchParameters.categories.map((category => category.title)).join(','),
                 filterDate: getFilterDate(searchParameters)
             }
         ), 
@@ -67,32 +68,65 @@ function UserPosts({ isUpdating }) {
         searchParameters.activeChecked, 
         searchParameters.inactiveChecked, 
         searchParameters.search, 
+        searchParameters.categories, 
         searchParameters.dateFrom,
         searchParameters.dateTo,
         isUpdating
     ]);
 
+    // return (
+    //     <>
+    //         <h2>{countPosts} your posts</h2>
+    //         <OrderByContainer />
+    //         <FilterStatusContainer />
+    //         <SearchContainer placeholder="Find posts" />
+    //         <FilterDateContainer />
+    //         <button onClick={resetSettings}>Reset settings</button>
+    //         <div>
+    //             {
+    //                 posts.length !== 0 
+    //                 ? <>
+    //                     {posts.map((post) => (
+    //                         <PostCard key={post.id} post={post} />
+    //                     ))}
+    //                 </>
+    //                 : <p>No posts found</p>
+    //             }
+    //         </div>
+    //         <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
+    //     </>
+    // );
+
     return (
-        <>
-            <h2>{countPosts} your posts</h2>
-            <OrderByContainer />
-            <FilterStatusContainer />
-            <SearchContainer placeholder="Find posts" />
-            <FilterDateContainer />
-            <button onClick={resetSettings}>Reset settings</button>
-            <div>
-                {
-                    posts.length !== 0 
-                    ? <>
-                        {posts.map((post) => (
-                            <PostCard key={post.id} post={post} />
-                        ))}
-                    </>
-                    : <p>No posts found</p>
-                }
+        <div className='post_comments_outer main_page'>
+            <div className='small_title'>
+                {countPosts} your post{countPosts != 1 && 's'}
             </div>
-            <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
-        </>
+            <div className='filter_container'>
+                <SearchContainer placeholder="Find posts" />
+                <FilterDateContainer />
+                <FilterCategoryContainer />
+                {
+                    curUser.role == 'admin' &&
+                    <FilterStatusContainer />
+                }
+                <OrderByContainer />
+                <button onClick={resetSettings} 
+                        className="button negative reset_settings">
+                    Reset settings
+                </button>
+            </div>
+            {
+                posts.length !== 0 
+                ? <>
+                    {posts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                        ))}
+                        <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
+                </>
+                : <p>No posts found</p>
+            }
+        </div>
     );
 
     function resetSettings() {
