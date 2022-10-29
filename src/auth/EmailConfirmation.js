@@ -37,14 +37,16 @@ function EmailConfirmation() {
     }, []);
 
     return (
-        <>
-            <p>{message}</p>
-            <p>
-                <Link to={'/login'}>
-                    Go to the login page
-                </Link>
-            </p>
-        </>
+        <div className='display_center'>
+            <div className='post_card no_hr user_form'> 
+                <div className='main_message'>{message}</div>
+                <div className='auth_link'>
+                    <Link to={'/login'}>
+                        Go to the login page
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
 }
 

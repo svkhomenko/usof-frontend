@@ -26,6 +26,7 @@
 /* user_form */
 
 .user_form .input {
+    display: block;
     width: 45vw;
     padding: 7px 10px;
 }
@@ -79,6 +80,7 @@
 /* textarea */
 
 textarea {
+    display: block;
     width: 45vw;
     resize: vertical;
     padding: 10px;

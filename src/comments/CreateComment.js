@@ -25,11 +25,9 @@ function CreateComment() {
                 <div className='small_title'>Leave your answer</div>
                 <div className='message success'>{mainMessage}</div>
                 <form onSubmit={handleSubmit} ref={createCommentFrom}>
-                    <div>
-                        <div className='message error'>{contentMessage}</div>
-                        <textarea value={content} onChange={handleChangeContent} 
-                                    className="large" placeholder="Answer..." />
-                    </div>
+                    <div className='message error'>{contentMessage}</div>
+                    <textarea value={content} onChange={handleChangeContent} 
+                                className="large" placeholder="Answer..." />
                     <div>
                         <div className='message error'>{commentImagesMessage}</div>
                         <label htmlFor="file-upload_new_comment" className='button negative'>

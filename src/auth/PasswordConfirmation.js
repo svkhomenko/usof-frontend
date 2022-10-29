@@ -13,32 +13,32 @@ function PasswordConfirmation() {
     const [errMessage, setErrMessage] = useState('');
 
     return (
-        <> 
-            {
-                message 
-                ? <h2>{message}</h2>
-                : <>
-                    <h2>Update password</h2>
-                    <p>{errMessage}</p>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            Password:
-                            <input type="password" value={password} onChange={handleChangePassword} />
-                        </label>
-                        <label>
-                            Password confirmation:
-                            <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
-                        </label>
-                        <input type="submit" value="Reset password" />
-                    </form>
-                </>
-            }
-            <p>
-                <Link to={'/login'}>
-                    Go to the login page
-                </Link>
-            </p>
-        </>
+        <div className='display_center'>
+            <div className='post_card no_hr user_form'> 
+                {
+                    message 
+                    ? <div className='main_message'>{message}</div>
+                    : <>
+                        <h2>Update password</h2>
+                        <div className='message error'>{errMessage}</div>
+                        <form onSubmit={handleSubmit}>
+                            <div className='label'>Password:</div>
+                            <input type="password" value={password} onChange={handleChangePassword} className="input" />
+                            
+                            <div className='label'>Password confirmation:</div>
+                            <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} className="input" />
+
+                            <input type="submit" value="Reset password" className='button submit' />
+                        </form>
+                    </>
+                }
+                <div className='auth_link'>
+                    <Link to={'/login'}>
+                        Go to the login page
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
 
     function handleChangePassword(event) {

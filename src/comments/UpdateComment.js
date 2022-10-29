@@ -130,12 +130,10 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
                 {
                     curUser.id == curComment.author.id
                     ? <>
-                        <div>
-                            <div className='label'>Content:</div>
-                            <div className='message error'>{contentMessage}</div>
-                            <textarea value={content} onChange={handleChangeContent}
+                        <div className='label'>Content:</div>
+                        <div className='message error'>{contentMessage}</div>
+                        <textarea value={content} onChange={handleChangeContent}
                                         className="large" />
-                        </div>
                         <div className='post_images_container'>
                             {curCommentImages.map((image) => (
                                 <div key={image.id} className="user_icon_outer post_images_outer update" >

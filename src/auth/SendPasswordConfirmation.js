@@ -9,31 +9,34 @@ function SendPasswordConfirmation() {
     const [errMessage, setErrMessage] = useState('');
 
     return (
-        <>
-            {
-                message 
-                ? <h2>{message}</h2>
-                : <>
-                    <h2>Send password confirmation</h2>
-                    <p>{errMessage}</p>
-                    <p>Please enter the email you use for registration</p>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            Email:
-                            <input type="text" value={email} onChange={handleChangeEmail} />
-                        </label>
-                        <input type="submit" value="Request password reset" />
-                    </form>
-                </>
-            }
-            <p>
-                <Link to={'/login'}>
-                    Go to the login page
-                </Link>
-            </p>
-        </>
+        <div className='display_center'>
+            <div className='post_card no_hr user_form'> 
+                {
+                    message 
+                    ? <div className='main_message'>{message}</div>
+                    : <> 
+                        <h2>Send password confirmation</h2>
+                        <div className='message error'>{errMessage}</div>
+                        <div className='label'>
+                            Please enter the email you use for registration
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className='label'>Email:</div>
+                            <input type="text" value={email} onChange={handleChangeEmail} className="input" />
+                            
+                            <input type="submit" value="Request password reset" className='button submit' />
+                        </form>
+                    </>
+                }
+                <div className='auth_link'>
+                    <Link to={'/login'}>
+                        Go to the login page
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
-
+    
     function handleChangeEmail(event) {
         setEmail(event.target.value);
     }

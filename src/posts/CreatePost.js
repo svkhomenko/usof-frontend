@@ -29,23 +29,19 @@ function CreatePost() {
             <div className='post_card update_post no_hr'> 
                 <h2>Create new post</h2>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className='label'>Title:</div>
-                        <div className='message error'>{titleMessage}</div>
-                        <textarea value={title} onChange={handleChangeTitle}
-                                    className="small" />
-                    </div>
-                    <div>
-                        <div className='label'>Content:</div>
-                        <div className='message error'>{contentMessage}</div>
-                        <textarea value={content} onChange={handleChangeContent}
-                                    className="large" />
-                    </div>
-                    <div>
-                        <div className='label'>Categories:</div>
-                        <div className='message error'>{categoriesMessage}</div>
-                        <FilterCategoryContainer />
-                    </div>
+                    <div className='label'>Title:</div>
+                    <div className='message error'>{titleMessage}</div>
+                    <textarea value={title} onChange={handleChangeTitle}
+                                className="small" />
+
+                    <div className='label'>Content:</div>
+                    <div className='message error'>{contentMessage}</div>
+                    <textarea value={content} onChange={handleChangeContent}
+                                className="large" />
+
+                    <div className='label'>Categories:</div>
+                    <div className='message error'>{categoriesMessage}</div>
+                    <FilterCategoryContainer />
                     <div>
                         <div className='label'>Images:</div>
                         <div className='message error'>{postImagesMessage}</div>

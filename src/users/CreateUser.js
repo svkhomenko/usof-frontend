@@ -32,31 +32,26 @@ function CreateUser() {
             <div className='post_card update_post no_hr user_form'> 
                 <h2>Create new user</h2>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className='label'>Login:</div>
-                        <div className='message error'>{loginMessage}</div>
-                        <input type="text" value={login} onChange={handleChangeLogin} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Password:</div>
-                        <div className='message error'>{passwordMessage}</div>
-                        <input type="password" value={password} onChange={handleChangePassword} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Password confirmation:</div>
-                        <div className='message error'>{passwordConfirmationMessage}</div>
-                        <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Email:</div>
-                        <div className='message error'>{emailMessage}</div>
-                        <input type="text" value={email} onChange={handleChangeEmail} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Full name:</div>
-                        <div className='message error'>{fullNameMessage}</div>
-                        <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
-                    </div>
+                    <div className='label'>Login:</div>
+                    <div className='message error'>{loginMessage}</div>
+                    <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+
+                    <div className='label'>Password:</div>
+                    <div className='message error'>{passwordMessage}</div>
+                    <input type="password" value={password} onChange={handleChangePassword} className="input" />
+
+                    <div className='label'>Password confirmation:</div>
+                    <div className='message error'>{passwordConfirmationMessage}</div>
+                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} className="input" />
+
+                    <div className='label'>Email:</div>
+                    <div className='message error'>{emailMessage}</div>
+                    <input type="text" value={email} onChange={handleChangeEmail} className="input" />
+
+                    <div className='label'>Full name:</div>
+                    <div className='message error'>{fullNameMessage}</div>
+                    <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
+
                     <div className='status_select_contatiner'>
                         <div className='label'>Role:</div>
                         <Select value={getRoleValue()} options={roleOptions} 

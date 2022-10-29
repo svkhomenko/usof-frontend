@@ -20,16 +20,14 @@ function Login() {
                 <h2>Login</h2>
                 <div className='message error'>{errMessage}</div>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className='label'>Login:</div>
-                        <div className='message error'>{loginMessage}</div>
-                        <input type="text" value={login} onChange={handleChangeLogin} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Password:</div>
-                        <div className='message error'>{passwordMessage}</div>
-                        <input type="password" value={password} onChange={handleChangePassword} className="input" />
-                    </div>
+                    <div className='label'>Login:</div>
+                    <div className='message error'>{loginMessage}</div>
+                    <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+
+                    <div className='label'>Password:</div>
+                    <div className='message error'>{passwordMessage}</div>
+                    <input type="password" value={password} onChange={handleChangePassword} className="input" />
+
                     <input type="submit" value="Log in" className='button submit' />
                 </form>
                 <div className='auth_link'>
@@ -47,6 +45,7 @@ function Login() {
             </div>
         </div>
     );
+
 
     function handleChangeLogin(event) {
         setLogin(event.target.value);

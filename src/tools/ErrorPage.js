@@ -2,7 +2,7 @@ import React from "react";
 
 function ErrorPage() {
     return (
-        <p>Something went wrong</p>
+        <div className='main_message'>Something went wrong</div>
     );
 }
 

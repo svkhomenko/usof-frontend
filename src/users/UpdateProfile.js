@@ -22,69 +22,6 @@ function UpdateProfile({ user, successFunc }) {
     const [fullNameMessage, setFullNameMessage] = useState('');
     const [profilePictureMessage, setProfilePictureMessage] = useState('');
 
-    // return (
-    //     <> 
-    //         <h2>Update profile</h2>
-    //         <form onSubmit={handleSubmit}>
-    //             <label>
-    //                 Login:
-    //                 <p>{loginMessage}</p>
-    //                 <input type="text" value={login} onChange={handleChangeLogin} />
-    //             </label>
-    //             <label>
-    //                 Email:
-    //                 <p>{emailMessage}</p>
-    //                 <input type="text" value={email} onChange={handleChangeEmail} />
-    //             </label>
-    //             <label>
-    //                 Full name:
-    //                 <p>{fullNameMessage}</p>
-    //                 <input type="text" value={fullName} onChange={handleChangeFullName} />
-    //             </label>
-    //             {
-    //                 curUser.role == 'admin'
-    //                 && <>
-    //                     <label>
-    //                         Role:
-    //                         <select value={role} onChange={handleChangeRole}>
-    //                             <option value="admin">Admin</option>
-    //                             <option value="user">User</option>
-    //                         </select>
-    //                     </label>
-    //                 </>
-    //             }
-    //             <label>
-    //                 Avatar:
-    //                 {
-    //                     curAvatar 
-    //                     && <div style={{
-    //                             display: "flex",
-    //                             justifyContent: "center",
-    //                             alignItems: "center",
-    //                             width: "50px",
-    //                             height: "50px",
-    //                             overflow: "hidden"
-    //                     }}>
-    //                         <span onClick={handleChangeDeleteAvatar}>Delete</span>
-    //                         <img src={getSrc(curAvatar)} 
-    //                                 alt="avatar" style={{width: "auto",
-    //                                                     height: "100%"}} />
-    //                     </div>
-    //                 }
-    //                 <p>{profilePictureMessage}</p>
-    //                 <input type="file" onChange={handleChangeProfilePicture} accept="image/*" />
-    //                 {
-    //                     profilePicture
-    //                     && <div>
-    //                         {profilePicture.name}{' '}{profilePicture.size}
-    //                     </div>
-    //                 }
-    //             </label>
-    //             <input type="submit" value="Update profile" />
-    //         </form>
-    //     </>
-    // );
-
     const roleOptions = [
         { value: 'admin', label: 'Admin' },
         { value: 'user', label: 'User' }
@@ -95,21 +32,17 @@ function UpdateProfile({ user, successFunc }) {
             <div className={'post_card update_post user_form no_hr'}> 
                 <h2>Update profile</h2>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className='label'>Login:</div>
-                        <div className='message error'>{loginMessage}</div>
-                        <input type="text" value={login} onChange={handleChangeLogin} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Email:</div>
-                        <div className='message error'>{emailMessage}</div>
-                        <input type="text" value={email} onChange={handleChangeEmail} className="input" />
-                    </div>
-                    <div>
-                        <div className='label'>Full name:</div>
-                        <div className='message error'>{fullNameMessage}</div>
-                        <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
-                    </div>
+                    <div className='label'>Login:</div>
+                    <div className='message error'>{loginMessage}</div>
+                    <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+
+                    <div className='label'>Email:</div>
+                    <div className='message error'>{emailMessage}</div>
+                    <input type="text" value={email} onChange={handleChangeEmail} className="input" />
+
+                    <div className='label'>Full name:</div>
+                    <div className='message error'>{fullNameMessage}</div>
+                    <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
                     {
                         curUser.role == 'admin'
                         && <div className='status_select_contatiner'>
@@ -118,7 +51,6 @@ function UpdateProfile({ user, successFunc }) {
                                     onChange={handleChangeRole} className='status_select' classNamePrefix='status_select' />
                         </div>
                     }
-
                     <div>
                         <div className='label'>Avatar:</div>
                         {

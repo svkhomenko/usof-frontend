@@ -19,18 +19,16 @@ function CreateCategory() {
             <div className='post_card update_post no_hr'> 
                 <h2>Create new category</h2>
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <div className='label'>Title:</div>
-                        <div className='message error'>{titleMessage}</div>
-                        <textarea value={title} onChange={handleChangeTitle}
-                                    className="small" />
-                    </div>
-                    <div>
-                        <div className='label'>Description:</div>
-                        <div className='message error'>{descriptionMessage}</div>
-                        <textarea value={description} onChange={handleChangeDescription}
+                    <div className='label'>Title:</div>
+                    <div className='message error'>{titleMessage}</div>
+                    <textarea value={title} onChange={handleChangeTitle}
+                                className="small" />
+                
+                    <div className='label'>Description:</div>
+                    <div className='message error'>{descriptionMessage}</div>
+                    <textarea value={description} onChange={handleChangeDescription}
                                     className="large" />
-                    </div>
+            
                     <input type="submit" value="Create category" className='button submit' />
                 </form>
             </div>

@@ -45,41 +45,34 @@ function UpdatePost({ setIsUpdating, curPost, setCurPost }) {
             <form onSubmit={handleSubmit}>
                 {
                     curUser.role == 'admin'
-                    && <>
-                        <div className='status_select_contatiner'>
-                            <div className='label'>Status:</div>
-                            <div className='message error'>{statusMessage}</div>
-                            <Select value={getStatusValue()} options={statusOptions} 
-                                    onChange={handleChangeStatus} className='status_select' classNamePrefix='status_select' />
-                        </div>
-                    </>
+                    && <div className='status_select_contatiner'>
+                        <div className='label'>Status:</div>
+                        <div className='message error'>{statusMessage}</div>
+                        <Select value={getStatusValue()} options={statusOptions} 
+                                onChange={handleChangeStatus} className='status_select' classNamePrefix='status_select' />
+                    </div>
                 }
                 {
                     curUser.id == curPost.author.id
                     ? <>
-                        <div>
-                            <div className='label'>Title:</div>
-                            <div className='message error'>{titleMessage}</div>
-                            <textarea value={title} onChange={handleChangeTitle}
-                                        className="small" />
-                        </div>
-                        <div>
-                            <div className='label'>Content:</div>
-                            <div className='message error'>{contentMessage}</div>
-                            <textarea value={content} onChange={handleChangeContent}
-                                        className="large" />
-                        </div>
+                        <div className='label'>Title:</div>
+                        <div className='message error'>{titleMessage}</div>
+                        <textarea value={title} onChange={handleChangeTitle}
+                                    className="small" />
+
+                        <div className='label'>Content:</div>
+                        <div className='message error'>{contentMessage}</div>
+                        <textarea value={content} onChange={handleChangeContent}
+                                    className="large" />
                     </>
                     : <>
                         <h2>{curPost.title}</h2>
                         <div className='content'>{curPost.content}</div>
                     </>
                 }
-                <div>
-                    <div className='label'>Categories:</div>
-                    <div className='message error'>{categoriesMessage}</div>
-                    <FilterCategoryContainer />
-                </div>
+                <div className='label'>Categories:</div>
+                <div className='message error'>{categoriesMessage}</div>
+                <FilterCategoryContainer />
                 {
                     curUser.id == curPost.author.id
                     ? <>

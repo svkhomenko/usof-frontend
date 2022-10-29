@@ -17,45 +17,83 @@ function Register() {
     const [emailMessage, setEmailMessage] = useState('');
     const [fullNameMessage, setFullNameMessage] = useState('');
 
+    // return (
+    //     <> 
+    //         <h2>Register</h2>
+    //         <p>{mainMessage}</p>
+    //         <form onSubmit={handleSubmit}>
+    //             <label>
+    //                 Login:
+    //                 <p>{loginMessage}</p>
+    //                 <input type="text" value={login} onChange={handleChangeLogin} />
+    //             </label>
+    //             <label>
+    //                 Password:
+    //                 <p>{passwordMessage}</p>
+    //                 <input type="password" value={password} onChange={handleChangePassword} />
+    //             </label>
+    //             <label>
+    //                 Password confirmation:
+    //                 <p>{passwordConfirmationMessage}</p>
+    //                 <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
+    //             </label>
+    //             <label>
+    //                 Email:
+    //                 <p>{emailMessage}</p>
+    //                 <input type="text" value={email} onChange={handleChangeEmail} />
+    //             </label>
+    //             <label>
+    //                 Full name:
+    //                 <p>{fullNameMessage}</p>
+    //                 <input type="text" value={fullName} onChange={handleChangeFullName} />
+    //             </label>
+    //             <input type="submit" value="Register" />
+    //         </form>
+    //         <p>
+    //             Already have an account? 
+    //             <Link to={'/login'}>
+    //                 Log in
+    //             </Link>
+    //         </p>
+    //     </>
+    // );
+
     return (
-        <> 
-            <h2>Register</h2>
-            <p>{mainMessage}</p>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Login:
-                    <p>{loginMessage}</p>
-                    <input type="text" value={login} onChange={handleChangeLogin} />
-                </label>
-                <label>
-                    Password:
-                    <p>{passwordMessage}</p>
-                    <input type="password" value={password} onChange={handleChangePassword} />
-                </label>
-                <label>
-                    Password confirmation:
-                    <p>{passwordConfirmationMessage}</p>
-                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
-                </label>
-                <label>
-                    Email:
-                    <p>{emailMessage}</p>
-                    <input type="text" value={email} onChange={handleChangeEmail} />
-                </label>
-                <label>
-                    Full name:
-                    <p>{fullNameMessage}</p>
-                    <input type="text" value={fullName} onChange={handleChangeFullName} />
-                </label>
-                <input type="submit" value="Register" />
-            </form>
-            <p>
-                Already have an account? 
-                <Link to={'/login'}>
-                    Log in
-                </Link>
-            </p>
-        </>
+        <div className='display_center'>
+            <div className='post_card no_hr user_form'>
+                <h2>Register</h2>
+                <div className='message success'>{mainMessage}</div>
+                <form onSubmit={handleSubmit}>
+                    <div className='label'>Login:</div>
+                    <div className='message error'>{loginMessage}</div>
+                    <input type="text" value={login} onChange={handleChangeLogin} className="input" />
+
+                    <div className='label'>Password:</div>
+                    <div className='message error'>{passwordMessage}</div>
+                    <input type="password" value={password} onChange={handleChangePassword} className="input" />
+
+                    <div className='label'>Password confirmation:</div>
+                    <div className='message error'>{passwordConfirmationMessage}</div>
+                    <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} className="input" />
+
+                    <div className='label'>Email:</div>
+                    <div className='message error'>{emailMessage}</div>
+                    <input type="text" value={email} onChange={handleChangeEmail} className="input" />
+
+                    <div className='label'>Full name:</div>
+                    <div className='message error'>{fullNameMessage}</div>
+                    <input type="text" value={fullName} onChange={handleChangeFullName} className="input" />
+
+                    <input type="submit" value="Register" className='button submit' />
+                </form>
+                <div className='auth_link'>
+                    Already have an account?{' '}
+                    <Link to={'/login'}>
+                        Log in
+                    </Link>
+                </div>
+            </div>
+        </div>
     );
 
     function handleChangeLogin(event) {
