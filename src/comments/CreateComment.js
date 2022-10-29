@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, removeUser } from '../store/slices/userSlice';
-import { resetPage, setReset } from '../store/slices/searchParametersSlice';
+import { removeUser } from '../store/slices/userSlice';
+import { setReset } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import { validateContent } from "../tools/dataValidation";
 
@@ -90,7 +90,7 @@ function CreateComment() {
                     setMainMessage('Comment was successfully created');
                     setContent('');
                     createCommentFrom.current.reset();
-                    dispatch(resetPage());
+                    // dispatch(resetPage());
                     dispatch(setReset({ reset: true }));
                 }
             })

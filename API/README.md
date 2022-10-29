@@ -78,7 +78,7 @@ Admin panel is available at http://localhost:3000/admin/login. For admins only
 | **GET** | `/api/posts/own-posts` | Get own posts. Pagination is implemented | page (starts with 1), orderBy (date), filterStatus (active, inactive) (separated by commas), search, filterCategory (separated by commas), filterDate (from...to) |
 | **GET** | `/api/posts/favorites` | Get favorites posts. Pagination is implemented | page (starts with 1), orderBy (date), filterStatus (active, inactive) (separated by commas), search, filterCategory (separated by commas), filterDate (from...to) |
 | **GET** | `/api/posts/:post_id` | Get specified post data | |
-| **GET** | `/api/posts/:post_id/comments` | Get all comments for the specified post | |
+| **GET** | `/api/posts/:post_id/comments` | Get all comments for the specified post. Pagination is implemented | lastDate, numberOfPosts |
 | **POST** | `/api/posts/:post_id/comments` | Create a new comment | content, repliedCommentId, commentImages |
 | **GET** | `/api/posts/:post_id/categories` | Get all categories associated with the specified post | |
 | **GET** | `/api/posts/:post_id/like` | Get all likes under the specified post. Pagination is implemented | page (starts with 1) |

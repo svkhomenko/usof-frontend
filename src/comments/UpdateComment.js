@@ -114,7 +114,6 @@ function UpdateComment({ setIsUpdating, curComment, setCurComment }) {
 
     return (
         <div className='post_card update_post'> 
-            {/* <h2>Update comment</h2> */}
             <form onSubmit={handleSubmit}>
                 {
                     curUser.role == 'admin'

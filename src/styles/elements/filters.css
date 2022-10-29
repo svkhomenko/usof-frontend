@@ -16,7 +16,8 @@
 
 .search_input::placeholder {
     font-size: 14px;
-    color: inherit;
+    /* color: inherit; */
+    color: var(--grey-color);
 }
 
 .search_input:focus {

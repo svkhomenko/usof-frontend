@@ -100,7 +100,8 @@ textarea.small {
 
 textarea::placeholder {
     font-size: 14px;
-    color: var(--black-color);
+    /* color: var(--black-color); */
+    color: var(--grey-color);
 }
 
 textarea:focus {
