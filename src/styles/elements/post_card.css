@@ -32,14 +32,6 @@
     min-width: 130px;
 }
 
-.post_card .button_container.for_comment {
-    min-width: 105px;
-}
-
-.post_card .button_container.for_comment.without_delete {
-    min-width: 0px;
-}
-
 .post_card .button_container .count {
     position: relative;
     top: -3px;
@@ -73,15 +65,54 @@
     color: var(--green-color);
 }
 
-.post_card .content {
-    white-space: pre-wrap;
-    -webkit-line-clamp: 8; 
-    display: -webkit-box; 
-    -webkit-box-orient: vertical; 
-    overflow: hidden;
-}
+/* comment_card */
 
 .comment_card .post_images_container {
     margin-top: 5px;
+}
+
+.post_card .button_container.for_comment {
+    min-width: 130px;
+}
+
+.post_card .button_container.for_comment.without_delete {
+    min-width: 105px;
+}
+
+/* replied_comment */
+
+.replied_comment_outer {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    width: 45vw;
+}
+
+.replied_comment_outer .icon {
+    font-size: 18px;
+    color: var(--dark-green-color);
+}
+
+.replied_comment_outer .delete:hover {
+    color: var(--green-color);
+}
+
+.replied_comment {
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--dark-green-color);
+}
+
+.replied_comment .login {
+    margin-bottom: 5px;
+    color: var(--dark-green-color);
+}
+
+.replied_comment .content {
+    white-space: pre-wrap;
+    -webkit-line-clamp: 1; 
+    display: -webkit-box; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
 }
 

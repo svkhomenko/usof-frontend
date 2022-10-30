@@ -69,6 +69,18 @@
     border-bottom: 1px solid var(--green-color);
 }
 
+.post_comments_outer .more_comments {
+    margin-bottom: 20px;
+    text-align: center;
+    text-decoration: underline;
+    color: var(--dark-green-color);
+    cursor: pointer;
+}
+
+.post_comments_outer .more_comments:hover {
+    color: var(--green-color);
+}
+
 /* create_comment_outer */
 
 .create_comment_outer {

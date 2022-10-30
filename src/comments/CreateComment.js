@@ -6,11 +6,11 @@ import { setReset } from '../store/slices/searchParametersSlice';
 import { SERVER_URL } from "../const";
 import { validateContent } from "../tools/dataValidation";
 
-function CreateComment() {
+function CreateComment({ repliedComment, setRepliedComment, goToRef }) {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const { id: postId } = useParams();
-    const createCommentFrom = useRef(null);
+    const createCommentForm = useRef(null);
 
     const [content, setContent] = useState('');
     const [commentImages, setCommentImages] = useState([]);
@@ -24,7 +24,24 @@ function CreateComment() {
             <div className='create_comment_outer'> 
                 <div className='small_title'>Leave your answer</div>
                 <div className='message success'>{mainMessage}</div>
-                <form onSubmit={handleSubmit} ref={createCommentFrom}>
+                {
+                    repliedComment &&
+                    <div className='replied_comment_outer'>
+                        <div className='icon'>
+                            <iconify-icon icon="bi:reply" />
+                        </div>
+                        <div className='replied_comment' 
+                            onClick={() => {goToRef(repliedComment.id)}}>
+                            <div className='login'>{repliedComment.author.login}</div>
+                            <div className='content'>{repliedComment.content}</div>
+                        </div>
+                        <div className='icon delete'
+                            onClick={removeRepliedComment}>
+                            <iconify-icon icon="iwwa:delete" />
+                        </div>
+                    </div>
+                }
+                <form onSubmit={handleSubmit} ref={createCommentForm}>
                     <div className='message error'>{contentMessage}</div>
                     <textarea value={content} onChange={handleChangeContent} 
                                 className="large" placeholder="Answer..." />
@@ -74,6 +91,9 @@ function CreateComment() {
             Object.values(commentImages).forEach((image) => {
                 formData.append("commentImages", image);
             });
+            if (repliedComment) {
+                formData.append("repliedCommentId", repliedComment.id);
+            }
 
             fetch(SERVER_URL + `/api/posts/${postId}/comments`, {
                 method: 'POST',
@@ -89,9 +109,9 @@ function CreateComment() {
                 else {
                     setMainMessage('Comment was successfully created');
                     setContent('');
-                    createCommentFrom.current.reset();
-                    // dispatch(resetPage());
+                    createCommentForm.current.reset();
                     dispatch(setReset({ reset: true }));
+                    setRepliedComment(null);
                 }
             })
             .catch((err) => {
@@ -140,6 +160,10 @@ function CreateComment() {
         });
 
         return valid;
+    }
+
+    function removeRepliedComment() {
+        setRepliedComment(null);
     }
 }
 

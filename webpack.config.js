@@ -12,11 +12,13 @@ module.exports = {
         filename: 'bundle.js',
         // sourceMapFilename: "[name].js.map",
         // publicPath: '/images/'
+        publicPath: '/'     ///
     },
     devServer: {
         historyApiFallback: true,
-        // contentBase: './',
+        open: true,         ///
         hot: true,
+        compress: true,     ///
         static: {
             directory: path.join(__dirname, "./")
         }

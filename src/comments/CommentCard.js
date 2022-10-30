@@ -169,7 +169,7 @@ import { getSrc, getDateString } from "../tools/tools_func";
 //     }
 // }
 
-function CommentCard({ comment, isPostActive, innerRef, goToRef }) {
+function CommentCard({ comment, isPostActive, innerRef, goToRef, replyComment }) {
     const curUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
@@ -179,9 +179,11 @@ function CommentCard({ comment, isPostActive, innerRef, goToRef }) {
     return (
         <div ref={(el) => innerRef[comment.id] = el}>
             {
-                comment.repliedComment &&
-                <div onClick={() => {goToRef(comment.repliedComment.id)}}>
-                    {comment.repliedComment.content}
+                curComment.repliedComment &&
+                <div className='replied_comment' 
+                    onClick={() => {goToRef(curComment.repliedComment.id)}}>
+                    <div className='login'>{curComment.repliedComment.author.login}</div>
+                    <div className='content'>{curComment.repliedComment.content}</div>
                 </div>
             }
             {
@@ -219,10 +221,14 @@ function CommentCard({ comment, isPostActive, innerRef, goToRef }) {
                                             dislikesCount={curComment.dislikesCount}/>
                                 {
                                     (curUser.id == curComment.author.id || curUser.role === 'admin') && 
-                                    <span onClick={deleteComment} className="like_outer delete">
+                                    <span onClick={deleteComment} className="like_outer">
                                         <iconify-icon icon="fluent:delete-16-filled" />
                                     </span>
                                 }
+                                <span onClick={reply} 
+                                        className={"like_outer" + (isPostActive && curComment.status == 'active' ? '' : " inactive")}>
+                                    <iconify-icon icon="bi:reply" />
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -247,7 +253,6 @@ function CommentCard({ comment, isPostActive, innerRef, goToRef }) {
             }
             else {
                 dispatch(setReset({ reset: true }));
-                // window.location.reload();
             }
         })
         .catch((err) => {
@@ -333,6 +338,12 @@ function CommentCard({ comment, isPostActive, innerRef, goToRef }) {
                         window.location.href = '/error';
                 }
             });
+        }
+    }
+
+    function reply() {
+        if (isPostActive && curComment.status == 'active') {
+            replyComment(curComment);
         }
     }
 }

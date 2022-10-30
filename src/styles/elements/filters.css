@@ -16,7 +16,6 @@
 
 .search_input::placeholder {
     font-size: 14px;
-    /* color: inherit; */
     color: var(--grey-color);
 }
 
@@ -130,5 +129,9 @@
 
 .category_filter .options:hover {
     background-color: var(--light-green-color);
+}
+
+.category_filter .search_input:not(:focus) + .options_container {
+    display: none;
 }
 

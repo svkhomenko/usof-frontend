@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setReset, removeSearchParameters } from '../store/slices/searchParametersSlice';
@@ -169,7 +169,7 @@ import CommentCard from '../comments/CommentCard';
 //     }
 // }
 
-function PostComments({ isPostActive }) {
+function PostComments({ isPostActive, goToRef, commentsRef, replyComment }) {
     const dispatch = useDispatch();
     const curUser = useSelector((state) => state.user);
     const searchParameters = useSelector((state) => state.searchParameters);
@@ -177,25 +177,10 @@ function PostComments({ isPostActive }) {
 
     const [comments, setComments] = useState([]);
     const [countComments, setCountComments] = useState(0);
-    // const [limit, setLimit] = useState(10);
-    
-    const commentsRef = useRef({});
 
     useEffect(() => {
         dispatch(removeSearchParameters());
     }, []);
-
-    // useEffect(() => {
-    //     if (searchParameters.reset) {
-    //         uploadComments(false);
-    //         dispatch(setReset({
-    //             reset: false
-    //         }));
-    //     }
-    //     else {
-    //         uploadComments();
-    //     }
-    // }, [postId, searchParameters.reset]);
 
     useEffect(() => {
         uploadComments();
@@ -224,29 +209,22 @@ function PostComments({ isPostActive }) {
                                     isPostActive={isPostActive}
                                     innerRef={commentsRef.current}
                                     goToRef={goToRef}
+                                    replyComment={replyComment}
                         />
                     ))}
                     {
                         (countComments > comments.length) &&
-                        <div onClick={uploadComments}>
+                        <div onClick={uploadComments} className="more_comments">
                             See more comments
                         </div>
                     }
-                    {/* update */}
                 </>
                 : <div className='small_message'>No comments found</div>
             }
         </div>
     );
-
-    function goToRef(commentId) {
-        if (commentsRef.current[commentId]) {
-            commentsRef.current[commentId].scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    }
-
+    
     function uploadComments(showNew = true) {
-        // console.log(showNew);
         let searchParams = {};
 
         if (!showNew) {
@@ -257,21 +235,7 @@ function PostComments({ isPostActive }) {
                 searchParams.lastDate = comments[comments.length - 1].publishDate;
             }
         }
-
-        console.log(searchParams);
-
-        // let lastDate = '';
-        // let numberOfPosts = '';
-
-        // if (!showNew) {
-        //     numberOfPosts = comments.length
-        // }
-        // else {
-        //     if (comments.length > 0) {
-        //         lastDate = comments[comments.length - 1].publishDate;
-        //     }
-        // }
-
+        
         fetch(SERVER_URL + `/api/posts/${postId}/comments?` + new URLSearchParams(searchParams), 
         {
             method: 'GET',
@@ -296,7 +260,6 @@ function PostComments({ isPostActive }) {
             if (!searchParams.lastDate) {
                 setCountComments(response.countComments);
             }
-            // setLimit(response.limit);
         })
         .catch((err) => {
             console.log('err', err, err.body);
@@ -311,7 +274,7 @@ function PostComments({ isPostActive }) {
             }
         });
     }
-}
+}        
 
 export default PostComments;
 

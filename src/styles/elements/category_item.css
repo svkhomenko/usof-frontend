@@ -13,5 +13,6 @@
     background-color: var(--light-green-color);
     font-size: 10px;
     color: var(--dark-green-color);
+    cursor: default;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeUser } from '../store/slices/userSlice';
@@ -20,6 +20,9 @@ function PostPage() {
     const [curPost, setCurPost] = useState();
     const [message, setMessage] = useState('Post is not found');
     const [isUpdating, setIsUpdating] = useState(false);
+
+    const commentsRef = useRef({});
+    const [repliedComment, setRepliedComment] = useState(null);
     
     useEffect(() => {
         fetch(SERVER_URL + `/api/posts/${postId}`, 
@@ -124,8 +127,13 @@ function PostPage() {
                             <PostImages images={curPost.images} />
                         </div>
                     }
-                    <PostComments isPostActive={curPost.status == 'active'} />
-                    <CreateComment />
+                    <PostComments isPostActive={curPost.status == 'active'}
+                                    goToRef={goToRef}
+                                    commentsRef={commentsRef}
+                                    replyComment={replyComment} />
+                    <CreateComment repliedComment={repliedComment}
+                                    setRepliedComment={setRepliedComment}
+                                    goToRef={goToRef} />
                 </>
                 : <div className='main_message'>{message}</div>
             }
@@ -150,6 +158,23 @@ function PostPage() {
 
     function handleFavClick() {
         favClick(curPost, curUser, setCurPost, () => {dispatch(removeUser());});
+    }
+
+    function goToRef(commentId) {
+        if (commentsRef.current[commentId]) {
+            commentsRef.current[commentId].scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+
+    function replyComment(comment) {
+        let scrollHeight = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+        window.scrollTo({ behavior: "smooth", top: scrollHeight });
+
+        setRepliedComment(comment);
     }
 }
 

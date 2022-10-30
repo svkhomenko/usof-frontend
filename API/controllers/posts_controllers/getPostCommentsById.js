@@ -192,8 +192,7 @@ async function getPostCommentsById(req, res) {
             throw new ValidationError("Forbidden data", 403); 
         }
 
-        // let limit = 10;
-        let limit = 2;
+        let limit = 10;
         
         let where = {};
         if (!(curUser && curUser.role === 'admin')) {
