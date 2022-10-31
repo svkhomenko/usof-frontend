@@ -9,10 +9,12 @@ function EmailConfirmation() {
     const [message, setMessage] = useState('Processing request...');
 
     useEffect(() => {
+        console.log('----------fetch');
         fetch(SERVER_URL + `/api/auth/email-confirmation/${token}`, {
             method: 'POST'
         })
         .then((response) => {
+            console.log("+++++", message);
             if (!response.ok) {
                 throw response;
             }

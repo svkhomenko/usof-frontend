@@ -17,47 +17,6 @@ function Register() {
     const [emailMessage, setEmailMessage] = useState('');
     const [fullNameMessage, setFullNameMessage] = useState('');
 
-    // return (
-    //     <> 
-    //         <h2>Register</h2>
-    //         <p>{mainMessage}</p>
-    //         <form onSubmit={handleSubmit}>
-    //             <label>
-    //                 Login:
-    //                 <p>{loginMessage}</p>
-    //                 <input type="text" value={login} onChange={handleChangeLogin} />
-    //             </label>
-    //             <label>
-    //                 Password:
-    //                 <p>{passwordMessage}</p>
-    //                 <input type="password" value={password} onChange={handleChangePassword} />
-    //             </label>
-    //             <label>
-    //                 Password confirmation:
-    //                 <p>{passwordConfirmationMessage}</p>
-    //                 <input type="password" value={passwordConfirmation} onChange={handleChangePasswordConfirmation} />
-    //             </label>
-    //             <label>
-    //                 Email:
-    //                 <p>{emailMessage}</p>
-    //                 <input type="text" value={email} onChange={handleChangeEmail} />
-    //             </label>
-    //             <label>
-    //                 Full name:
-    //                 <p>{fullNameMessage}</p>
-    //                 <input type="text" value={fullName} onChange={handleChangeFullName} />
-    //             </label>
-    //             <input type="submit" value="Register" />
-    //         </form>
-    //         <p>
-    //             Already have an account? 
-    //             <Link to={'/login'}>
-    //                 Log in
-    //             </Link>
-    //         </p>
-    //     </>
-    // );
-
     return (
         <div className='display_center'>
             <div className='post_card no_hr user_form'>

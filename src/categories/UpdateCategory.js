@@ -16,25 +16,6 @@ function UpdateCategory({ setIsUpdating, curCategory, setCurCategory }) {
     const [titleMessage, setTitleMessage] = useState('');
     const [descriptionMessage, setDescriptionMessage] = useState('');
 
-    // return (
-    //     <> 
-    //         <h2>Update category</h2>
-    //         <form onSubmit={handleSubmit}>
-    //             <label>
-    //                 Title:
-    //                 <p>{titleMessage}</p>
-    //                 <input type="text" value={title} onChange={handleChangeTitle} />
-    //             </label>
-    //             <label>
-    //                 Description:
-    //                 <p>{descriptionMessage}</p>
-    //                 <textarea value={description} onChange={handleChangeDescription} />
-    //             </label>
-    //             <input type="submit" value="Update category" />
-    //         </form>
-    //     </>
-    // );
-
     return (
         <div className='post_card update_post'> 
             <h2>Update category</h2>

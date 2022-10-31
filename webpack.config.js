@@ -4,27 +4,23 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-        // 'react-hot-loader/patch',
         path.resolve(__dirname, 'src', 'index.js')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js',
-        // sourceMapFilename: "[name].js.map",
-        // publicPath: '/images/'
-        publicPath: '/'     ///
+        publicPath: '/'
     },
     devServer: {
         historyApiFallback: true,
-        open: true,         ///
+        open: true,
         hot: true,
-        compress: true,     ///
+        compress: true,
         static: {
             directory: path.join(__dirname, "./")
         }
     },
     devtool: "source-map",
-    // devtool: 'eval-source-map',
     resolve: {
         modules: [path.join(__dirname, 'src'), 'node_modules'],
         alias: {
@@ -34,7 +30,6 @@ module.exports = {
         fallback: {
             "fs": false,
             "path": false,
-            // "path": require.resolve("path-browserify"),
             "buffer": require.resolve("buffer/"),
             "assert": false
         } 
@@ -46,16 +41,7 @@ module.exports = {
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',
-            },
-            // enforce: "pre",
-            // use: [
-            // {
-            //     loader: "source-map-loader"
-            // },
-            // {
-            //     loader: 'babel-loader',
-            // },
-            // ]
+            }
         },
         {
             test: /\.css$/,
@@ -70,9 +56,6 @@ module.exports = {
         },
         {
             test: /\.(gif|svg|jpg|png)$/,
-            // use: {
-            //     loader: "file-loader",
-            // },
             loader: "file-loader",
             options: {
                 name: '/src/images/[name].[ext]'

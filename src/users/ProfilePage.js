@@ -58,46 +58,6 @@ function ProfilePage() {
         });
     }, []);
 
-    // return (
-    //     <>
-    //         {
-    //             isUpdating
-    //             ? <UpdateProfile user={curUser} successFunc={successUpdateFunc} />
-    //             : <>
-    //                 <button onClick={deleteAccount}>Delete</button>
-    //                 <button onClick={() => {setIsUpdating(true)}}>
-    //                     Update
-    //                 </button>
-    //                 <div>{curUser.login}</div>
-    //                 <div>{curUser.email}</div>
-    //                 <div>{curUser.fullName}</div>
-    //                 <div style={{
-    //                         display: "flex",
-    //                         justifyContent: "center",
-    //                         alignItems: "center",
-    //                         width: "50px",
-    //                         height: "50px",
-    //                         overflow: "hidden"
-    //                 }}>
-    //                     <img src={getSrc(curUser.profilePicture)} alt="avatar" style={{width: "auto",
-    //                                                         height: "100%"}} />
-    //                 </div>
-    //                 <div>{curUser.role}</div>
-    //                 <div>{curUser.status}</div>
-    //                 <div>{curUser.rating}</div>
-    //             </>
-    //         }
-    //         <hr />
-    //         <div onClick={() => {setIsFavoritesPosts(false)}}>Your posts</div>
-    //         <div onClick={() => {setIsFavoritesPosts(true)}}>Favorites posts</div>
-    //         {
-    //             isFavoritesPosts 
-    //             ? <FavoritesPosts isUpdating={isUpdating} />
-    //             : <UserPosts isUpdating={isUpdating} />
-    //         }
-    //     </>
-    // );
-
     return (
         <div className='profile_page'>
             {

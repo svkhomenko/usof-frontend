@@ -74,32 +74,6 @@ function FavoritesPosts({ isUpdating }) {
         isUpdating
     ]);
 
-    // return (
-    //     <>
-    //         <h2>{countPosts} favorites posts</h2>
-    //         <OrderByContainer />
-    //         {
-    //             curUser.role == 'admin' &&
-    //             <FilterStatusContainer />
-    //         }
-    //         <SearchContainer placeholder="Find posts" />
-    //         <FilterDateContainer />
-    //         <button onClick={resetSettings}>Reset settings</button>
-    //         <div>
-    //             {
-    //                 posts.length !== 0 
-    //                 ? <>
-    //                     {posts.map((post) => (
-    //                         <PostCard key={post.id} post={post} />
-    //                     ))}
-    //                 </>
-    //                 : <p>No posts found</p>
-    //             }
-    //         </div>
-    //         <PageIndexContainer numberOfPages={Math.ceil(countPosts / limit)}/>
-    //     </>
-    // );
-
     return (
         <div className='post_comments_outer main_page'>
             <div className='small_title'>

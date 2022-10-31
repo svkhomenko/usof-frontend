@@ -131,7 +131,7 @@
     background-color: var(--light-green-color);
 }
 
-.category_filter .search_input:not(:focus) + .options_container {
+.category_filter .search_input:not(:focus) + .options_container:not(:hover) {
     display: none;
 }
 

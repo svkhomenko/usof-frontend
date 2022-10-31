@@ -1,15 +1,3 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import userReducer from './slices/userSlice';
-// import searchParametersReducer from './slices/searchParametersSlice';
-
-// export default configureStore({
-//     reducer: {
-//         user: userReducer,
-//         searchParameters: searchParametersReducer
-//     },
-// });
-
-
 import { configureStore, combineReducers, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userReducer from './slices/userSlice';
 import searchParametersReducer from './slices/searchParametersSlice';

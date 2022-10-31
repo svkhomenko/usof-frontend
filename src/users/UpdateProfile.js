@@ -102,7 +102,6 @@ function UpdateProfile({ user, successFunc }) {
     }
 
     function handleChangeProfilePicture(event) {
-        // setProfilePicture(event.target.files);
         setProfilePicture(event.target.files[0]);
     }
     
@@ -131,9 +130,6 @@ function UpdateProfile({ user, successFunc }) {
             if (!curAvatar) {
                 formData.append("deleteAvatar", true);
             }
-            // if (profilePicture && profilePicture[0]) {
-            //     formData.append("avatar", profilePicture[0]);
-            // }
             if (profilePicture) {
                 formData.append("avatar", profilePicture);
             }
