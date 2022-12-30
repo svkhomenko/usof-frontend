@@ -1,20 +1,20 @@
 # Usof frontend
 
 A web app for a question and answer service for professional and enthusiast programmers. It allows you to share your problems/solutions with short posts and receivesolutions/feedback, or even increase your profile rating. 
-Based on on the API from [Usof backend](git@gitlab.ucode.world:connect-khpi/connect-fullstack-usof-backend/skhomenko.git).
+Based on on the API from [Usof backend](https://github.com/svkhomenko/usof-backend).
 
 ## Installation
 
 1. Clone project 
     ```sh
-    git clone git@gitlab.ucode.world:connect-khpi/connect-fullstack-usof-frontend/skhomenko.git
+    git clone https://github.com/svkhomenko/usof-frontend.git
     ```
 2. In the root of project run
     ```sh
     npm install
     ```
 3. Run the server
-    Visit [Usof backend](git@gitlab.ucode.world:connect-khpi/connect-fullstack-usof-backend/skhomenko.git) for more information.
+    Visit [Usof backend](https://github.com/svkhomenko/usof-backend) for more information.
 
 3. Run the client
     ```sh
